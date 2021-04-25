@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha de publicacion</th>
+        <th scope="col">Fecha de lanzamiento</th>
+        <th scope="col">Nota</th>
+        <th scope="col">Imagen</th>
+        <th scope="col">Eliminar</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Ver juego</th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let juego of juegos, let indice=index">
+        <th scope="row">{{indice}}</th>
+        <td>{{juego.nombre}}</td>
+        <td>{{juego.fechaDePublicacion}}</td>
+        <td>{{juego.fechaDeLanzamiento}}</td>
+        <td>{{juego.nota}}</td>
+        <td><img src="{{juego.imagen}}" width="50px"></td>
+        <td><button (click)="eliminarJuego(juego.id)" class="btn btn-danger">Dar de baja</button></td>
+        <td><button (click)="editarJuego(juego.id)" class="btn btn-warning">Editar</button></td>
+        <td><button (click)="verJuego(juego.id)" class="btn btn-info">Ver juego</button></td>
+      </tr>
+    </tbody>
+  </table>

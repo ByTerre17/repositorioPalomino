@@ -1,0 +1,56 @@
+<div class="caja">
+    <div class="titulo">
+      <h1>Insertar Juegos</h1>
+    </div>
+    <div class="formulario">
+        <form [formGroup]="form1" (submit)="submit()">
+            <div class="form-row mb-1">
+              <div class="form-group col-md-6">
+                <label for="nombre">Nombre:</label>
+                <input class="form-control" type="text" placeholder="Nombre" id="nombre" formControlName="nombre">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="fechaDeLanzamiento">fechaDeLanzamiento:</label>
+                <input class="form-control" type="date" placeholder="fechaDeLanzamiento" id="fechaDeLanzamiento" formControlName="fechaDeLanzamiento">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="comprar">Enlace para comprar:</label>
+                <input class="form-control" type="url" placeholder="comprar" id="comprar" formControlName="comprar">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="edad">Minimo de edad para jugar al juego:</label>
+                <input class="form-control" type="text" placeholder="edad" id="edad" formControlName="edad">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="creador">Creador:</label>
+                <input class="form-control" type="text" placeholder="creador" id="creador" formControlName="creador">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="genero">Genero:</label>
+                <input class="form-control" type="text" placeholder="genero" id="genero" formControlName="genero">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="numeroDeJugadores">Numero de jugadores:</label>
+                <input class="form-control" type="text" placeholder="numeroDeJugadores" id="numeroDeJugadores" formControlName="numeroDeJugadores">
+              </div>
+              
+              <div class="form-group col-md-6">
+                <label for="nombre">Resumen:</label>
+                <input class="form-control" type="text" placeholder="Resumen" id="resumen" formControlName="resumen">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="nota">Nota:</label>
+                <input class="form-control" type="number" placeholder="nota" id="nota" formControlName="nota">
+              </div>
+              <div class="form-group col-md-6" formArrayName="imagenes">
+                <label for="imagen">Imagen:</label>
+                <div *ngFor="let item of getImagenes.controls, let pointIndex=index" [formGroupName]="pointIndex">
+                  <input type="file" name='imagen{{pointIndex}}' formControlName="imagen" (change)="cambiaImagen($event,pointIndex)">
+                  <input type="radio" id="principal"  name="principal" value="imagen{{pointIndex}}" (click)="cambiarFotoPrincipal(pointIndex)"> Foto principal
+                </div>
+                 <a class="btn btn-link" (click)="addImagen()">Añadir imagen</a>
+              </div>
+            <button class="btn btn-primary btn-block" [disabled]="!form1.valid" type ="submit" >Insertar</button>
+        </div>
+        </form>
+    </div>

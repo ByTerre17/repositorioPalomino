@@ -1,0 +1,27 @@
+<div class="caja">
+    <div class="card">
+        <div class="NombreNota"><h1 class="subtitulo">{{juego.nombre}}</h1><div class="nota">{{juego.nota}}</div></div><br>
+        <div class="card-body">
+            <span class="titulos"> Fecha de creacion:</span> {{juego.fechaDeLanzamiento}}<br>
+            <span class="titulos">Creador:</span> {{juego.creador}}<br>
+            <span class="titulos">Genero:</span> {{juego.genero}}<br>
+            <span class="titulos">Resumen:</span><br> <span class="resumen">-{{juego.resumen}}.</span><br>
+        </div>
+    </div>
+    <div class="cajaDeComentarios">
+    <div><h2 class="tituloCajaComentarios"><span class="titulos">Comentarios</span></h2></div>
+        <div class="comentario" *ngFor="let comentario of comentarios">
+            <h4 class="titulos">{{comentario.titulo}} {{comentario.nota}}</h4>
+            <span class="resumenComentario">{{comentario.texto}}</span>
+            <div class="botonEliminar"><button class="btn btn-success" (click)="eliminarComentario(comentario.id)" *ngIf="comprobarUsuario(comentario.idUsuario)" >Eliminar</button></div>
+        </div>
+    </div>
+    <div class="cajaInsertarComentario" *ngIf="logueado()">
+        <form [formGroup]='formComentario' (submit)='escribirComentario()'>
+            <span class="titulos">Titulo:</span><input type="text" class="form-control" formControlName='titulo' placeholder='escribe tu titulo'><br>
+            <span class="titulos">Texto:</span><input type="text" class="form-control" formControlName='texto' placeholder='escribe tu texto'><br>
+            <span class="titulos">Nota:</span><input type="text" class="form-control" formControlName='nota' placeholder='escribe tu nota'><br>
+            <button type='submit' class="btn btn-secondary" (click)="formComentario.patchValue({idUsuario:usuario.id});formComentario.patchValue({idJuego:juego.id})" [disabled]='!formComentario.valid'>Enviar comentario</button>
+        </form>
+    </div>
+</div>

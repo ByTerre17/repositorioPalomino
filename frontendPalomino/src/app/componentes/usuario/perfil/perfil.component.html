@@ -1,0 +1,32 @@
+<div class="caja">
+    <div class="titulo">
+        <h1 class="subtitulo">Bienvenido {{perfil.usuario}}</h1>
+    </div>
+    <div class="perfil">
+        <span class="subtitulo2">Datos de cuenta</span>
+        <div class="foto">
+            <img src='./assets/{{perfil.foto}}.jpg' width='100px'>
+        </div>
+        <span class="dato">Correo:{{perfil.email}}</span><br>
+        
+    </div>
+    <div class="perfil">
+        <button class="btn btn-warning" (click)='mostrarEditar=!mostrarEditar'>Editar usuario</button><br><br>
+        <button class="btn btn-danger" (click)='mostrarEliminar=!mostrarEliminar'>Eliminar usuario</button><br>
+    </div>
+    <div class="eliminarPerfil" *ngIf="mostrarEliminar">
+        <button class="btn btn-danger" (click)="eliminarPerfil()">Eliminar perfil</button>
+    </div>
+    <div class="perfil" *ngIf='mostrarEditar'>
+        <span class="subtitulo2">Modificar contraseña</span>
+        <form class="form-group" [formGroup]="form1" (submit)="submit()">
+            <label for="email">Contraseña antigua:</label>
+            <input class="form-control" type="text" placeholder="contraseña antigua" id="passwordAntigua" formControlName="passwordAntigua">
+            <label for="email">Contraseña nueva:</label>
+            <input class="form-control" type="text" placeholder="contraseña nueva" id="passwordNueva" formControlName="passwordNueva">
+            <label for="password">Repite la nueva contraseña:</label>
+            <input class="form-control" type="text" placeholder="Repite la contraseña" id="passwordNueva2" formControlName="passwordNueva2">
+            <button class="btn btn-primary btn-block" type ="submit" >Modificar contraseña</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,225 @@
+.caja{
+    padding: 100px;
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.nota{
+    display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+        align-content: stretch;
+        -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        color: white;
+        background-color: #61ff47;
+        font-weight: bold;
+        font-size: 2em;
+        border: 1px solid #000;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 15px;
+        padding-right: 15px;
+        border: 5px solid rgba(28,110,164,0.11);
+        border-radius: 40px 40px 40px 40px;
+        margin-left: 10px;
+}
+.NombreNota{
+        display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+        align-content: stretch;
+        -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        }
+
+.nombre{
+    border-bottom: solid black;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+
+.card{
+    padding: 20px;
+    margin: 20px;
+    border:solid black;
+}
+.card-body{
+    border: 1px solid #dfe6de;
+    border-radius: 26px 26px 26px 26px;
+    font-family: 'EB Garamond', serif;
+    font-size: 2em;
+}
+.titulos{
+    font-weight: bolder;
+}
+.resumen{
+    font-size: 0.5em;
+}
+.text-muted{
+    font-size: bold;
+}
+.display-4 , .subtitulo{
+    font-family: 'Shippori Mincho B1', serif;
+    color: #FFFFFF;
+    background: #b8b8b8;
+    text-shadow: 4px 3px 0 #7A7A7A;
+    font-size: 4em;
+}
+.display-4{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+.subtitulo{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    color: #444444;
+    background: #FFFFFF;
+    text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
+    color: #444444;
+    background: #FFFFFF;
+}
+.card-img-top{
+    background-image: url("https://www.google.es/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png");
+    min-width: 100px;
+    min-height: 200px;
+    background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.card-body{
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+.cajaDeComentarios{
+    margin: 10px;
+    background-color: white;
+    border: solid black;
+}
+.comentario{
+    margin: 20px;
+    padding: 10px;
+    background-color: rgb(201, 183, 183);
+    border: solid rgb(97, 92, 92);
+}
+.resumenComentario{
+    font-size: 1em;
+}
+.botonEliminar{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.tituloCajaComentarios{
+    padding: 10px;
+}
+.cajaInsertarComentario{
+    background-color: white;
+    border: solid black;
+    margin: 10px;
+    padding: 10px;
+}
+.perfil{
+    background-color: white;
+    border: solid black;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+}
+.dato{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.subtitulo2{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    color: #444444;
+    background: #FFFFFF;
+    text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
+    color: #444444;
+    background: #FFFFFF;
+    font-size: 3em;
+}
