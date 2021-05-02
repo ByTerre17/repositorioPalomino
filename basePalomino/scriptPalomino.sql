@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-04-2021 a las 21:06:42
+-- Tiempo de generación: 02-05-2021 a las 21:19:56
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -35,20 +35,17 @@ CREATE TABLE `comentario` (
   `texto` varchar(255) NOT NULL,
   `nota` int(11) NOT NULL,
   `idJuego` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL
+  `idUsuario` int(11) NOT NULL,
+  `likes` int(11) NOT NULL DEFAULT 0,
+  `dislikes` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `comentario`
 --
 
-INSERT INTO `comentario` (`id`, `titulo`, `texto`, `nota`, `idJuego`, `idUsuario`) VALUES
-(2, 'Prueba', '<h1>Tremendisimo</h1>', 10, 1, 1),
-(5, 'Maravilloso ', 'El mejejor juego que existira jamas me ha encantado.', 9, 3, 1),
-(8, 'Maravilloso ', 'El mejejor juego que existira jamas me ha encantado.', 5, 3, 1),
-(9, 'Prueba', '<h1>Tremendisimo</h1>', 2, 1, 1),
-(10, 'Pewersfsdf', 'asddasdada', 7, 1, 8),
-(11, 'asdasd', 'asdasdad', 7, 1, 3);
+INSERT INTO `comentario` (`id`, `titulo`, `texto`, `nota`, `idJuego`, `idUsuario`, `likes`, `dislikes`) VALUES
+(14, 'Genial', 'sfsdfsfsd', 7, 34, 3, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -80,12 +77,12 @@ CREATE TABLE `imagenes` (
 --
 
 INSERT INTO `imagenes` (`id`, `direccion`, `idJuego`, `principal`) VALUES
-(13, 'http://localhost/backendphp/images/p-Juego de prueba-0.jpg', 17, 0),
-(14, 'http://localhost/backendphp/images/p-Juego de prueba-1.jpg', 17, 1),
-(27, 'http://localhost/backendphp/images/p-Juego de prueba 2-0.jpg', 31, 0),
-(28, 'http://localhost/backendphp/images/p-Juego de prueba 2-1.jpg', 31, 1),
-(29, 'http://localhost/backendphp/images/p-Juego de prueba 3-0.jpg', 32, 0),
-(30, 'http://localhost/backendphp/images/p-Juego de prueba 4-0.jpg', 33, 1);
+(27, 'http://localhost/backendPalomino/images/p-Juego de prueba 2-0.jpg', 31, 0),
+(28, 'http://localhost/backendPalomino/images/p-Juego de prueba 2-1.jpg', 31, 1),
+(46, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-0.jpg', 32, 0),
+(48, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-1.jpg', 32, 0),
+(49, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-2.jpg', 32, 0),
+(50, 'http://localhost/backendPalomino/images/p-Juego de prueba 5-0.jpg', 34, 1);
 
 -- --------------------------------------------------------
 
@@ -113,10 +110,30 @@ CREATE TABLE `juego` (
 --
 
 INSERT INTO `juego` (`id`, `nombre`, `fechaDeLanzamiento`, `comprar`, `edad`, `creador`, `genero`, `numeroDeJugadores`, `fechaDePublicacion`, `imagen`, `nota`, `resumen`) VALUES
-(17, 'Juego de prueba', '2021-04-24', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-24', '13', 9, 'dsfsdfsdfsdfsd'),
 (31, 'Juego de prueba 2', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-25', '28', 8, 'dsfsdfsdfsdfsd'),
-(32, 'Juego de prueba 3', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-25', '29', 8, 'dsfsdfsdfsdfsd'),
-(33, 'Juego de prueba 4', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-25', '30', 8, 'dsfsdfsdfsdfsd');
+(32, 'Juego de prueba 3', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-25', '49', 8, 'dsfsdfsdfsdfsd'),
+(34, 'Juego de prueba 5', '2021-05-01', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-05-01', '50', 7, 'dsfsdfsdfsdfsd');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `likedislike`
+--
+
+CREATE TABLE `likedislike` (
+  `id` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `idComentario` int(11) NOT NULL,
+  `opinion` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `likedislike`
+--
+
+INSERT INTO `likedislike` (`id`, `idUsuario`, `idComentario`, `opinion`) VALUES
+(13, 3, 14, 'like'),
+(14, 2, 14, 'like');
 
 -- --------------------------------------------------------
 
@@ -185,6 +202,12 @@ ALTER TABLE `juego`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `likedislike`
+--
+ALTER TABLE `likedislike`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -205,7 +228,7 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `generojuegos`
@@ -217,13 +240,19 @@ ALTER TABLE `generojuegos`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `juego`
 --
 ALTER TABLE `juego`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT de la tabla `likedislike`
+--
+ALTER TABLE `likedislike`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

@@ -15,6 +15,7 @@ export class VerJuegoComponent implements OnInit {
   idJuego: any
   juegos: any[] = []
   juego: any
+  votado: Boolean = false
   logueado: any = this.servicioUsuarios.isLogged
   comentarios:any
   urlActiva: any
@@ -112,6 +113,47 @@ export class VerJuegoComponent implements OnInit {
     )
   }
 }
+
+likeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,indice:number): void{
+  if(this.servicioUsuarios.isLogged()){
+    var formData = new FormData()
+    formData.append("idComentario",idComentario)
+    formData.append("idUsuario",this.usuario.id)
+  this.servicioComentarios.likeComentario(formData).subscribe(
+    respuesta => {
+      console.log(respuesta)
+      if(respuesta=="true"){
+        window.location.reload();
+      }
+      else if(respuesta=="mod"){
+        window.location.reload();
+      }
+    },
+    error => console.log(error)
+  )
+}
+}
+
+dislikeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,indice:number): void{
+  if(this.servicioUsuarios.isLogged()){
+    var formData = new FormData()
+    formData.append("idComentario",idComentario)
+    formData.append("idUsuario",this.usuario.id)
+  this.servicioComentarios.dislikeComentario(formData).subscribe(
+    respuesta => {
+      console.log(respuesta)
+      if(respuesta=="true"){
+        window.location.reload();
+      }
+      else if(respuesta=="mod"){
+        window.location.reload();
+      }
+    },
+    error => console.log(error)
+  )
+}
+}
+
   comprobarUsuario(idRespuestaUsuario:any): boolean{
     let igual = false
     if(this.servicioUsuarios.isLogged()){

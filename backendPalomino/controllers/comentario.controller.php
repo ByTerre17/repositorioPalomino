@@ -26,8 +26,33 @@ class ComentarioController {
       $eval = "SELECT * FROM comentario where idJuego=?";
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$id]);
-      $resultado = $peticion->fetchAll(PDO::FETCH_OBJ);
-      exit(json_encode($resultado));
+      $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
+      
+      
+      $eval = "SELECT likedislike.idComentario,  count(likedislike.opinion) AS dislikes FROM likedislike WHERE opinion = 'dislike' GROUP BY likedislike.idComentario";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $dislikes = $peticion->fetchAll(PDO::FETCH_OBJ);
+      
+      $eval = "SELECT likedislike.idComentario,  count(likedislike.opinion) AS likes FROM likedislike WHERE opinion = 'like' GROUP BY likedislike.idComentario";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $likes = $peticion->fetchAll(PDO::FETCH_OBJ);
+      
+      foreach ($comentarios as $comentario){
+          foreach ($likes as $like){
+              if($comentario->id == $like->idComentario){
+                  $comentario->likes = $like->likes;
+              }
+          }
+          foreach ($dislikes as $dislike){
+              if($comentario->id == $dislike->idComentario){
+                  $comentario->dislikes = $dislike->dislikes;
+              }
+          }
+      }
+      exit(json_encode($comentarios));
+      
     
   }
 
@@ -72,5 +97,62 @@ class ComentarioController {
       http_response_code(401);
       exit(json_encode(["error" => "No puedes eliminar un mensaje que no es tuyo"]));            
     }
+  }
+  
+  public function likeComentario() {
+      $idUsuario=$_POST['idUsuario'];
+      $idComentario=$_POST['idComentario'];
+      
+      $eval = "SELECT * FROM likedislike WHERE idUsuario = ? and idComentario = ?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$idUsuario,$idComentario]);
+      $resultado = $peticion->fetchObject();
+      if(empty($resultado)){
+        $eval = "INSERT INTO likedislike (idUsuario,idComentario,opinion) VALUES (?,?,?)";
+        $peticion = $this->db->prepare($eval);
+        $resultado = $peticion->execute([$idUsuario,$idComentario,"like"]);
+        exit(json_encode("true"));
+      }
+      else if(!empty($resultado)){
+          if($resultado->opinion=="like"){
+              exit(json_encode("repetido"));
+          }
+          else if($resultado->opinion=="dislike"){
+            $eval = "UPDATE likedislike SET opinion='like' where idUsuario = ? and idComentario = ?";
+            $peticion = $this->db->prepare($eval);
+            $resultado = $peticion->execute([$idUsuario,$idComentario]);
+            exit(json_encode("mod"));
+          }
+          
+      }
+      
+  }
+  
+  public function dislikeComentario() {
+      $idUsuario=$_POST['idUsuario'];
+      $idComentario=$_POST['idComentario'];
+      $eval = "SELECT * FROM likedislike WHERE idUsuario = ? and idComentario = ?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$idUsuario,$idComentario]);
+      $resultado = $peticion->fetchObject();
+      if(empty($resultado)){
+        $eval = "INSERT INTO likedislike (idUsuario,idComentario,opinion) VALUES (?,?,?)";
+        $peticion = $this->db->prepare($eval);
+        $resultado = $peticion->execute([$idUsuario,$idComentario,"dislike"]);
+        exit(json_encode("true"));
+      }
+      else if(!empty($resultado)){
+          if($resultado->opinion=="dislike"){
+              exit(json_encode("repetido"));
+          }
+          else if($resultado->opinion=="like"){
+            $eval = "UPDATE likedislike SET opinion='dislike' where idUsuario = ? and idComentario = ?";
+            $peticion = $this->db->prepare($eval);
+            $resultado = $peticion->execute([$idUsuario,$idComentario]);
+            exit(json_encode("mod"));
+          }
+          
+      }
+      
   }
 }

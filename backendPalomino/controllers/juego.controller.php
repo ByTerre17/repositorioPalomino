@@ -239,10 +239,9 @@ class JuegoController {
     $juego = json_decode($_POST['juego']);
     
     $idJuego = $_POST['idJuego'];
-    $imagenPrincipal=$_POST['imagenPrincipal'];
     $idImagenPrincipal;
     $principalVieja=$_POST['principalVieja'];
-    $cantidadDeImagenes = $juego->cantidadImagenes-1;
+    $cantidadDeImagenes = $_POST['cantidadImagenesNuevas'];
     $cantidadImagenesMantenidas=$_POST['cantidadImagenesMantenidas'];
     $imagenes = [];
     $imagenesAntiguas = [];
@@ -256,24 +255,73 @@ class JuegoController {
     
     for($i=0;$i<$cantidadDeImagenes;$i++){
         if(isset($_FILES['imagen'.$i])){
-            $imagenes[$i]=$_FILES['imagen'.$i];
+            $imagenes[]=$_FILES['imagen'.$i];
         }
     }
+//    $prueba=count();
+
+    
+    
     for($i=0;$i<$cantidadImagenesMantenidas;$i++){
-        if(isset($_FILES['imagenMantenida'.$i])){
-            $imagenesAntiguas[$i]=$_FILES['imagen'.$i];
+        if(isset($_POST['imagenMantenida'.$i])){
+            $imagenesAntiguas[]=$_POST['imagenMantenida'.$i];
         }
     }
-    if($principalVieja=="false"){
+
+    if($principalVieja=="false" && $cantidadDeImagenes=!0){
+        $imagenPrincipal=$_FILES['imagenPrincipal'];
         $imagenes[]=$imagenPrincipal;
     }
+        
+        
+    if($principalVieja=="true"){
+        $imagenPrincipal=$_POST['imagenPrincipal'];;
+        $imagenesAntiguas[]=$_POST['imagenPrincipal'];
+    }
+    
     
     $eval = "update juego set nombre=?, fechaDeLanzamiento=?, comprar=?, edad=?, creador=?, genero=?, numeroDeJugadores=?, nota=?, resumen=? where id = ?";
     $peticion = $this->db->prepare($eval);
     $peticion->execute([$juego->nombre,$juego->fechaDeLanzamiento,$juego->comprar,$juego->edad,$juego->creador,$juego->genero,$juego->numeroDeJugadores,$juego->nota,$juego->resumen,$idJuego]);   
     
-    for($i=0;$i<=(count($imagenes));$i++){
-        if($i=$imagenPrincipal && $principalVieja=="false"){
+        
+    
+        $consulta = "SELECT id, direccion FROM imagenes WHERE imagenes.idJuego = ?";
+        $peticion = $this->db->prepare($consulta);
+        $peticion->execute([$idJuego]);
+        $imagenesExistentes = $peticion->fetchAll(PDO::FETCH_OBJ);
+        $imagenesEliminar = [];
+        
+        for($i=0;$i<sizeof($imagenesExistentes);$i++){
+            $existe="false";
+            for($x=0;$x<$cantidadImagenesMantenidas;$x++){
+                if($imagenesAntiguas[$x]==$imagenesExistentes[$i]->id){
+                    $existe="true";
+                }
+            }
+            if($existe=="false"){
+                $imagenesEliminar[]=$imagenesExistentes[$i];
+            }
+        }
+        
+
+        
+        for($i=0;$i<sizeof($imagenesEliminar);$i++){
+            $consulta = "delete FROM imagenes WHERE imagenes.id = ?";
+            $peticion = $this->db->prepare($consulta);
+            $peticion->execute([$imagenesEliminar[$i]->id]);
+            
+            $imgFile = glob($imagenesEliminar[$i]->direccion);
+            foreach($imgFile as $fichero) unlink($fichero);
+            
+        }
+    
+    
+    
+    
+    
+    for($i=0;$i<(count($imagenes)) && $cantidadDeImagenes=!0 ;$i++){
+        if($i==$imagenPrincipal && $principalVieja=="false"){
             
             $imagen = $imagenes[$i];
             $mime = $imagen['type'];
@@ -285,7 +333,7 @@ class JuegoController {
                 exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
             } else {
                 $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-                $nombreImagen = "p-".$juego->nombre."-".$i.$ext;
+                $nombreImagen = "p-".$juego->nombre."-".$cantidadImagenesMantenidas+$i.$ext;
                 $ruta = ROOT."images/".$nombreImagen;
                 
                 $imgFind = $ruta;
@@ -308,12 +356,12 @@ class JuegoController {
                 
                 $eval = "UPDATE juego SET imagen=? WHERE id=?";
                 $peticion = $this->db->prepare($eval);
-                $peticion->execute([$idImagen->id,$idJuego]);
+                $peticion->execute([$idImagen,$idJuego]);
                 
                 }
             }    
         }
-        else{
+        elseif($i!=$imagenPrincipal && $principalVieja=="false"){
             $imagen = $imagenes[$i];
             $mime = $imagen['type'];
             $size = $imagen['size'];
@@ -325,7 +373,7 @@ class JuegoController {
                 exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
             } else {
                 $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-                $nombreImagen = "p-".$juego->nombre."-".$i.$ext;
+                $nombreImagen = "p-".$juego->nombre."-".$cantidadImagenesMantenidas+$i.$ext;
                 $ruta = ROOT."images/".$nombreImagen;
                 
                 $imgFind = $ruta;
@@ -348,42 +396,14 @@ class JuegoController {
                 
                 $eval = "UPDATE juego SET imagen=? WHERE id=?";
                 $peticion = $this->db->prepare($eval);
-                $peticion->execute([$idImagen->id,$idJuego->id]);
+                $peticion->execute([$idImagen->id,$idJuego]);
                 }
             }
         }
     }
-        $consulta = "SELECT id, direccion FROM imagenes WHERE imagenes.idJuego = ?";
-        $peticion = $this->db->prepare($consulta);
-        $peticion->execute([$idJuego]);
-        $imagenesExistentes = $peticion->fetchAll(PDO::FETCH_OBJ);
-        $imagenesEliminar = [];
-        
-        for($i=0;$i<sizeof($imagenesExistentes);$i++){
-            $existe="false";
-            for($x=0;$x<$cantidadDeImagenesMantenidas;$x++){
-                if($imagenesAntiguas[$x]==$imagenesExistentes[$i]){
-                    $existe="true";
-                }
-            }
-            if($existe=="false"){
-                $imagenesEliminar[]=$imagenesExistentes[$i];
-            }
-        }
-        
 
         
-        for($i=0;$i<sizeof($imagenesEliminar);$i++){
-            $consulta = "delete FROM imagenes WHERE imagenes.id = ?";
-            $peticion = $this->db->prepare($consulta);
-            $peticion->execute([$imagenesEliminar[$i]->id]);
-            
-            $imgFile = glob($imagenesEliminar[$i]->direccion);
-            foreach($imgFile as $fichero) unlink($fichero);
-            
-        }
-        
-        if($principalVieja="true"){
+        if($principalVieja=="true"){
             $eval = "UPDATE juego SET imagen=? WHERE id=?";
             $peticion = $this->db->prepare($eval);
             $peticion->execute([$imagenPrincipal,$idJuego]);

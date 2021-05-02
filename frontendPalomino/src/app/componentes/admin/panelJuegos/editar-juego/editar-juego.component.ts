@@ -34,17 +34,38 @@ export class EditarJuegoComponent implements OnInit {
     resumen:['', [Validators.required]]
 
   })
+  usuario: any;
   
   constructor(private ruta: ActivatedRoute,private fb:FormBuilder, private servicioUsuario:UsuariosService, private irHacia:Router,private serviciojuego:JuegosService,) {
 
    }
 
   ngOnInit(): void {
+    this.cargarUsuario()
     this.idJuego = this.ruta.snapshot.paramMap.get("id")
     this.obtenerJuego()
     this.obtenerImagenesJuego()
     
   }
+
+  cargarUsuario(): void{
+    if(this.servicioUsuario.isLogged()){
+    this.servicioUsuario.obtenerPerfil().subscribe(
+      respuesta => {
+        console.log(respuesta)
+        this.usuario = respuesta
+        if(this.usuario.rol!="admin"){
+          this.irHacia.navigate([''])
+        }
+      },
+      error => console.log(error)
+    )
+    }
+    else{
+      this.irHacia.navigate([''])
+    }
+  }
+
   meteImagen(evento: any,indice:any): void{
     if(evento.target.files){
       this.imagen[indice] =evento.target.files[0]
@@ -146,23 +167,27 @@ export class EditarJuegoComponent implements OnInit {
       nombre="imagen"+indice
       if(indice==this.imagenPrincipal && this.imagenPrincipalAntigua==false){
         nombre="imagenPrincipal"
-        formData.append(nombre, indice+"")
+        formData.append(nombre, this.imagen[indice])
       }
       else{
         formData.append(nombre, this.imagen[indice])
       }
     }
 
-    if(this.imagenesMantenidas.length==0){
-      for(let indice = 0;indice<=this.imagenesMantenidas.length;indice++){
+    if(this.imagenesMantenidas.length!=0){
+      for(let indice = 0;indice<this.imagenesMantenidas.length;indice++){
         let nombre
         nombre="imagenMantenida"+indice
-        if(this.imagenesMantenidas[indice]=this.imagenPrincipal && this.imagenPrincipalAntigua==true){
+        if(this.imagenesMantenidas[indice]==this.imagenPrincipal && this.imagenPrincipalAntigua==true){
           nombre="imagenPrincipal"
+          
           formData.append(nombre, this.imagenesMantenidas[indice])
+          
         }
         else{
+          console.log(this.imagenesMantenidas[indice]+"dsfsf")
           formData.append(nombre, this.imagenesMantenidas[indice])
+          console.log(nombre)
         }
       }
     }
@@ -170,7 +195,8 @@ export class EditarJuegoComponent implements OnInit {
     if(this.imagenPrincipalAntigua==true){
       formData.append("imagenPrincipal", this.imagenPrincipal)
     }
-
+    console.log(this.imagen.length+"")
+    formData.append('cantidadImagenesNuevas',this.imagen.length+"" )
     formData.append('idJuego', this.juego.id)
     formData.append('principalVieja', this.imagenPrincipalAntigua+"")
     console.log(this.imagenesMantenidas.length)

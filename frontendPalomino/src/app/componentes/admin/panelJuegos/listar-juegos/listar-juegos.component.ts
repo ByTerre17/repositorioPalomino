@@ -12,13 +12,31 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 export class ListarJuegosComponent implements OnInit {
   juegos: any[] = []
   logueado:any
+  usuario: any;
   constructor(private fb:FormBuilder,private servicioJuegos:JuegosService,private servicioUsuarios:UsuariosService, private irHacia:Router) { }
 
   ngOnInit(): void {
+    this.cargarUsuario()
     this.logueado= this.servicioUsuarios.isLogged
     this.obtenerJuegos()
   }
-
+  cargarUsuario(): void{
+    if(this.servicioUsuarios.isLogged()){
+    this.servicioUsuarios.obtenerPerfil().subscribe(
+      respuesta => {
+        console.log(respuesta)
+        this.usuario = respuesta
+        if(this.usuario.rol!="admin"){
+          this.irHacia.navigate([''])
+        }
+      },
+      error => console.log(error)
+    )
+    }
+    else{
+      this.irHacia.navigate([''])
+    }
+  }
 
   eliminarJuego(idJuego:number): void{
     if(this.servicioUsuarios.isLogged()){

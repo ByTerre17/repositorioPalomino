@@ -28,10 +28,28 @@ export class InsertarJuegosComponent implements OnInit {
     resumen:['', [Validators.required]]
 
   })
+  usuario: any;
   constructor(private fb:FormBuilder, private servicioUsuario:UsuariosService, private irHacia:Router,private serviciojuego:JuegosService,) { }
 
   ngOnInit(): void {
-    
+    this.cargarUsuario()
+  }
+  cargarUsuario(): void{
+    if(this.servicioUsuario.isLogged()){
+    this.servicioUsuario.obtenerPerfil().subscribe(
+      respuesta => {
+        console.log(respuesta)
+        this.usuario = respuesta
+        if(this.usuario.rol!="admin"){
+          this.irHacia.navigate([''])
+        }
+      },
+      error => console.log(error)
+    )
+    }
+    else{
+      this.irHacia.navigate([''])
+    }
   }
   cambiaImagen(evento: any,indice:any): void{
     if(evento.target.files){

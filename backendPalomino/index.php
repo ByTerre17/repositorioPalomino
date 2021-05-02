@@ -36,7 +36,7 @@ define('CJWT', $bd->getClave());
 $control = explode('/',$url);
 switch($control[0]) {
 
-  case "user":
+  case "usuario":
     require_once("controllers/user.controller.php");
     $controladorUsuarios = new UserController($conexion);
     switch(METODO) {
@@ -52,7 +52,12 @@ switch($control[0]) {
             break;
         }
         break;
-
+        case "DELETE":
+        switch($control[1]) {
+          case "eliminarUsuario":
+            $controladorUsuarios->eliminarUser();
+            break;
+        }
       case "POST":
         switch($control[1]) {
           case "login":
@@ -73,9 +78,7 @@ switch($control[0]) {
         $controladorUsuarios->editarPassword();
         break;
 
-      case "DELETE":
-        $controladorUsuarios->eliminarUser();
-        break;
+
 
       default: exit(json_encode(["Bienvenido al Backend con routes"]));  
     }  
@@ -99,10 +102,15 @@ switch($control[0]) {
           case "listarXJuegosPorFechaNuevos":
             $controladorJuegos->listarXJuegosPorFechaNuevos($control[2]);
             break;
-        
         }
 
-      case "POST":
+      case "DELETE":
+        switch($control[1]) {
+          case "eliminarJuego":
+            $controladorJuegos->eliminarJuego($control[2]);
+            break;
+        }
+    case "POST":
           switch($control[1]) {
           case "crearJuego":
         $controladorJuegos->crearJuego();
@@ -121,9 +129,7 @@ switch($control[0]) {
         
         }
 
-      case "DELETE":
-        $controladorJuegos->eliminarJuego($control[1]);
-        break;
+      
 
       default: exit(json_encode(["Bienvenido al Backend con routes"]));
     }
@@ -144,21 +150,34 @@ switch($control[0]) {
           case "ver":
             $controladorJuegos->verJuego($control[2]);
             break;
+          case "likesDislikes":
+            $controladorJuegos->verJuego($control[2]);
+            break;
         }
-
-      case "POST":
-        $controladorComentarios->crearComentario();
-        break;
-
+        case "DELETE":
+        switch($control[1]) {
+          case "eliminarComentario":
+            $controladorComentarios->eliminarComentario($control[2],$control[3]);
+            break;
+        } 
+    
+        case "POST":
+        switch($control[1]) {
+          case "crearComentario":
+            $controladorComentarios->crearComentario();
+            break;
+          case "like":
+            $controladorComentarios->likeComentario();
+            break;
+          case "dislike":
+            $controladorComentarios->dislikeComentario();
+            break;
+          }
 //      case "PUT":
 //        $controladorJuegos->editarJuego();
 //        break;
 
-      case "DELETE":
-        $controladorComentarios->eliminarComentario($control[1],$control[2]);
-        break;
-
-      default: exit(json_encode(["Bienvenido al Backend con routes"]));
+      
     }
     break;
 

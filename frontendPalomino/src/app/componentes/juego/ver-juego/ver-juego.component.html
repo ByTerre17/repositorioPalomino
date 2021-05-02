@@ -10,10 +10,13 @@
     </div>
     <div class="cajaDeComentarios">
     <div><h2 class="tituloCajaComentarios"><span class="titulos">Comentarios</span></h2></div>
-        <div class="comentario" *ngFor="let comentario of comentarios">
-            <h4 class="titulos">{{comentario.titulo}} {{comentario.nota}}</h4>
+        <div class="comentario" *ngFor="let comentario of comentarios, let indice=index">
+            <h4 class="titulos">{{comentario.titulo}} {{comentario.nota}} </h4>
+            Likes: {{comentario.likes}} Dislikes: {{comentario.dislikes}}<br>
             <span class="resumenComentario">{{comentario.texto}}</span>
             <div class="botonEliminar"><button class="btn btn-success" (click)="eliminarComentario(comentario.id)" *ngIf="comprobarUsuario(comentario.idUsuario)" >Eliminar</button></div>
+            <div class="botonLike"><button class="btn btn-success" (click)="likeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Like</button></div>
+            <div class="botondislike"><button class="btn btn-success" (click)="dislikeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Dislike</button></div>
         </div>
     </div>
     <div class="cajaInsertarComentario" *ngIf="logueado()">
