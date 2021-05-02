@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { accesoUsuario, Usuario } from '../clases/usuario';
 import { Observable } from 'rxjs';
-const url = 'http://localhost/backendphp/user/';
+const url = 'http://localhost/backendPalomino/usuario/'
+//const url = 'http://localhost/backendphp/juego/'
 @Injectable({
   providedIn: 'root'
 })
@@ -32,7 +33,7 @@ export class UsuariosService {
   }
 
   eliminarUsuario(): Observable<any>{
-    return this.http.delete(url)
+    return this.http.delete(url+"eliminarUsuario")
   }
   editarPassword(usuario:Usuario): Observable<any>{
     return this.http.put(url, usuario)

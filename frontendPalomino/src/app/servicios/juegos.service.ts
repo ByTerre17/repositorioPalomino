@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
-const url = 'http://localhost/backendphp/juego/'
+const url = 'http://localhost/backendPalomino/juego/'
+//const url = 'http://localhost/backendphp/juego/'
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +29,7 @@ export class JuegosService {
   }
   
   eliminarJuego(id: any): Observable<any>{
-    return this.http.delete(url+id)
+    return this.http.delete(url+"eliminarJuego/"+id)
   }
 
   listarJuegos(): Observable<any>{
