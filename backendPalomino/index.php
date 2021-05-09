@@ -44,9 +44,10 @@ switch($control[0]) {
         switch($control[1]) {
           case "list":
             $controladorUsuarios->listarUser();
+            break;         
+          case "comprobarCodigoRecuperacion":
+            $controladorUsuarios->comprobarCodigo($control[2]);
             break;
-                        
-            
           case "":
             $controladorUsuarios->leerPerfil();
             break;
@@ -63,6 +64,10 @@ switch($control[0]) {
           case "login":
             $controladorUsuarios->hacerLogin();
             break;
+          case "editarPasswordRecuperar":
+            $controladorUsuarios->editarPasswordRecuperar();
+            break;
+        
           case "image":
             $controladorUsuarios->subirAvatar();
             break;
@@ -92,6 +97,15 @@ switch($control[0]) {
         switch($control[1]) {
           case "list":
             $controladorJuegos->listarJuegos();
+            break;
+          case "listGeneros":
+            $controladorJuegos->listarGeneros();
+            break;
+          case "listPlataformas":
+            $controladorJuegos->listarPlataformas();
+            break;
+        case "listVideos":
+            $controladorJuegos->listarVideos($control[2]);
             break;
           case "ver":
             $controladorJuegos->verJuego($control[2]);
@@ -143,16 +157,22 @@ switch($control[0]) {
           case "list":
             $controladorComentarios->listarComentarios();
             break;
-        
+          case "listReportes":
+            $controladorComentarios->listarReportes();
+            break;
+          case "obtenerComentarios":
+            $controladorComentarios->listarComentarios($control[2]);
+            break;
           case "listPorJuego":
             $controladorComentarios->listarComentariosPorJuego($control[2]);
             break;
-          case "ver":
-            $controladorJuegos->verJuego($control[2]);
+          case "obtenerComentario":
+            $controladorComentarios->obtenerComentario($control[2]);
             break;
-          case "likesDislikes":
-            $controladorJuegos->verJuego($control[2]);
+        case "obtenerReporte":
+            $controladorComentarios->obtenerReporte($control[2]);
             break;
+          
         }
         case "DELETE":
         switch($control[1]) {
@@ -166,12 +186,22 @@ switch($control[0]) {
           case "crearComentario":
             $controladorComentarios->crearComentario();
             break;
+        case "crearReporte":
+            $controladorComentarios->crearReporte();
+            break;
           case "like":
             $controladorComentarios->likeComentario();
             break;
           case "dislike":
             $controladorComentarios->dislikeComentario();
             break;
+          case "eliminarComentarioAdmin":
+            $controladorComentarios->eliminarComentarioAdmin();
+            break;
+          case "eliminarReporte":
+            $controladorComentarios->eliminarReporte();
+            break;
+        
           }
 //      case "PUT":
 //        $controladorJuegos->editarJuego();

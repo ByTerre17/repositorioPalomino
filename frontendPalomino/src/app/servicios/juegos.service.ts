@@ -35,6 +35,15 @@ export class JuegosService {
   listarJuegos(): Observable<any>{
     return this.http.get(url+'list/')
   }
+  listarGeneros(): Observable<any>{
+    return this.http.get(url+'listGeneros/')
+  }
+  listarVideos(idJuego:number): Observable<any>{
+    return this.http.get(url+'listVideos/'+idJuego)
+  }
+  listarPlataformas(): Observable<any>{
+    return this.http.get(url+'listPlataformas/')
+  }
 
   listarXJuegosNuevos(cantidad:number): Observable<any>{
     return this.http.get(url+'listarXJuegosPorFechaNuevos/'+cantidad)

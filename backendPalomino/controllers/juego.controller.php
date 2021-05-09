@@ -13,7 +13,7 @@ class JuegoController {
   public function listarJuegos() {
     $imagen;
       
-      $eval = "SELECT * FROM juego";
+      $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -22,11 +22,6 @@ class JuegoController {
       $peticion->execute();
       $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
       foreach ($juegos as $juego){
-        $eval = "SELECT direccion FROM imagenes where id = ?";
-        $peticion = $this->db->prepare($eval);
-        $peticion->execute([$juego->imagen]);
-        $imagen = $peticion->fetchObject();
-        $juego->imagen = $imagen->direccion;
         $juego->nota=$juego->nota*10;
         foreach ($medias as $media){
             if($media->id==$juego->id){
@@ -40,7 +35,7 @@ class JuegoController {
   
   public function listarXJuegosPorFechaNuevos($cantidad) {
     
-    $eval = "select * from juego order by juego.fechaDePublicacion desc limit ".$cantidad;
+    $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id ORDER BY fechaDePublicacion DESC LIMIT ".$cantidad;
     $peticion = $this->db->prepare($eval);
     $peticion->execute();
     $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -49,12 +44,6 @@ class JuegoController {
     $peticion->execute();
     $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
     foreach ($juegos as $juego){
-          
-        $eval = "SELECT direccion FROM imagenes where id = ?";
-        $peticion = $this->db->prepare($eval);
-        $peticion->execute([$juego->imagen]);
-        $imagen = $peticion->fetchObject();
-        $juego->imagen = $imagen->direccion;
         $juego->nota=$juego->nota*10;
         foreach ($medias as $media){
             if($media->id==$juego->id){
@@ -67,7 +56,7 @@ class JuegoController {
   }
 
   public function verJuego($id) {
-      $consulta = "SELECT * FROM juego WHERE id=?";
+      $consulta = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.id=? and juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
       $peticion = $this->db->prepare($consulta);
       $peticion->execute([$id]);
       $juego = $peticion->fetchObject();
@@ -77,16 +66,7 @@ class JuegoController {
         $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
         $peticion = $this->db->prepare($eval);
         $peticion->execute();
-        $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
-        
-        $eval = "SELECT direccion FROM imagenes where id = ?";
-        $peticion = $this->db->prepare($eval);
-        $peticion->execute([$juego->imagen]);
-        $imagen = $peticion->fetchObject();
-        $juego->imagen = $imagen->direccion;
-        
-        
-        
+        $medias = $peticion->fetchAll(PDO::FETCH_OBJ);      
         
         $juego->nota=$juego->nota*10;
         foreach ($medias as $media){
@@ -108,12 +88,36 @@ class JuegoController {
         $imagenes = $peticion->fetchAll(PDO::FETCH_OBJ);
         exit(json_encode($imagenes));
      }
+     
+     public function listarGeneros() {
+        $eval = "SELECT * FROM genero";
+        $peticion = $this->db->prepare($eval);
+        $peticion->execute();
+        $generos = $peticion->fetchAll(PDO::FETCH_OBJ);
+        exit(json_encode($generos));
+     }
+     
+     public function listarPlataformas() {
+        $eval = "SELECT * FROM plataforma";
+        $peticion = $this->db->prepare($eval);
+        $peticion->execute();
+        $plataforma = $peticion->fetchAll(PDO::FETCH_OBJ);
+        exit(json_encode($plataforma));
+     }
     
+     public function listarVideos($idJuego) {
+        $eval = "SELECT * FROM videos where idJuego=?";
+        $peticion = $this->db->prepare($eval);
+        $peticion->execute([$idJuego]);
+        $videos = $peticion->fetchAll(PDO::FETCH_OBJ);
+        exit(json_encode($videos));
+     }
     
 
   public function crearJuego() {
     //Guardamos los parametros de la petición.
     $juego = json_decode($_POST['juego']);
+    $videos=$juego->videos;
     $idJuego;
     $idImagen;
     $imagenPrincipal=$_FILES['imagenPrincipal'];
@@ -123,7 +127,7 @@ class JuegoController {
     
     
     //Comprobamos que los datos sean consistentes.
-    if(!isset($juego->nombre) || !isset($juego->fechaDeLanzamiento) || !isset($juego->comprar) || !isset($juego->edad) || !isset($juego->creador) || !isset($juego->genero) || !isset($juego->numeroDeJugadores)    || !isset($juego->resumen) ) {
+    if(!isset($juego->nombre) || !isset($juego->fechaDeLanzamiento) || !isset($juego->comprar) || !isset($juego->edad) || !isset($juego->creador) || !isset($juego->genero) || !isset($juego->plataforma) || !isset($juego->numeroDeJugadores)    || !isset($juego->resumen) || !isset($videos) ) {
       http_response_code(400);
       exit(json_encode(["error" => "No se han enviado todos los parametros"]));
 
@@ -137,15 +141,22 @@ class JuegoController {
     
     $imagenes[]=$imagenPrincipal;
     
-    $eval = "INSERT INTO juego (nombre,fechaDeLanzamiento,comprar,edad,creador,genero,numeroDeJugadores,nota,resumen) VALUES (?,?,?,?,?,?,?,?,?)";
+    
+    
+    $eval = "INSERT INTO juego (nombre,fechaDeLanzamiento,comprar,edad,creador,genero,plataforma,numeroDeJugadores,nota,resumen) VALUES (?,?,?,?,?,?,?,?,?,?)";
     $peticion = $this->db->prepare($eval);
-    $peticion->execute([$juego->nombre,$juego->fechaDeLanzamiento,$juego->comprar,$juego->edad,$juego->creador,$juego->genero,$juego->numeroDeJugadores,$juego->nota,$juego->resumen]);
+    $peticion->execute([$juego->nombre,$juego->fechaDeLanzamiento,$juego->comprar,$juego->edad,$juego->creador,$juego->genero,$juego->plataforma,$juego->numeroDeJugadores,$juego->nota,$juego->resumen]);
     
     $consulta = "SELECT juego.id FROM juego WHERE juego.nombre = ? AND  juego.creador = ?";
     $peticion = $this->db->prepare($consulta);
     $peticion->execute([$juego->nombre,$juego->creador]);
     $idJuego = $peticion->fetchObject();
     
+    for($i=0;$i<(count($videos));$i++){
+        $eval = "INSERT INTO videos (idJuego,direccion) VALUES (?,?)";
+        $peticion = $this->db->prepare($eval);
+        $peticion->execute([$idJuego->id,$videos[$i]->video]);
+    }
     
     for($i=0;$i<(count($imagenes));$i++){
         if($imagenes[$i]['name']==$imagenPrincipal['name'] && $imagenes[$i]['size']==$imagenPrincipal['size']){
@@ -237,7 +248,7 @@ class JuegoController {
   public function editarJuego() {
     //Guardamos los parametros de la petición.
     $juego = json_decode($_POST['juego']);
-    
+    $videos=$juego->videos;
     $idJuego = $_POST['idJuego'];
     $idImagenPrincipal;
     $principalVieja=$_POST['principalVieja'];
@@ -247,7 +258,7 @@ class JuegoController {
     $imagenesAntiguas = [];
     
     //Comprobamos que los datos sean consistentes.
-    if(!isset($juego->nombre) || !isset($juego->fechaDeLanzamiento) || !isset($juego->comprar) || !isset($juego->edad) || !isset($juego->creador) || !isset($juego->genero) || !isset($juego->numeroDeJugadores)    || !isset($juego->resumen) ) {
+    if(!isset($juego->nombre) || !isset($juego->fechaDeLanzamiento) || !isset($juego->comprar) || !isset($juego->edad) || !isset($juego->creador) || !isset($juego->genero) || !isset($juego->numeroDeJugadores)     || !isset($videos) ) {
       http_response_code(400);
       exit(json_encode(["error" => "No se han enviado todos los parametros"]));
 
@@ -258,8 +269,6 @@ class JuegoController {
             $imagenes[]=$_FILES['imagen'.$i];
         }
     }
-//    $prueba=count();
-
     
     
     for($i=0;$i<$cantidadImagenesMantenidas;$i++){
@@ -277,6 +286,15 @@ class JuegoController {
     if($principalVieja=="true"){
         $imagenPrincipal=$_POST['imagenPrincipal'];;
         $imagenesAntiguas[]=$_POST['imagenPrincipal'];
+    }
+    $consulta = "delete from videos where idJuego=?";
+    $peticion = $this->db->prepare($consulta);
+    $peticion->execute([$idJuego]);
+    
+    for($i=0;$i<(count($videos));$i++){
+        $eval = "INSERT INTO videos (idJuego,direccion) VALUES (?,?)";
+        $peticion = $this->db->prepare($eval);
+        $peticion->execute([$idJuego,$videos[$i]->video]);
     }
     
     
@@ -410,7 +428,7 @@ class JuegoController {
         }
     
         
-            exit(json_encode("Juego creado"));
+            exit(json_encode("Juego editado"));
   
       }
       

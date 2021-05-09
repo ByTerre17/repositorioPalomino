@@ -1,0 +1,18 @@
+<div>
+    <h1>Reportar Comentario</h1>
+    <div>
+        Comentario
+        Titulo: {{comentario.titulo}}<br>
+        Texto: {{comentario.texto}}<br>
+        Nota: {{comentario.nota}}<br>
+    </div>
+    <div>
+        Reporte
+        Titulo: {{reporte.titulo}}<br>
+        Descripcion: {{reporte.descripcion}}
+    </div>
+    <div>
+        <button (click)="eliminarComentario()">Borrar Comentario</button>
+        <button (click)="eliminarReporte()">Borrar Reporte</button>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div>
+    <h1>Reportar Comentario</h1>
+    <div>
+        Titulo: {{comentario.titulo}}<br>
+        Texto: {{comentario.texto}}<br>
+        Nota: {{comentario.nota}}<br>
+    </div>
+    <form [formGroup]="form1" (submit)="submit()">
+        <input type="text" formControlName="titulo" placeholder="Titulo"><br>
+        <input type="text" formControlName="descripcion" placeholder="texto"><br>
+        <input type="submit">
+    </form>
+</div>
+

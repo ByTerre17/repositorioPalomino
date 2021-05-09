@@ -27,7 +27,21 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="genero">Genero:</label>
-                <input class="form-control" type="text" placeholder="genero" id="genero" formControlName="genero">
+                <select name="genero"  formControlName="genero">
+                  <option value="" disabled selected="selected">Elige un genero</option>
+                  <option *ngFor="let genero of generos" [ngValue]="genero.id">
+                    {{ genero.nombre }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="plataforma">Plataforma:</label>
+                <select name="plataforma"  formControlName="plataforma">
+                  <option value="" disabled selected="selected">Elige una plataforma</option>
+                  <option *ngFor="let plataforma of plataformas" [ngValue]="plataforma.id">
+                    {{ plataforma.nombre }}
+                  </option>
+                </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="numeroDeJugadores">Numero de jugadores:</label>
@@ -49,6 +63,15 @@
                   <input type="radio" id="principal"  name="principal" value="imagen{{pointIndex}}" (click)="cambiarFotoPrincipal(pointIndex)"> Foto principal
                 </div>
                  <a class="btn btn-link" (click)="addImagen()">Añadir imagen</a>
+                 <a class="btn btn-link" (click)="eliminarImagen()">Quitar imagen</a>
+              </div>
+              <div class="form-group col-md-6" formArrayName="videos">
+                <label for="video">Video:</label>
+                <div *ngFor="let item of getVideos.controls, let pointIndex=index" [formGroupName]="pointIndex">
+                  <input type="text" name='video{{pointIndex}}' formControlName="video">
+                </div>
+                 <a class="btn btn-link" (click)="addVideo()">Añadir video</a>
+                 <a class="btn btn-link" (click)="eliminarVideo()">Quitar video</a>
               </div>
             <button class="btn btn-primary btn-block" [disabled]="!form1.valid" type ="submit" >Insertar</button>
         </div>

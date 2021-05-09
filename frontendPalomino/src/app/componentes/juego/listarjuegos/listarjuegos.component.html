@@ -1,0 +1,48 @@
+<div class="caja" *ngIf="listoJuegos==true">
+    <table class="table">
+        <thead>
+            <h1>Listado de juegos</h1>
+            <tr><th><input type="text" class="form-control" name="buscador" placeholder="Search.." [(ngModel)]="buscador"></th></tr>
+            <div class="form-group col-md-6">
+                <label for="genero">Genero:</label>
+                <select name="genero" name="generoSeleccionado" [(ngModel)]="generoSeleccionado">
+                  <option value=""  selected="selected">Elige un genero</option>
+                  <option *ngFor="let genero of generos"   [ngValue]="genero.nombre">
+                    {{ genero.nombre }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="plataforma">Plataforma:</label>
+                <select name="plataforma" name="plataformaSeleccionada" [(ngModel)]="plataformaSeleccionada">
+                  <option value=""  selected="selected">Elige una plataforma</option>
+                  <option *ngFor="let plataforma of plataformas"  [ngValue]="plataforma.nombre">
+                    {{ plataforma.nombre }}
+                  </option>
+                </select>
+              </div>
+            <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Plataforma</th>
+            <th scope="col">Fecha de lanzamiento</th>
+            <th scope="col">Nota</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Ver juego</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let juego of juegos | buscar:buscador | filtroGenero:generoSeleccionado | filtroPlataforma:plataformaSeleccionada, let indice=index">
+            <th scope="row">{{indice}}</th>
+            <td>{{juego.nombre}}</td>
+            <td>{{juego.genero}}</td>
+            <td>{{juego.plataforma}}</td>
+            <td>{{juego.fechaDeLanzamiento}}</td>
+            <td>{{juego.nota}}</td>
+            <td><img src="{{juego.imagen}}" width="50px"></td>
+            <td><button (click)="verJuego(juego.id)" class="btn btn-info">Ver juego</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>

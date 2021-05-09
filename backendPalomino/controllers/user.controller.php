@@ -257,37 +257,24 @@ class UserController {
     }
   
     //Primero busca si existe el usuario, si existe que obtener el id y la password.
-    $peticion = $this->db->prepare("SELECT password FROM usuario WHERE email = ? AND usuario = ?");
+    $peticion = $this->db->prepare("SELECT * FROM usuario WHERE email = ? AND usuario = ?");
     $peticion->execute([$user->email,$user->usuario]);
     $resultado = $peticion->fetchObject();
   
     if($resultado) {
         $password=$resultado->password ;
-      
-        // Store the cipher method 
-        $ciphering = "AES-128-CTR"; 
-
-        $options = 0; 
-
-        // Non-NULL Initialization Vector for decryption 
-        $decryption_iv = '1234567891011121'; 
-
-        // Store the decryption key 
-        $decryption_key = "&Vf3oYx!oX8QQRKyZ@eV"; 
-
-        // Use openssl_decrypt() function to decrypt the data 
-        $password=openssl_decrypt ($password, $ciphering, 
-                        $decryption_key, $options, $decryption_iv); 
+        $fechaInicio=(date("H")).":".(date("i")).":".(date("s"));
+        $fechaFinal=(date("H")).":".(date("i")+15).":".(date("s"));
+        $codigoRecuperacion=time()*rand(1,1000);
+        $eval = "INSERT INTO codigorecuperación (idUsuario,fechaInicio,fechaFinal,codigoRecuperacion,usado) VALUES (?,?,?,?,?)";
+        $peticion = $this->db->prepare($eval);
+        $peticion->execute([$resultado->id,$fechaInicio,$fechaFinal,$codigoRecuperacion,0]);
         
-        $destinatario = $user->email;
-        $asunto = "Recuperar Contraseña";
-        $mensaje="La contraseña de su cuenta es " . $password;
-        
-        
+        $mensaje= "Hola usted ha solicitado un cambio de contraseña debido a que ha olvidado la misma, para cambiar la contraseña clicke el siguiente enlace ". 'http://localhost:4200/recuperarPassword2/'.$codigoRecuperacion;
         $email_user = "manuelproyecto484@gmail.com"; //Mi correo
         $email_password = "2FJVx7PRpy2zjXe"; //Pass de mi correo
-        $the_subject = $asunto;
-        $address_to = $destinatario;
+        $the_subject = "Recuperación de contraseña";
+        $address_to = $resultado->email;
         $from_name = "Prueba";
         $phpmailer = new PHPMailer();
         // ---------- datos de la cuenta de Gmail ---------------------
@@ -340,4 +327,44 @@ class UserController {
     }
   }
   
-}
+  public function comprobarCodigo($idCodigo) {
+      $fechaActual=(date("H")).":".(date("i")).":".(date("s"));
+      $eval = "SELECT * FROM codigoRecuperación where codigoRecuperacion = ?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$idCodigo]);
+      $codigoRecuperacion = $peticion->fetchObject();
+      if(!isset($codigoRecuperacion)){
+          exit(json_encode("noValido"));     
+      }
+      else {
+        if($fechaActual<$codigoRecuperacion->fechaFinal){
+          exit(json_encode("Valido"));   
+        }
+        else {
+            exit(json_encode("NoValido"));  
+        }
+      }
+  }
+  public function editarPasswordRecuperar() {
+      //Cogemos los valores de la peticion.
+      $password= $_POST['password'];
+      $idCodigo=$_POST['codigo'];
+      
+      if(!isset($password)) {
+      http_response_code(400);
+      exit(json_encode("Error"));
+      }
+      
+      $eval = "SELECT * FROM codigoRecuperación where codigoRecuperacion = ?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$idCodigo]);
+      $codigoRecuperacion = $peticion->fetchObject();
+
+      $nPassword = password_hash($password, PASSWORD_BCRYPT);
+      $eval = "UPDATE usuario SET password=? WHERE id=?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$nPassword,$codigoRecuperacion->idUsuario]);
+      http_response_code(201);
+      exit(json_encode("Usuario actualizado correctamente"));
+      }
+  }

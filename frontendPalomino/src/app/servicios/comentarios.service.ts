@@ -15,8 +15,16 @@ export class ComentariosService {
     return this.http.post(url+"/crearComentario", comentario)
   }
 
-  eliminarComentario(idJuego: any,idUsuario: any): Observable<any>{
-    return this.http.delete(url+"eliminarComentario/"+idJuego+"/"+idUsuario+"/")
+  eliminarComentario(idComentario: any,idUsuario: any): Observable<any>{
+    return this.http.delete(url+"eliminarComentario/"+idComentario+"/"+idUsuario+"/")
+  }
+
+  eliminarComentarioAdmin(idComentario: any): Observable<any>{
+    return this.http.post(url+"eliminarComentarioAdmin/",idComentario)
+  }
+
+  eliminarReporte(idReporte: any): Observable<any>{
+    return this.http.post(url+"eliminarReporte/",idReporte)
   }
 
   likeComentario(datos: any): Observable<any>{
@@ -27,9 +35,24 @@ export class ComentariosService {
     return this.http.post(url+"/dislike",datos)
   }
   
+  obtenerComentario(idComentario: number): Observable<any>{
+    return this.http.get(url+'obtenerComentario/'+idComentario)
+  }
+
+  obtenerReporte(idReporte: number): Observable<any>{
+    return this.http.get(url+'obtenerReporte/'+idReporte)
+  }
+  
+  crearReporte(reporte: any): Observable<any>{
+    return this.http.post(url+"/crearReporte", reporte)
+  }
 
   listarComentarios(): Observable<any>{
     return this.http.get(url+'list/')
+  }
+
+  listarReportes(): Observable<any>{
+    return this.http.get(url+'listReportes/')
   }
 
   listarComentariosPorJuego(idJuego: any): Observable<any>{

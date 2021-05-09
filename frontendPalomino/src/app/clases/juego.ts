@@ -6,6 +6,7 @@ export class Juego {
     edad?: String
     creador?: String
     genero?: String
+    plataforma?: String
     numeroDeJugadores?: String
     fechaDePublicacion?: Date
     imagen?: String

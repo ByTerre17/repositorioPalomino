@@ -18,11 +18,19 @@ import { VerJuegoComponent } from './componentes/juego/ver-juego/ver-juego.compo
 import { CrearJuegoComponent } from './componentes/juego/crear-juego/crear-juego.component';
 import { PanelComponent } from './componentes/admin/panel/panel.component';
 import { PanelUsuariosComponent } from './componentes/admin/panel-usuarios/panel-usuarios.component';
-import { PanelReportesComponent } from './componentes/admin/panel-reportes/panel-reportes.component';
+import { PanelReportesComponent } from './componentes/admin/panelReportes/panel-reportes/panel-reportes.component';
 import { ListarJuegosComponent } from './componentes/admin/panelJuegos/listar-juegos/listar-juegos.component';
 import { InsertarJuegosComponent } from './componentes/admin/panelJuegos/insertar-juegos/insertar-juegos.component';
 import { PanelJuegosComponent } from './componentes/admin/panelJuegos/panel-juegos/panel-juegos.component';
 import { EditarJuegoComponent } from './componentes/admin/panelJuegos/editar-juego/editar-juego.component';
+import { ListarReportesComponent } from './componentes/admin/panelReportes/listar-reportes/listar-reportes.component';
+import { ReportarComentarioComponent } from './componentes/comentario/reportar-comentario/reportar-comentario.component';
+import { VerReporteComponent } from './componentes/admin/panelReportes/ver-reporte/ver-reporte.component';
+import { RecuperarPassword2Component } from './componentes/usuario/recuperar-password2/recuperar-password2.component';
+import { ListarjuegosComponent } from './componentes/juego/listarjuegos/listarjuegos.component';
+import { BuscarPipe } from './pipes/buscar.pipe';
+import { FiltroGeneroPipe } from './pipes/filtro-genero.pipe';
+import { FiltroPlataformaPipe } from './pipes/filtro-plataforma.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +50,15 @@ import { EditarJuegoComponent } from './componentes/admin/panelJuegos/editar-jue
     PanelReportesComponent,
     ListarJuegosComponent,
     InsertarJuegosComponent,
-    EditarJuegoComponent
+    EditarJuegoComponent,
+    ListarReportesComponent,
+    ReportarComentarioComponent,
+    VerReporteComponent,
+    RecuperarPassword2Component,
+    ListarjuegosComponent,
+    BuscarPipe,
+    FiltroGeneroPipe,
+    FiltroPlataformaPipe
   ],
   imports: [
     BrowserModule,

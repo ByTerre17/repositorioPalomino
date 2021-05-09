@@ -20,10 +20,16 @@ export class UsuariosService {
     return this.http.post(url+'recuperarPassword', usuario)
   }
 
+  comprobarCodigo(codigo: any): Observable<any>{
+    return this.http.get(url+'comprobarCodigoRecuperacion/'+codigo)
+  }
+
   acceso (usuario: accesoUsuario): Observable<any>{
     return this.http.post(url+'login/', usuario)
   }
-
+  cambiarPasswordRecuperacion (datos: any): Observable<any>{
+    return this.http.post(url+'editarPasswordRecuperar', datos)
+  }
   obtenerPerfil(): Observable<any>{
     return this.http.get(url)
   }

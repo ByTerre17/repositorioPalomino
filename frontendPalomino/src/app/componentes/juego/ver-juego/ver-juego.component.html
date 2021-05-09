@@ -17,6 +17,7 @@
             <div class="botonEliminar"><button class="btn btn-success" (click)="eliminarComentario(comentario.id)" *ngIf="comprobarUsuario(comentario.idUsuario)" >Eliminar</button></div>
             <div class="botonLike"><button class="btn btn-success" (click)="likeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Like</button></div>
             <div class="botondislike"><button class="btn btn-success" (click)="dislikeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Dislike</button></div>
+            <div class="botondislike"><button class="btn btn-success" (click)="reportarComentario(comentario.id)" >Reportar</button></div>
         </div>
     </div>
     <div class="cajaInsertarComentario" *ngIf="logueado()">

@@ -21,6 +21,16 @@ class ComentarioController {
     
   }
   
+  public function listarReportes() {
+    
+      $eval = "SELECT * FROM reporte";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $resultado = $peticion->fetchAll(PDO::FETCH_OBJ);
+      exit(json_encode($resultado));
+    
+  }
+  
   public function listarComentariosPorJuego($id) {
     
       $eval = "SELECT * FROM comentario where idJuego=?";
@@ -68,6 +78,46 @@ class ComentarioController {
       }
     }
 
+  public function obtenerComentario($id) {
+      $consulta = "SELECT * FROM comentario WHERE id=?";
+      $peticion = $this->db->prepare($consulta);
+      $peticion->execute([$id]);
+      $resultado = $peticion->fetchObject();
+      if(empty($resultado)){
+          exit(json_encode(["error" => "No se encuentra el comentario"]));
+      }else{
+          exit(json_encode($resultado));
+      }
+    }
+  public function obtenerReporte($id) {
+      $consulta = "SELECT * FROM reporte WHERE id=?";
+      $peticion = $this->db->prepare($consulta);
+      $peticion->execute([$id]);
+      $resultado = $peticion->fetchObject();
+      if(empty($resultado)){
+          exit(json_encode(["error" => "No se encuentra el reporte"]));
+      }else{
+          exit(json_encode($resultado));
+      }
+    }
+  public function crearReporte(){
+      $idComentario=$_POST['idComentario'];
+      $reporte=json_decode($_POST['reporte']);
+      //Comprobamos que los datos sean consistentes.
+    if(!isset($idComentario) || !isset($reporte->titulo) || !isset($reporte->descripcion)) {
+      http_response_code(400);
+      exit(json_encode(["error" => "No se han enviado todos los parametros"]));
+    }
+    $eval = "INSERT INTO reporte (titulo,descripcion,idComentario) VALUES (?,?,?)";
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute([
+      $reporte->titulo,$reporte->descripcion,$idComentario
+    ]);
+      exit(json_encode("Reporte  creado"));
+      
+  }
+   
+    
   public function crearComentario() {
     //Guardamos los parametros de la petición.
     $comentario = json_decode(file_get_contents("php://input"));
@@ -97,6 +147,24 @@ class ComentarioController {
       http_response_code(401);
       exit(json_encode(["error" => "No puedes eliminar un mensaje que no es tuyo"]));            
     }
+  }
+  
+  public function eliminarReporte() {
+      $idReporte=$_POST['idReporte'];
+      $eval = "DELETE FROM reporte WHERE id=?";
+      $peticion = $this->db->prepare($eval);
+      $resultado = $peticion->execute([$idReporte]);
+      http_response_code(200);
+      exit(json_encode("reporte eliminado correctamente"));
+  }
+  
+  public function eliminarComentarioAdmin() {
+      $idComentario=$_POST['idComentario'];
+      $eval = "DELETE FROM comentario WHERE id=?";
+      $peticion = $this->db->prepare($eval);
+      $resultado = $peticion->execute([$idComentario]);
+      http_response_code(200);
+      exit(json_encode("Comentario eliminado correctamente"));
   }
   
   public function likeComentario() {

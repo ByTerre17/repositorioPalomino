@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2021 a las 21:19:56
+-- Tiempo de generación: 09-05-2021 a las 21:16:52
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -26,6 +26,28 @@ USE `proyectophp`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `codigorecuperación`
+--
+
+CREATE TABLE `codigorecuperación` (
+  `id` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `fechaInicio` time NOT NULL,
+  `fechaFinal` time NOT NULL,
+  `codigoRecuperacion` varchar(255) NOT NULL,
+  `usado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `codigorecuperación`
+--
+
+INSERT INTO `codigorecuperación` (`id`, `idUsuario`, `fechaInicio`, `fechaFinal`, `codigoRecuperacion`, `usado`) VALUES
+(4, 3, '14:11:19', '16:26:19', '580130364682', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `comentario`
 --
 
@@ -35,29 +57,45 @@ CREATE TABLE `comentario` (
   `texto` varchar(255) NOT NULL,
   `nota` int(11) NOT NULL,
   `idJuego` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
-  `likes` int(11) NOT NULL DEFAULT 0,
-  `dislikes` int(11) NOT NULL DEFAULT 0
+  `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `comentario`
 --
 
-INSERT INTO `comentario` (`id`, `titulo`, `texto`, `nota`, `idJuego`, `idUsuario`, `likes`, `dislikes`) VALUES
-(14, 'Genial', 'sfsdfsfsd', 7, 34, 3, 0, 0);
+INSERT INTO `comentario` (`id`, `titulo`, `texto`, `nota`, `idJuego`, `idUsuario`) VALUES
+(15, 'Hola', 'dsafdsf', 2, 31, 3);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `generojuegos`
+-- Estructura de tabla para la tabla `genero`
 --
 
-CREATE TABLE `generojuegos` (
+CREATE TABLE `genero` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `idJuego` int(11) NOT NULL
+  `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `genero`
+--
+
+INSERT INTO `genero` (`id`, `nombre`) VALUES
+(1, 'Acción'),
+(2, 'Adventura'),
+(3, 'Peleas'),
+(4, 'Shooter primera persona'),
+(5, 'Naves'),
+(6, 'Fiesta'),
+(7, 'Puzzles'),
+(9, 'Carreras'),
+(10, 'Estrategia'),
+(11, 'Simulacion'),
+(12, 'Deportes'),
+(13, 'Shooter tercera persona'),
+(14, 'RPG');
 
 -- --------------------------------------------------------
 
@@ -82,7 +120,10 @@ INSERT INTO `imagenes` (`id`, `direccion`, `idJuego`, `principal`) VALUES
 (46, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-0.jpg', 32, 0),
 (48, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-1.jpg', 32, 0),
 (49, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-2.jpg', 32, 0),
-(50, 'http://localhost/backendPalomino/images/p-Juego de prueba 5-0.jpg', 34, 1);
+(50, 'http://localhost/backendPalomino/images/p-Juego de prueba 5-0.jpg', 34, 1),
+(51, 'http://localhost/backendPalomino/images/p-Juego de prueba 7-0.jpg', 35, 1),
+(52, 'http://localhost/backendPalomino/images/p-Juego de prueba 8-0.jpg', 36, 1),
+(53, 'http://localhost/backendPalomino/images/p-Juego de prueba 10-0.jpg', 38, 1);
 
 -- --------------------------------------------------------
 
@@ -98,6 +139,7 @@ CREATE TABLE `juego` (
   `edad` varchar(255) NOT NULL,
   `creador` varchar(255) NOT NULL,
   `genero` varchar(255) NOT NULL,
+  `plataforma` int(11) NOT NULL,
   `numeroDeJugadores` varchar(255) NOT NULL,
   `fechaDePublicacion` date NOT NULL DEFAULT current_timestamp(),
   `imagen` varchar(255) NOT NULL,
@@ -109,10 +151,12 @@ CREATE TABLE `juego` (
 -- Volcado de datos para la tabla `juego`
 --
 
-INSERT INTO `juego` (`id`, `nombre`, `fechaDeLanzamiento`, `comprar`, `edad`, `creador`, `genero`, `numeroDeJugadores`, `fechaDePublicacion`, `imagen`, `nota`, `resumen`) VALUES
-(31, 'Juego de prueba 2', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-25', '28', 8, 'dsfsdfsdfsdfsd'),
-(32, 'Juego de prueba 3', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-04-25', '49', 8, 'dsfsdfsdfsdfsd'),
-(34, 'Juego de prueba 5', '2021-05-01', 'https://www.google.es/', '12', 'Pedro', 'Lucha', '12', '2021-05-01', '50', 7, 'dsfsdfsdfsdfsd');
+INSERT INTO `juego` (`id`, `nombre`, `fechaDeLanzamiento`, `comprar`, `edad`, `creador`, `genero`, `plataforma`, `numeroDeJugadores`, `fechaDePublicacion`, `imagen`, `nota`, `resumen`) VALUES
+(31, 'Juego de prueba 2', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', '3', 3, '12', '2021-04-25', '28', 8, 'dsfsdfsdfsdfsd'),
+(32, 'Juego de prueba 3', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', '3', 4, '12', '2021-04-25', '49', 8, 'dsfsdfsdfsdfsd'),
+(34, 'Juego de prueba 5', '2021-05-01', 'https://www.google.es/', '12', 'Pedro', '3', 2, '12', '2021-05-01', '50', 7, 'dsfsdfsdfsdfsd'),
+(37, 'Juego de prueba 8', '2021-05-09', 'https://www.google.es/', '12', 'Pedro', '12', 6, '12', '2021-05-09', '', 8, 'dsfsdfsdfsdfsd'),
+(38, 'Juego de prueba 10', '2021-05-09', 'https://www.google.es/', '12', 'Pedro', '9', 4, '12', '2021-05-09', '53', 8, 'dsfsdfsdfsdfsd');
 
 -- --------------------------------------------------------
 
@@ -138,6 +182,42 @@ INSERT INTO `likedislike` (`id`, `idUsuario`, `idComentario`, `opinion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `plataforma`
+--
+
+CREATE TABLE `plataforma` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `plataforma`
+--
+
+INSERT INTO `plataforma` (`id`, `nombre`) VALUES
+(1, 'PS4'),
+(2, 'PS5'),
+(3, 'PC'),
+(4, 'Nintendo Switch'),
+(5, 'XBOX ONE'),
+(6, 'XBOX Series X');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reporte`
+--
+
+CREATE TABLE `reporte` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `idComentario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -156,7 +236,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `email`, `foto`, `usuario`, `password`, `rol`) VALUES
 (2, 'manuelpalomino080@gmail.com', 'no_foto', 'Juan12343', '$2y$10$oqluhgCBzyWgiGnrVvYe4uCFah4o1D/09MOenrZFyYr799Z/kaPNW', 'user'),
-(3, 'manuelpalomino484@gmail.com', 'no_foto', 'admin', '$2y$10$LDOfAkH9USf7T8eM0Imlre7J1w3Dco5k1r3K.RRwGjIhUW4aIyKH2', 'admin'),
+(3, 'manuelpalomino484@gmail.com', 'no_foto', 'admin', '$2y$10$BqURjc0ycw.DShGIVD2zdeUbde8b2ChabCn3pdaGqq4/iL/eoqJwe', 'admin'),
 (6, 'manuelpalomino4884@gmail.com', 'no_foto', 'Manuel1234', '$2y$10$HCd4Ixng6Q4TSqifHgJMGe6Pvc1lYrs8UqBSFEQ52lEE.eu/pYeKS', 'user'),
 (7, 'aujo@gmail.com', 'no_foto', 'aujo21', '$2y$10$GzQVwRwc8b.9RADvEYSose0wmGs3LlB/adNPMSO3hpxRj3AlSMhQm', 'user'),
 (8, 'manuelpalomino040@gmail.com', 'no_foto', 'Juabhewr21', '$2y$10$W.PCAGEQP51V5p5PzQNpW.oUoFKAJkE2CzwMrIe09muO4W5BGkn/2', 'user');
@@ -174,8 +254,22 @@ CREATE TABLE `videos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Volcado de datos para la tabla `videos`
+--
+
+INSERT INTO `videos` (`id`, `direccion`, `idJuego`) VALUES
+(9, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 38),
+(10, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 38);
+
+--
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `codigorecuperación`
+--
+ALTER TABLE `codigorecuperación`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `comentario`
@@ -184,9 +278,9 @@ ALTER TABLE `comentario`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `generojuegos`
+-- Indices de la tabla `genero`
 --
-ALTER TABLE `generojuegos`
+ALTER TABLE `genero`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -208,6 +302,12 @@ ALTER TABLE `likedislike`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `plataforma`
+--
+ALTER TABLE `plataforma`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -225,34 +325,46 @@ ALTER TABLE `videos`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `codigorecuperación`
+--
+ALTER TABLE `codigorecuperación`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT de la tabla `generojuegos`
+-- AUTO_INCREMENT de la tabla `genero`
 --
-ALTER TABLE `generojuegos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `genero`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `juego`
 --
 ALTER TABLE `juego`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `likedislike`
 --
 ALTER TABLE `likedislike`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `plataforma`
+--
+ALTER TABLE `plataforma`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -264,7 +376,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

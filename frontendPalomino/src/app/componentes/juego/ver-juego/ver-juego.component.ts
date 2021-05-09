@@ -123,10 +123,11 @@ likeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,ind
     respuesta => {
       console.log(respuesta)
       if(respuesta=="true"){
-        window.location.reload();
+        this.comentarios[indice].likes++
       }
       else if(respuesta=="mod"){
-        window.location.reload();
+        this.comentarios[indice].likes++
+        this.comentarios[indice].dislikes--
       }
     },
     error => console.log(error)
@@ -143,10 +144,11 @@ dislikeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,
     respuesta => {
       console.log(respuesta)
       if(respuesta=="true"){
-        window.location.reload();
+        this.comentarios[indice].dislikes++
       }
       else if(respuesta=="mod"){
-        window.location.reload();
+        this.comentarios[indice].likes--
+        this.comentarios[indice].dislikes++
       }
     },
     error => console.log(error)
@@ -162,5 +164,9 @@ dislikeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,
     }
     }
   return igual
+  }
+
+  reportarComentario(idComentario:number): void{
+    this.irHacia.navigate(["/reportarComentario/"+idComentario])
   }
 }

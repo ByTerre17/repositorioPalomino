@@ -9,7 +9,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./recuperar-password.component.css']
 })
 export class RecuperarPasswordComponent implements OnInit {
-  formLogin= this.fb.group({
+  form1= this.fb.group({
     usuario:['', [Validators.required]],
     email:['', [Validators.required, Validators.email]]
   })
@@ -18,7 +18,7 @@ export class RecuperarPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
   submit(): void{
-    this.servicioUsuario.recuperarPassword(this.formLogin.value).subscribe(
+    this.servicioUsuario.recuperarPassword(this.form1.value).subscribe(
       respuesta => {
         console.log(respuesta)
         this.irHacia.navigate([''])
