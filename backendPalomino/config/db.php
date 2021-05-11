@@ -1,7 +1,7 @@
 <?php
 class db{
   private $host = "localhost";
-  private $database = "proyectophp";
+  private $database = "basePalomino";
   private $user = "root";
   private $password = "";
   private $dbPDO;

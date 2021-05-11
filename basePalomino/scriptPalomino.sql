@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-05-2021 a las 21:16:52
+-- Tiempo de generación: 11-05-2021 a las 19:50:10
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -18,18 +18,18 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `proyectophp`
+-- Base de datos: `basepalomino`
 --
-CREATE DATABASE IF NOT EXISTS `proyectophp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `proyectophp`;
+CREATE DATABASE IF NOT EXISTS `basepalomino` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `basepalomino`;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `codigorecuperación`
+-- Estructura de tabla para la tabla `codigorecuperacion`
 --
 
-CREATE TABLE `codigorecuperación` (
+CREATE TABLE `codigorecuperacion` (
   `id` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `fechaInicio` time NOT NULL,
@@ -39,10 +39,10 @@ CREATE TABLE `codigorecuperación` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `codigorecuperación`
+-- Volcado de datos para la tabla `codigorecuperacion`
 --
 
-INSERT INTO `codigorecuperación` (`id`, `idUsuario`, `fechaInicio`, `fechaFinal`, `codigoRecuperacion`, `usado`) VALUES
+INSERT INTO `codigorecuperacion` (`id`, `idUsuario`, `fechaInicio`, `fechaFinal`, `codigoRecuperacion`, `usado`) VALUES
 (4, 3, '14:11:19', '16:26:19', '580130364682', 0);
 
 -- --------------------------------------------------------
@@ -266,9 +266,9 @@ INSERT INTO `videos` (`id`, `direccion`, `idJuego`) VALUES
 --
 
 --
--- Indices de la tabla `codigorecuperación`
+-- Indices de la tabla `codigorecuperacion`
 --
-ALTER TABLE `codigorecuperación`
+ALTER TABLE `codigorecuperacion`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -325,9 +325,9 @@ ALTER TABLE `videos`
 --
 
 --
--- AUTO_INCREMENT de la tabla `codigorecuperación`
+-- AUTO_INCREMENT de la tabla `codigorecuperacion`
 --
-ALTER TABLE `codigorecuperación`
+ALTER TABLE `codigorecuperacion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --

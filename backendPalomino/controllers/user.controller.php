@@ -266,7 +266,7 @@ class UserController {
         $fechaInicio=(date("H")).":".(date("i")).":".(date("s"));
         $fechaFinal=(date("H")).":".(date("i")+15).":".(date("s"));
         $codigoRecuperacion=time()*rand(1,1000);
-        $eval = "INSERT INTO codigorecuperación (idUsuario,fechaInicio,fechaFinal,codigoRecuperacion,usado) VALUES (?,?,?,?,?)";
+        $eval = "INSERT INTO codigorecuperacion (idUsuario,fechaInicio,fechaFinal,codigoRecuperacion,usado) VALUES (?,?,?,?,?)";
         $peticion = $this->db->prepare($eval);
         $peticion->execute([$resultado->id,$fechaInicio,$fechaFinal,$codigoRecuperacion,0]);
         
@@ -329,7 +329,7 @@ class UserController {
   
   public function comprobarCodigo($idCodigo) {
       $fechaActual=(date("H")).":".(date("i")).":".(date("s"));
-      $eval = "SELECT * FROM codigoRecuperación where codigoRecuperacion = ?";
+      $eval = "SELECT * FROM codigoRecuperacion where codigoRecuperacion = ?";
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$idCodigo]);
       $codigoRecuperacion = $peticion->fetchObject();
@@ -355,7 +355,7 @@ class UserController {
       exit(json_encode("Error"));
       }
       
-      $eval = "SELECT * FROM codigoRecuperación where codigoRecuperacion = ?";
+      $eval = "SELECT * FROM codigoRecuperacion where codigoRecuperacion = ?";
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$idCodigo]);
       $codigoRecuperacion = $peticion->fetchObject();
