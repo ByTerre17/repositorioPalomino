@@ -68,9 +68,18 @@ switch($control[0]) {
             $controladorUsuarios->editarPasswordRecuperar();
             break;
         
-          case "image":
-            $controladorUsuarios->subirAvatar();
+          case "editarFoto":
+            $controladorUsuarios->editarFoto();
             break;
+          case "editarPassword":
+            $controladorUsuarios->editarPassword();
+            break;
+          case "editarUsuario":
+            $controladorUsuarios->editarUsuario();
+            break;
+          case "editarCorreo":
+            $controladorUsuarios->editarCorreo();
+            break;        
         case "recuperarPassword":
             $controladorUsuarios->recuperarPassword();
             break;
@@ -116,6 +125,12 @@ switch($control[0]) {
           case "listarXJuegosPorFechaNuevos":
             $controladorJuegos->listarXJuegosPorFechaNuevos($control[2]);
             break;
+          case "obtenerVideosJuegoMejorValorado":
+            $controladorJuegos->juegoMejorValorado();
+            break;
+          case "listarJuegosMasComentarios":
+            $controladorJuegos->listarJuegosMasComentarios();
+            break;
         }
 
       case "DELETE":
@@ -157,11 +172,17 @@ switch($control[0]) {
           case "list":
             $controladorComentarios->listarComentarios();
             break;
+          case "listComentarMasLikes":
+            $controladorComentarios->listarComentariosMasLikes();
+            break;
           case "listReportes":
             $controladorComentarios->listarReportes();
             break;
           case "obtenerComentarios":
             $controladorComentarios->listarComentarios($control[2]);
+            break;
+          case "listarComentariosPorUsuario":
+            $controladorComentarios->listarComentariosPorUsuario($control[2]);
             break;
           case "listPorJuego":
             $controladorComentarios->listarComentariosPorJuego($control[2]);

@@ -1,25 +1,31 @@
 <div class="caja">
     <div class="jumbotron">
         <h1 class="display-4">Bienvenido a criticame</h1>
-        
         <br>
       </div>
-    <h2 class="subtitulo">Ultimos lanzamientos.</h2>
-    <div class="cajaFuncion1">
-        <div class="card-group">
-          <div class="card" *ngFor="let juego of juegos1" (click)="verJuego(juego.id)"  (mouseenter)="mostrarBoton()">
-            <div class="card-img-top" style="background-image: url('{{juego.imagen}}')" ><div class="nota">{{juego.nota}}</div></div>
-              <div class="card-body">
-                
-                <h3 class="card-title"> <div class="NombreNota"><div class="nombre">{{juego.nombre}}</div></div></h3>
-                <p class="card-text">{{juego.resumen}}</p>
-                <div class="eventoPasarElRaton" id="boton" ><button type="button" class="btn btn-primary">Haz click</button></div>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">{{juego.fechaDePublicacion}}</small>
-              </div>
-          </div>  
-        </div> 
+    <div class="ultimosLanzamientos">
+      <h2 class="subtitulo">Ultimos lanzamientos.</h2>
+      <div class="cajaFuncion1">
+          <div class="card-group">
+            <div class="card" *ngFor="let juego of juegos1" (click)="verJuego(juego.id)" >
+              <div class="card-img-top" style="background-image: url('{{juego.imagen}}')" ><div class="nota">{{juego.nota}}</div></div>
+                <div class="card-body">
+                  <h3 class="card-title"> <div class="NombreNota"><div class="nombre">{{juego.nombre}}</div></div></h3>
+                  <p class="card-text">{{juego.resumen}}</p>
+                  <div class="eventoPasarElRaton" id="boton" ><button type="button" class="btn btn-primary">Haz click</button></div>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">{{juego.fechaDePublicacion}}</small>
+                </div>
+            </div>  
+          </div> 
+      </div>
     </div>
-    <div class="cajaFuncion"></div>
+    <div class="Video">
+      <h2 class="subtitulo">El trailer del juego mejor valorado.</h2>
+      <div class="cajaFuncion2">
+        <iframe class="cajaFuncion2video" [src]='video()'>
+        </iframe> 
+      </div>
+    </div>    
 </div>

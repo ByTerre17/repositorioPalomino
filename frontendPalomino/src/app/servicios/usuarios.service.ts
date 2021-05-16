@@ -41,9 +41,19 @@ export class UsuariosService {
   eliminarUsuario(): Observable<any>{
     return this.http.delete(url+"eliminarUsuario")
   }
-  editarPassword(usuario:Usuario): Observable<any>{
-    return this.http.put(url, usuario)
+  editarPassword(datos:any): Observable<any>{
+    return this.http.post(url+"editarPassword",datos)
   }
+  editarUsuario(datos:any): Observable<any>{
+    return this.http.post(url+"editarUsuario",datos)
+  }
+  editarCorreo(datos:any): Observable<any>{
+    return this.http.post(url+"editarCorreo",datos)
+  }
+  editarFoto(datos:any): Observable<any>{
+    return this.http.post(url+"editarFoto",datos)
+  }
+
 
   listarUsuarios(): Observable<any>{
     return this.http.get(url+'list/')

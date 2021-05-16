@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2021 a las 19:50:10
+-- Tiempo de generación: 16-05-2021 a las 22:24:15
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -65,7 +65,10 @@ CREATE TABLE `comentario` (
 --
 
 INSERT INTO `comentario` (`id`, `titulo`, `texto`, `nota`, `idJuego`, `idUsuario`) VALUES
-(15, 'Hola', 'dsafdsf', 2, 31, 3);
+(15, 'Hola', 'dsafdsf', 2, 31, 3),
+(18, 'DGDG', 'DFGDFGFFD', 7, 43, 3),
+(19, 'DFGDGFFDGD', 'DFGDFG', 10, 43, 3),
+(20, 'DFGDGFFDGD', 'DFGDFG', 10, 43, 3);
 
 -- --------------------------------------------------------
 
@@ -115,15 +118,12 @@ CREATE TABLE `imagenes` (
 --
 
 INSERT INTO `imagenes` (`id`, `direccion`, `idJuego`, `principal`) VALUES
-(27, 'http://localhost/backendPalomino/images/p-Juego de prueba 2-0.jpg', 31, 0),
-(28, 'http://localhost/backendPalomino/images/p-Juego de prueba 2-1.jpg', 31, 1),
-(46, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-0.jpg', 32, 0),
-(48, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-1.jpg', 32, 0),
-(49, 'http://localhost/backendPalomino/images/p-Juego de prueba 3-2.jpg', 32, 0),
-(50, 'http://localhost/backendPalomino/images/p-Juego de prueba 5-0.jpg', 34, 1),
-(51, 'http://localhost/backendPalomino/images/p-Juego de prueba 7-0.jpg', 35, 1),
-(52, 'http://localhost/backendPalomino/images/p-Juego de prueba 8-0.jpg', 36, 1),
-(53, 'http://localhost/backendPalomino/images/p-Juego de prueba 10-0.jpg', 38, 1);
+(59, 'http://localhost/backendPalomino/images/imagenJuegodeprueba3-0.jpg', 43, 1),
+(61, 'http://localhost/backendPalomino/images/imagenJuegodeprueba4-0.jpg', 44, 1),
+(62, 'http://localhost/backendPalomino/images/imagenJuegodeprueba4-1.jpg', 44, 1),
+(76, 'http://localhost/backendPalomino/images/imagenJuegodeprueba3-2.jpg', 43, 0),
+(77, 'http://localhost/backendPalomino/images/imagenJuegodeprueba3-3.jpg', 43, 0),
+(78, 'http://localhost/backendPalomino/images/imagenJuegodeprueba3-4.jpg', 43, 0);
 
 -- --------------------------------------------------------
 
@@ -152,11 +152,9 @@ CREATE TABLE `juego` (
 --
 
 INSERT INTO `juego` (`id`, `nombre`, `fechaDeLanzamiento`, `comprar`, `edad`, `creador`, `genero`, `plataforma`, `numeroDeJugadores`, `fechaDePublicacion`, `imagen`, `nota`, `resumen`) VALUES
-(31, 'Juego de prueba 2', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', '3', 3, '12', '2021-04-25', '28', 8, 'dsfsdfsdfsdfsd'),
-(32, 'Juego de prueba 3', '2021-04-25', 'https://www.google.es/', '12', 'Pedro', '3', 4, '12', '2021-04-25', '49', 8, 'dsfsdfsdfsdfsd'),
-(34, 'Juego de prueba 5', '2021-05-01', 'https://www.google.es/', '12', 'Pedro', '3', 2, '12', '2021-05-01', '50', 7, 'dsfsdfsdfsdfsd'),
-(37, 'Juego de prueba 8', '2021-05-09', 'https://www.google.es/', '12', 'Pedro', '12', 6, '12', '2021-05-09', '', 8, 'dsfsdfsdfsdfsd'),
-(38, 'Juego de prueba 10', '2021-05-09', 'https://www.google.es/', '12', 'Pedro', '9', 4, '12', '2021-05-09', '53', 8, 'dsfsdfsdfsdfsd');
+(42, 'Juego de prueba 2', '2021-05-15', 'https://www.google.es/', '12', 'Pedro', '3', 1, '12', '2021-05-15', '72', 10, 'dsfsdfsdfsdfsd'),
+(43, 'Juego de prueba 3', '2021-05-15', 'https://www.google.es/', '12', 'Pedro', '13', 4, '12', '2021-05-15', '59', 9, 'dsfsdfsdfsdfsd'),
+(44, 'Juego de prueba 4', '2021-05-15', 'https://www.google.es/', '12', 'Pedro', '13', 4, '12', '2021-05-15', '62', 6, 'dsfsdfsdfsdfsd');
 
 -- --------------------------------------------------------
 
@@ -176,8 +174,11 @@ CREATE TABLE `likedislike` (
 --
 
 INSERT INTO `likedislike` (`id`, `idUsuario`, `idComentario`, `opinion`) VALUES
-(13, 3, 14, 'like'),
-(14, 2, 14, 'like');
+(13, 3, 15, 'like'),
+(14, 2, 15, 'like'),
+(15, 7, 17, 'like'),
+(16, 3, 16, 'like'),
+(17, 3, 18, 'dislike');
 
 -- --------------------------------------------------------
 
@@ -236,7 +237,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `email`, `foto`, `usuario`, `password`, `rol`) VALUES
 (2, 'manuelpalomino080@gmail.com', 'no_foto', 'Juan12343', '$2y$10$oqluhgCBzyWgiGnrVvYe4uCFah4o1D/09MOenrZFyYr799Z/kaPNW', 'user'),
-(3, 'manuelpalomino484@gmail.com', 'no_foto', 'admin', '$2y$10$BqURjc0ycw.DShGIVD2zdeUbde8b2ChabCn3pdaGqq4/iL/eoqJwe', 'admin'),
+(3, 'manuelpalomino484@gmail.com', 'http://localhost/backendPalomino/images/imagenimagenUsuario-3', 'Manuel', '$2y$10$BqURjc0ycw.DShGIVD2zdeUbde8b2ChabCn3pdaGqq4/iL/eoqJwe', 'admin'),
 (6, 'manuelpalomino4884@gmail.com', 'no_foto', 'Manuel1234', '$2y$10$HCd4Ixng6Q4TSqifHgJMGe6Pvc1lYrs8UqBSFEQ52lEE.eu/pYeKS', 'user'),
 (7, 'aujo@gmail.com', 'no_foto', 'aujo21', '$2y$10$GzQVwRwc8b.9RADvEYSose0wmGs3LlB/adNPMSO3hpxRj3AlSMhQm', 'user'),
 (8, 'manuelpalomino040@gmail.com', 'no_foto', 'Juabhewr21', '$2y$10$W.PCAGEQP51V5p5PzQNpW.oUoFKAJkE2CzwMrIe09muO4W5BGkn/2', 'user');
@@ -259,7 +260,16 @@ CREATE TABLE `videos` (
 
 INSERT INTO `videos` (`id`, `direccion`, `idJuego`) VALUES
 (9, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 38),
-(10, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 38);
+(10, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 38),
+(11, 'fhgrfgh', 39),
+(12, 'fhgrfgh', 39),
+(13, 'fhgrfgh', 39),
+(18, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 44),
+(19, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 44),
+(66, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 42),
+(67, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 42),
+(74, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 43),
+(75, 'https://www.youtube.com/watch?v=Z_fEKap24wU', 43);
 
 --
 -- Índices para tablas volcadas
@@ -334,7 +344,7 @@ ALTER TABLE `codigorecuperacion`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`
@@ -346,19 +356,19 @@ ALTER TABLE `genero`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT de la tabla `juego`
 --
 ALTER TABLE `juego`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `likedislike`
 --
 ALTER TABLE `likedislike`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `plataforma`
@@ -376,7 +386,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

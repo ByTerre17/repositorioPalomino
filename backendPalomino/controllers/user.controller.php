@@ -79,57 +79,6 @@ class UserController {
     }
   }
 
-  public function subirAvatar() {
-    if(is_null(IDUSER)){
-      http_response_code(401);
-      exit(json_encode(["error" => "Fallo de autorizacion"]));
-    }
-    if(isset($_FILES['imagen'])) {
-      $imagen = $_FILES['imagen'];
-      $mime = $imagen['type'];
-      $size = $imagen['size'];
-      $rutaTemp = $imagen['tmp_name'];
-  
-      //Comprobamos que la imagen sea JPEG o PNG y que el tamaño sea menor que 400KB.
-      if( !(strpos($mime, "jpeg") || strpos($mime, "png")) || ($size > 400000) ) {
-        http_response_code(400);
-        exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
-      } else {
-  
-        //Comprueba cual es la extensión del archivo.
-        $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-        $nombreFoto = "p-".IDUSER."-".time().$ext;
-        $ruta = ROOT."images/".$nombreFoto;
-  
-        //Comprobamos que el usuario no tenga mas fotos de perfil subidas al servidor.
-        //En caso de que exista una imagen anterior la elimina.
-        $imgFind = ROOT."images/p-".IDUSER."-*";
-        $imgFile = glob($imgFind);
-        foreach($imgFile as $fichero) unlink($fichero);
-        
-        //Si se guarda la imagen correctamente actualiza la ruta en la tabla usuarios
-        if(move_uploaded_file($rutaTemp,$ruta)) {
-  
-          //Prepara el contenido del campo imgSrc
-          $imgSRC = "http://localhost/backendphp/images/".$nombreFoto;
-  
-          $eval = "UPDATE usuario SET foto=? WHERE id=?";
-          $peticion = $this->db->prepare($eval);
-          $peticion->execute([$imgSRC,IDUSER]);
-  
-          http_response_code(201);
-          exit(json_encode("Imagen actualizada correctamente"));
-        } else {
-          http_response_code(500);
-          exit(json_encode(["error" => "Ha habido un error con la subida"]));      
-        }
-      }
-    }  else {
-      http_response_code(400);
-      exit(json_encode(["error" => "No se han enviado todos los parametros"]));
-    }
-  }
-
   public function registrarUser() {
     //Guardamos los parametros de la petición.
     $user = json_decode(file_get_contents("php://input"));
@@ -174,58 +123,6 @@ class UserController {
     } else {
       http_response_code(409);
       echo json_encode(["error" => "Ya existe este usuario"]);
-    }
-  }
-
-  public function editarUser() {
-    if(IDUSER) {
-      //Cogemos los valores de la peticion.
-      $user = json_decode(file_get_contents("php://input"));
-      
-      //Comprobamos si existe otro usuario con ese correo electronico.
-      if(isset($user->email)) {
-        $peticion = $this->db->prepare("SELECT id FROM usuario WHERE email=?");
-        $peticion->execute([$user->email]);
-        $resultado = $peticion->fetchObject();
-        
-        //Comprobamos si hay algun resultado, sino continuamos editando.
-        if($resultado) {
-          //Si el id del usuario con este email es distinto del usuario que ha hecho LOGIN.
-          if($resultado->id != IDUSER) {
-            http_response_code(409);
-            exit(json_encode(["error" => "Ya existe un usuario con este email"]));              
-          }
-        } 
-      }
-
-      //Obtenemos los datos guardados en el servidor relacionados con el usuario
-      $peticion = $this->db->prepare("SELECT email,foto,usuario,password,rol FROM usuario WHERE id=?");
-      $peticion->execute([IDUSER]);
-      $resultado = $peticion->fetchObject();
-
-      //Combinamos los datos de la petición y de los que había en la base de datos.
-      $nUsuario = isset($user->usuario) ? $user->usuario : $resultado->usuario;
-      $nEmail = isset($user->email) ? $user->email : $resultado->email;
-
-      //Si hemos recibido el dato de modificar la password.
-      if(isset($user->password) && (strlen($user->password))){
-
-        //Encriptamos la contraseña.
-        $nPassword = password_hash($user->password, PASSWORD_BCRYPT);
-        //Preparamos la petición.
-        $eval = "UPDATE usuario SET usuario=?,email=?,password=? WHERE id=?";
-        $peticion = $this->db->prepare($eval);
-        $peticion->execute([$nUsuario,$nPassword,$nEmail,IDUSER]);
-      } else {
-        $eval = "UPDATE usuario SET usuario=?,email=? WHERE id=?";
-        $peticion = $this->db->prepare($eval);
-        $peticion->execute([$nUsuario,$nEmail,IDUSER]);        
-      }
-      http_response_code(201);
-      exit(json_encode("Usuario actualizado correctamente"));
-    } else {
-      http_response_code(401);
-      exit(json_encode(["error" => "Fallo de autorizacion"]));         
     }
   }
 
@@ -301,11 +198,12 @@ class UserController {
   public function editarPassword() {
     if(IDUSER) {
       //Cogemos los valores de la peticion.
-      $user = json_decode(file_get_contents("php://input"));
+      $passwordAntigua = $_POST[('passwordAntigua')];
+      $passwordNueva = $_POST[('passwordNueva')];
       
-      if(!isset($user->passwordAntigua) || !isset($user->passwordNueva)) {
+      if(!isset($passwordAntigua) || !isset($passwordNueva)) {
       http_response_code(400);
-      exit(json_encode($user));
+      exit(json_encode("Faltan datos"));
     }
 
       //Obtenemos los datos guardados en el servidor relacionados con el usuario
@@ -313,8 +211,8 @@ class UserController {
       $peticion->execute([IDUSER]);
       $usuarioBaseDeDatos = $peticion->fetchObject();
       
-      if(password_verify($user->passwordAntigua, $usuarioBaseDeDatos->password)){
-          $nPassword = password_hash($user->passwordNueva, PASSWORD_BCRYPT);
+      if(password_verify($passwordAntigua, $usuarioBaseDeDatos->password)){
+          $nPassword = password_hash($passwordNueva, PASSWORD_BCRYPT);
           $eval = "UPDATE usuario SET password=? WHERE id=?";
           $peticion = $this->db->prepare($eval);
           $peticion->execute([$nPassword,IDUSER]);
@@ -326,7 +224,91 @@ class UserController {
       exit(json_encode(["error" => "Fallo de autorizacion"]));         
     }
   }
-  
+
+  public function editarUsuario() {
+    if(IDUSER) {
+      //Cogemos los valores de la peticion.
+      $usuario= $_POST[('usuario')];
+      
+      if(!isset($usuario)) {
+      http_response_code(400);
+      exit(json_encode("Faltan datos"));
+    }
+      $eval = "UPDATE usuario SET usuario=? WHERE id=?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$usuario,IDUSER]);
+      http_response_code(201);
+      exit(json_encode("Usuario actualizado correctamente"));
+
+    } else {
+      http_response_code(401);
+      exit(json_encode(["error" => "Fallo de autorizacion"]));         
+    }
+  }
+
+  public function editarCorreo() {
+    if(IDUSER) {
+      //Cogemos los valores de la peticion.
+      $correo= $_POST[('correo')];
+      
+      if(!isset($correo)) {
+      http_response_code(400);
+      exit(json_encode("Faltan datos"));
+    }
+      $eval = "UPDATE usuario SET correo=? WHERE id=?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$correo,IDUSER]);
+      http_response_code(201);
+      exit(json_encode("Usuario actualizado correctamente"));
+
+    } else {
+      http_response_code(401);
+      exit(json_encode(["error" => "Fallo de autorizacion"]));         
+    }
+  }
+
+  public function editarFoto() {
+    if(IDUSER) {
+      $imagen=$_FILES[('foto')];
+      
+      if(!isset($imagen)) {
+      http_response_code(400);
+      exit(json_encode("Faltan datos"));
+    }
+      $mime = $imagen['type'];
+      $size = $imagen['size'];
+      $rutaTemp = $imagen['tmp_name'];
+      
+      if( !(strpos($mime, "jpeg") || strpos($mime, "png")) || ($size > 400000) ) {
+                http_response_code(400);
+                exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
+            } else {
+                
+                $ext = strpos($mime, "jpeg") ? ".jpg":".png";
+                $nombreImagen = "imagen"."imagenUsuario"."-".IDUSER;
+                $ruta = ROOT."images/".$nombreImagen;
+                
+                $direccionImagen= ROOT .'images'. '\\' . $nombreImagen;
+                if(unlink($direccionImagen));
+                
+                if(move_uploaded_file($rutaTemp,$ruta)) {
+
+                //Prepara el contenido del campo imgSrc
+                $imgSRC = "http://localhost/".basename(ROOT)."/images/".$nombreImagen;
+                
+                $eval = "UPDATE usuario SET foto=? WHERE id=?";
+                $peticion = $this->db->prepare($eval);
+                $peticion->execute([$imgSRC,IDUSER]);
+                http_response_code(201);
+                exit(json_encode("Usuario actualizado correctamente"));
+                }
+            }                
+    } else {
+      http_response_code(401);
+      exit(json_encode(["error" => "Fallo de autorizacion"]));         
+    }
+  }
+ 
   public function comprobarCodigo($idCodigo) {
       $fechaActual=(date("H")).":".(date("i")).":".(date("s"));
       $eval = "SELECT * FROM codigoRecuperacion where codigoRecuperacion = ?";
@@ -345,6 +327,8 @@ class UserController {
         }
       }
   }
+  
+  
   public function editarPasswordRecuperar() {
       //Cogemos los valores de la peticion.
       $password= $_POST['password'];

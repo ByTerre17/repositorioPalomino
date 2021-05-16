@@ -32,9 +32,14 @@ export class JuegosService {
     return this.http.delete(url+"eliminarJuego/"+id)
   }
 
+  listarJuegosMasComentarios(): Observable<any>{
+    return this.http.get(url+'listarJuegosMasComentarios/')
+  }
+
   listarJuegos(): Observable<any>{
     return this.http.get(url+'list/')
   }
+
   listarGeneros(): Observable<any>{
     return this.http.get(url+'listGeneros/')
   }
@@ -43,6 +48,10 @@ export class JuegosService {
   }
   listarPlataformas(): Observable<any>{
     return this.http.get(url+'listPlataformas/')
+  }
+
+  obtenerVideosJuegoMejorValorado(): Observable<any>{
+    return this.http.get(url+'obtenerVideosJuegoMejorValorado/')
   }
 
   listarXJuegosNuevos(cantidad:number): Observable<any>{

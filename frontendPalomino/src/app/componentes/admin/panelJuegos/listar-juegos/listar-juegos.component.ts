@@ -43,7 +43,7 @@ export class ListarJuegosComponent implements OnInit {
       this.servicioJuegos.eliminarJuego(idJuego).subscribe(
         respuesta => {
           console.log(respuesta)
-          window.location.reload();
+
         },
         error => console.log(error)
       )

@@ -20,6 +20,7 @@ export class VerJuegoComponent implements OnInit {
   comentarios:any
   urlActiva: any
   usuario: any
+  cargado:Boolean = false
   formComentario = this.fb.group({
     idJuego: [''],
     idUsuario: [''],
@@ -32,27 +33,14 @@ export class VerJuegoComponent implements OnInit {
   ngOnInit(): void {
     this.idJuego = this.ruta.snapshot.paramMap.get("id")
     this.obtenerJuego()
-    this.obtenerJuegos()
     this.urlActiva = document.location.href
-    this.obtenerComentariosPorJuego(this.idJuego)
     this.cargarPerfil()
   }
   obtenerJuego(): void{
     this.servicioJuegos.verJuego(this.idJuego).subscribe(
       respuesta =>{
-        console.log(respuesta)
         this.juego=respuesta
-        console.log(this.juego)
-      },
-      error => {console.log(error)}
-    )
-  }
-
-  obtenerJuegos(): void{
-    this.servicioJuegos.listarJuegos().subscribe(
-      respuesta =>{
-        this.juegos=respuesta
-        console.log(this.juegos)
+        this.obtenerComentariosPorJuego(this.idJuego)
       },
       error => {console.log(error)}
     )
@@ -62,29 +50,24 @@ export class VerJuegoComponent implements OnInit {
     console.log(this.formComentario.value)
     this.servicioComentarios.crearComentario(this.formComentario.value).subscribe(
       respuesta =>{
-        console.log(respuesta)
-        
         window.location.reload();
       },
       error => console.log(error)
     )
   }
-
-  obtenerComentarios(): void{
-    this.servicioComentarios.listarComentarios().subscribe(
-      respuesta =>{
-        this.comentarios=respuesta
-        console.log(this.comentarios)
-      },
-      error => {console.log(error)}
-    )
-  }
-
   obtenerComentariosPorJuego(idJuego: any): void{
     this.servicioComentarios.listarComentariosPorJuego(idJuego).subscribe(
       respuesta =>{
         this.comentarios=respuesta
-        console.log(this.comentarios)
+        for(let i=0;i<this.comentarios.length;i++){
+          if(this.comentarios[i].likes==null){
+            this.comentarios[i].likes=0
+          }
+          if(this.comentarios[i].dislikes==null){
+            this.comentarios[i].dislikes=0
+          }
+        }
+        this.cargado=true
       },
       error => {console.log(error)}
     )
@@ -94,7 +77,6 @@ export class VerJuegoComponent implements OnInit {
     if(this.servicioUsuarios.isLogged()){
     this.servicioUsuarios.obtenerPerfil().subscribe(
       respuesta => {
-        console.log(respuesta)
         this.usuario = respuesta
       },
       error => console.log(error)

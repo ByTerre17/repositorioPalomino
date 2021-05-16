@@ -148,3 +148,27 @@
     margin-bottom: 10px;
 }
 
+.Video{
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  padding-top: 5%;
+}
+.ultimosLanzamientos{
+    padding-top: 2%;
+}
+.cajaFuncion2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+  width: 100%;
+}
+.cajaFuncion2video{
+    padding-top: 2%;
+    display: block;
+    width: 60vw;
+    height: 70vh;
+    margin-left: 5%;
+  }

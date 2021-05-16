@@ -30,15 +30,15 @@
         color: white;
         background-color: #61ff47;
         font-weight: bold;
-        font-size: 2em;
+        font-size: 0.9vw;
         border: 1px solid #000;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-top: 0.2vw;
+        padding-bottom: 0.2vw;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
         border: 5px solid rgba(28,110,164,0.11);
         border-radius: 40px 40px 40px 40px;
-        margin-left: 10px;
+        margin-left: 5px;
 }
 .NombreNota{
         display: -ms-inline-flexbox;
@@ -74,23 +74,10 @@
     align-self: auto;
 }
 
-.card{
-    padding: 20px;
-    margin: 20px;
-    border:solid black;
-}
-.card-body{
-    border: 1px solid #dfe6de;
-    border-radius: 26px 26px 26px 26px;
-    font-family: 'EB Garamond', serif;
-    font-size: 2em;
-}
 .titulos{
     font-weight: bolder;
 }
-.resumen{
-    font-size: 0.5em;
-}
+
 .text-muted{
     font-size: bold;
 }
@@ -99,7 +86,7 @@
     color: #FFFFFF;
     background: #b8b8b8;
     text-shadow: 4px 3px 0 #7A7A7A;
-    font-size: 4em;
+    font-size: 8vh;
 }
 .display-4{
     display: -ms-inline-flexbox;
@@ -146,44 +133,21 @@
     color: #444444;
     background: #FFFFFF;
 }
-.card-img-top{
-    background-image: url("https://www.google.es/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png");
-    min-width: 100px;
-    min-height: 200px;
-    background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-.card-body{
-    padding-top: 10px;
-    margin-bottom: 10px;
-}
+
 .cajaDeComentarios{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     margin: 10px;
-    background-color: white;
-    border: solid black;
 }
-.comentario{
-    margin: 20px;
-    padding: 10px;
-    background-color: rgb(201, 183, 183);
-    border: solid rgb(97, 92, 92);
-}
+
 .resumenComentario{
     font-size: 1em;
 }
-.botonEliminar{
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-.tituloCajaComentarios{
-    padding: 10px;
-}
-.cajaInsertarComentario{
-    background-color: white;
-    border: solid black;
-    margin: 10px;
-    padding: 10px;
-}
+
 .perfil{
     background-color: white;
     border: solid black;
@@ -196,6 +160,9 @@
 .dato{
     font-size: 1.2em;
     font-weight: bold;
+}
+.subtitulo1{
+    font-weight: bold;  
 }
 .subtitulo2{
     display: -ms-inline-flexbox;
@@ -222,4 +189,74 @@
     color: #444444;
     background: #FFFFFF;
     font-size: 3em;
+}
+.comentario{
+    margin: 1vh;
+    padding: 1vh;
+    background-color: rgb(201, 183, 183);
+    border: solid rgb(97, 92, 92);
+    width: 80vw;
+    height: 18vh;
+    display: inline-block;
+}
+.comentarioArriba{
+    width: 78.5vw;
+    display: flex;
+    align-items: flex-start;
+}
+
+.comentarioAbajo{
+    width: 100%;
+    height: 60%;
+    margin-top: 1vh;
+    display: flex;
+    align-items: flex-start;
+    display: inline-block;
+    padding-left: 1vw;
+    padding-top: 1vh;
+    
+}
+.cajaBoton{
+    margin-top: 2%;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    
+}
+.tituloComentario{
+    font-weight: bold;
+    margin-left: 1vw;
+    margin-top: 1vh;
+    font-size: 1.2vw;
+    justify-content: flex-end;
+}
+
+.nombreJuego{
+    font-size: 1.2vw;
+    font-weight: bold;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+
+}
+.cajaBotonEliminar{
+    font-size: 1vw;
+    display: flex;
+    width: 30vw;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.btn-primary {
+    font-size: 0.9vw;
+}
+.btn-danger {
+    font-size: 0.8vw;
+}
+.texto{
+    font-size: 0.8vw;
+    display: inline-block;
+    overflow-wrap: break-word;
 }

@@ -47,6 +47,10 @@ export class ComentariosService {
     return this.http.post(url+"/crearReporte", reporte)
   }
 
+  listComentarMasLikes(): Observable<any>{
+    return this.http.get(url+'listComentarMasLikes/')
+  }
+
   listarComentarios(): Observable<any>{
     return this.http.get(url+'list/')
   }
@@ -54,8 +58,12 @@ export class ComentariosService {
   listarReportes(): Observable<any>{
     return this.http.get(url+'listReportes/')
   }
-
+  
   listarComentariosPorJuego(idJuego: any): Observable<any>{
     return this.http.get(url+'listPorJuego/'+idJuego)
+  }
+
+  listarComentariosPorUsuario(): Observable<any>{
+    return this.http.get(url+'listarComentariosPorUsuario/')
   }
 }

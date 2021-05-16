@@ -11,16 +11,13 @@ class ComentarioController {
     $this->db = $conexion;
   }
 
-  public function listarComentarios() {
-    
-      $eval = "SELECT * FROM comentario";
+  public function listarComentariosMasLikes() {
+      $eval = 'SELECT comentario.*, COUNT(likedislike.opinion = "like")as Likes  FROM comentario, likedislike WHERE comentario.id = likedislike.idComentario GROUP BY comentario.id ORDER BY COUNT(likedislike.opinion = "like") DESC LIMIT 3';
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
-      $resultado = $peticion->fetchAll(PDO::FETCH_OBJ);
-      exit(json_encode($resultado));
-    
+      $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
+      exit(json_encode($comentarios));
   }
-  
   public function listarReportes() {
     
       $eval = "SELECT * FROM reporte";
@@ -62,8 +59,39 @@ class ComentarioController {
           }
       }
       exit(json_encode($comentarios));
-      
+  }
+  
+  public function listarComentariosPorUsuario($id) {
     
+      $eval = "SELECT comentario.*,juego.nombre as nombreJuego FROM comentario,juego where idUsuario=? and comentario.idJuego = juego.id";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([IDUSER]);
+      $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
+      
+      
+      $eval = "SELECT likedislike.idComentario,  count(likedislike.opinion) AS dislikes FROM likedislike WHERE opinion = 'dislike' GROUP BY likedislike.idComentario";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $dislikes = $peticion->fetchAll(PDO::FETCH_OBJ);
+      
+      $eval = "SELECT likedislike.idComentario,  count(likedislike.opinion) AS likes FROM likedislike WHERE opinion = 'like' GROUP BY likedislike.idComentario";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $likes = $peticion->fetchAll(PDO::FETCH_OBJ);
+      
+      foreach ($comentarios as $comentario){
+          foreach ($likes as $like){
+              if($comentario->id == $like->idComentario){
+                  $comentario->likes = $like->likes;
+              }
+          }
+          foreach ($dislikes as $dislike){
+              if($comentario->id == $dislike->idComentario){
+                  $comentario->dislikes = $dislike->dislikes;
+              }
+          }
+      }
+      exit(json_encode($comentarios));
   }
 
   public function verJuego($id) {

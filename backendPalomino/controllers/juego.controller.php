@@ -11,9 +11,30 @@ class JuegoController {
   }
 
   public function listarJuegos() {
-    $imagen;
       
       $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
+      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
+      foreach ($juegos as $juego){
+        $juego->nota=$juego->nota*10;
+        foreach ($medias as $media){
+            if($media->id==$juego->id){
+                $juego->nota=$media->notaMedia;
+            }
+        }
+      }
+      exit(json_encode($juegos));
+    
+  }
+  
+  public function listarJuegosMasComentarios() {
+     
+      $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen, COUNT(comentario.id) AS cantidadComentarios   FROM juego,imagenes,plataforma,genero,comentario WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id and juego.id = comentario.idJuego GROUP BY juego.id LIMIT 4";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -105,14 +126,27 @@ class JuegoController {
         exit(json_encode($plataforma));
      }
     
-     public function listarVideos($idJuego) {
-        $eval = "SELECT * FROM videos where idJuego=?";
-        $peticion = $this->db->prepare($eval);
-        $peticion->execute([$idJuego]);
-        $videos = $peticion->fetchAll(PDO::FETCH_OBJ);
-        exit(json_encode($videos));
-     }
+    public function listarVideos($idJuego) {
+       $eval = "SELECT * FROM videos where idJuego=?";
+       $peticion = $this->db->prepare($eval);
+       $peticion->execute([$idJuego]);
+       $videos = $peticion->fetchAll(PDO::FETCH_OBJ);
+       exit(json_encode($videos));
+    }
     
+  public function juegoMejorValorado() {
+    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id LIMIT 1";
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute();
+    $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
+    $idJuego = $medias[0]->id;
+    $eval = "SELECT videos.direccion from videos where videos.idJuego = ?";
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute([$idJuego]);
+    $video = $peticion->fetchAll(PDO::FETCH_OBJ);
+    exit(json_encode($video));
+    
+  }
 
   public function crearJuego() {
     //Guardamos los parametros de la petición.
@@ -170,13 +204,14 @@ class JuegoController {
                 http_response_code(400);
                 exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
             } else {
+                
+                $nombreJuego =str_replace(' ', '', $juego->nombre);
                 $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-                $nombreImagen = "p-".$juego->nombre."-".$i.$ext;
+                $nombreImagen = "imagen".$nombreJuego."-".$i.$ext;
                 $ruta = ROOT."images/".$nombreImagen;
                 
-                $imgFind = $ruta;
-                $imgFile = glob($imgFind);
-                foreach($imgFile as $fichero) unlink($fichero);
+                $direccionImagen= ROOT .'images'. '\\' . $nombreImagen;
+                unlink($direccionImagen);
                 
                 if(move_uploaded_file($rutaTemp,$ruta)) {
 
@@ -210,14 +245,14 @@ class JuegoController {
                 http_response_code(400);
                 exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
             } else {
+                $nombreJuego =str_replace(' ', '', $juego->nombre);
                 $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-                $nombreImagen = "p-".$juego->nombre."-".$i.$ext;
+                $nombreImagen = "imagen".$nombreJuego."-".$i.$ext;
                 $ruta = ROOT."images/".$nombreImagen;
                 
-                $imgFind = $ruta;
-                $imgFile = glob($imgFind);
                 
-            foreach($imgFile as $fichero) unlink($fichero);
+                $direccionImagen= ROOT .'images'. '\\' . $nombreImagen;
+                unlink($direccionImagen);
                 if(move_uploaded_file($rutaTemp,$ruta)) {
 
                 //Prepara el contenido del campo imgSrc
@@ -284,7 +319,7 @@ class JuegoController {
         
         
     if($principalVieja=="true"){
-        $imagenPrincipal=$_POST['imagenPrincipal'];;
+        $imagenPrincipal=$_POST['imagenPrincipal'];
         $imagenesAntiguas[]=$_POST['imagenPrincipal'];
     }
     $consulta = "delete from videos where idJuego=?";
@@ -298,9 +333,9 @@ class JuegoController {
     }
     
     
-    $eval = "update juego set nombre=?, fechaDeLanzamiento=?, comprar=?, edad=?, creador=?, genero=?, numeroDeJugadores=?, nota=?, resumen=? where id = ?";
+    $eval = "update juego set nombre=?, fechaDeLanzamiento=?, comprar=?, edad=?, creador=?, genero=?, plataforma=?, numeroDeJugadores=?, nota=?, resumen=? where id = ?";
     $peticion = $this->db->prepare($eval);
-    $peticion->execute([$juego->nombre,$juego->fechaDeLanzamiento,$juego->comprar,$juego->edad,$juego->creador,$juego->genero,$juego->numeroDeJugadores,$juego->nota,$juego->resumen,$idJuego]);   
+    $peticion->execute([$juego->nombre,$juego->fechaDeLanzamiento,$juego->comprar,$juego->edad,$juego->creador,$juego->genero,$juego->plataforma,$juego->numeroDeJugadores,$juego->nota,$juego->resumen,$idJuego]);   
     
         
     
@@ -329,8 +364,8 @@ class JuegoController {
             $peticion = $this->db->prepare($consulta);
             $peticion->execute([$imagenesEliminar[$i]->id]);
             
-            $imgFile = glob($imagenesEliminar[$i]->direccion);
-            foreach($imgFile as $fichero) unlink($fichero);
+            $direccionImagen= ROOT .'images'. '\\' . substr($imagenesEliminar[$i]->direccion, 40);
+            unlink($direccionImagen);
             
         }
     
@@ -350,13 +385,14 @@ class JuegoController {
                 http_response_code(400);
                 exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
             } else {
+                
+                $nombreJuego =str_replace(' ', '', $juego->nombre);
                 $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-                $nombreImagen = "p-".$juego->nombre."-".$cantidadImagenesMantenidas+$i.$ext;
+                $nombreImagen = "imagen".$nombreJuego."-".($i+$cantidadDeImagenes+$cantidadImagenesMantenidas).$ext;
                 $ruta = ROOT."images/".$nombreImagen;
                 
-                $imgFind = $ruta;
-                $imgFile = glob($imgFind);
-                foreach($imgFile as $fichero) unlink($fichero);
+                $direccionImagen= ROOT .'images'. '\\' . $nombreImagen;
+                unlink($direccionImagen);
                 
                 if(move_uploaded_file($rutaTemp,$ruta)) {
 
@@ -379,7 +415,7 @@ class JuegoController {
                 }
             }    
         }
-        elseif($i!=$imagenPrincipal && $principalVieja=="false"){
+        elseif($i!=$imagenPrincipal && $principalVieja=="true"){
             $imagen = $imagenes[$i];
             $mime = $imagen['type'];
             $size = $imagen['size'];
@@ -390,14 +426,17 @@ class JuegoController {
                 http_response_code(400);
                 exit(json_encode(["error" => "La imagen tiene que ser JPG o PNG y no puede ocupar mas de 400KB"]));
             } else {
+                
+                $nombreJuego =str_replace(' ', '', $juego->nombre);
                 $ext = strpos($mime, "jpeg") ? ".jpg":".png";
-                $nombreImagen = "p-".$juego->nombre."-".$cantidadImagenesMantenidas+$i.$ext;
+                $nombreImagen = "imagen".$nombreJuego."-".($i+$cantidadDeImagenes+$cantidadImagenesMantenidas).$ext;
                 $ruta = ROOT."images/".$nombreImagen;
                 
                 $imgFind = $ruta;
                 $imgFile = glob($imgFind);
                 
-            foreach($imgFile as $fichero) unlink($fichero);
+                $direccionImagen= ROOT .'images'. '\\' . $nombreImagen;
+                unlink($direccionImagen);
                 if(move_uploaded_file($rutaTemp,$ruta)) {
 
                 //Prepara el contenido del campo imgSrc
@@ -434,9 +473,20 @@ class JuegoController {
       
   public function eliminarJuego($id) {
     if(IDUSER) {
-      $eval = "DELETE FROM juego WHERE id=?";
+        
+      $eval = "SELECT * FROM imagenes where idJuego = ?";
       $peticion = $this->db->prepare($eval);
-      $resultado = $peticion->execute([$id]);
+      $peticion->execute([$id]);
+      $imagenes = $peticion->fetchAll(PDO::FETCH_OBJ);
+      if(isset($imagenes)){
+        foreach ($imagenes as $imagen){
+          $direccionImagen=ROOT .'images'. '\\'. substr($imagen->direccion, 40);
+          unlink($direccionImagen);
+        }
+      }
+        $eval = "DELETE FROM juego WHERE id=?";
+        $peticion = $this->db->prepare($eval);
+        $resultado = $peticion->execute([$id]);
       http_response_code(200);
       exit(json_encode("juego eliminado correctamente"));
     } else {
