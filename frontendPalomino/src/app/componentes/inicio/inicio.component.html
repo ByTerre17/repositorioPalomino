@@ -1,21 +1,20 @@
-<div class="caja">
-    <div class="jumbotron">
-        <h1 class="display-4">Bienvenido a criticame</h1>
+<div *ngIf="preparadoJuegosRecuadro1==true && preparadoVideosJuegoMejorValorado==true && preparadoJuegosRecuadro3==true && preparadoComentarMasLikes==true" class="caja">
+    <div class="tituloPagina">
+        <h1 class="titulo">Bienvenido a <div class="neon">critícame</div></h1>
         <br>
       </div>
     <div class="ultimosLanzamientos">
       <h2 class="subtitulo">Ultimos lanzamientos.</h2>
       <div class="cajaFuncion1">
-          <div class="card-group">
-            <div class="card" *ngFor="let juego of juegos1" (click)="verJuego(juego.id)" >
-              <div class="card-img-top" style="background-image: url('{{juego.imagen}}')" ><div class="nota">{{juego.nota}}</div></div>
-                <div class="card-body">
-                  <h3 class="card-title"> <div class="NombreNota"><div class="nombre">{{juego.nombre}}</div></div></h3>
-                  <p class="card-text">{{juego.resumen}}</p>
-                  <div class="eventoPasarElRaton" id="boton" ><button type="button" class="btn btn-primary">Haz click</button></div>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">{{juego.fechaDePublicacion}}</small>
+          <div class="cajaUltimosLanzamientos">
+            <div class="cajaUltimoLanzamiento" *ngFor="let juego of juegos1" (click)="verJuego(juego.id)" >
+              <div class="parteArribaUL" style="background-image: url('{{juego.imagen}}')" ><div class="nota">{{juego.nota}}</div></div>
+                <div class="parteAbajoUL">
+                  <h3 class="tituloUL"> <div class="NombreNota"><div class="nombre">{{juego.nombre}}</div></div></h3>
+                  <div class="cajaBotonUL" id="boton" ><button type="button" class="btn btn-primary">Haz click</button></div>
+                  <div class="fechaDeLanzamientoUL">
+                    <small class="text-muted">{{juego.fechaDePublicacion}}</small>
+                  </div>
                 </div>
             </div>  
           </div> 
@@ -27,5 +26,33 @@
         <iframe class="cajaFuncion2video" [src]='video()'>
         </iframe> 
       </div>
-    </div>    
+    </div>
+    <div class="juegosMasComentarios">
+      <h2 class="subtitulo">Juegos con más comentarios.</h2>
+      <div class="cajaFuncion1">
+          <div class="cajasJuegoMasComentario">
+            <div class="cajaJuegoMasComentario" *ngFor="let juego of juegosMasComentarios" (click)="verJuego(juego.id)" >
+                <div class="fotoJuegoMasComentario" style="background-image: url('{{juego.imagen}}')" ><div class="nota">{{juego.nota}}</div></div>
+                <div class="cajaBotonVerJuegoMasComentarios"><button class="botonVerJuegoMasComentarios">Ver juego</button></div>
+            </div>  
+          </div> 
+      </div>
+    </div>
+    <div  class="comentariosMasLikes">
+      <h2>Comentarios con más likes:</h2>
+      <div class="cajaComentarios">
+        <div class="cajaDeComentarios">
+            <div *ngFor="let comentario of comentariosMasLikes" class="comentario">
+                <div class="comentarioArriba">
+                    <div class="nota">{{comentario.nota}}</div>
+                    <div class="tituloComentario">{{comentario.titulo}}</div>
+                    <div class="nombreJuego"><a href="/verJuego/{{comentario.idJuego}}">{{comentario.nombreJuego}}</a></div>
+                </div>
+                <div class="comentarioAbajo">
+                    <div class="texto">{{comentario.texto}}</div>
+                </div>
+              </div> 
+        </div>
+      </div>
+  </div>    
 </div>

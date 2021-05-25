@@ -35,6 +35,7 @@ export class ListarjuegosComponent implements OnInit {
     this.servicioJuegos.listarJuegos().subscribe(
       respuesta =>{
         this.juegos=respuesta
+        console.log(this.juegos)
         this.listoJuegos=true
       },
       error => {console.log(error)}
@@ -44,16 +45,16 @@ export class ListarjuegosComponent implements OnInit {
     this.servicioJuegos.listarGeneros().subscribe(
       respuesta =>{
         this.generos=respuesta
+        this.listoGeneros=true
       },
       error => {console.log(error)}
     )
   }
-
   obtenerPlataformas(): void{
     this.servicioJuegos.listarPlataformas().subscribe(
       respuesta =>{
         this.plataformas=respuesta
-        console.log(this.plataformas)
+        this.listoPlataformas=true
       },
       error => {console.log(error)}
     )

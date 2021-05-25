@@ -13,6 +13,7 @@ export class ListarJuegosComponent implements OnInit {
   juegos: any[] = []
   logueado:any
   usuario: any;
+  juegosListo: Boolean = false
   constructor(private fb:FormBuilder,private servicioJuegos:JuegosService,private servicioUsuarios:UsuariosService, private irHacia:Router) { }
 
   ngOnInit(): void {
@@ -43,7 +44,6 @@ export class ListarJuegosComponent implements OnInit {
       this.servicioJuegos.eliminarJuego(idJuego).subscribe(
         respuesta => {
           console.log(respuesta)
-
         },
         error => console.log(error)
       )
@@ -63,7 +63,7 @@ export class ListarJuegosComponent implements OnInit {
     this.servicioJuegos.listarJuegos().subscribe(
       respuesta =>{
         this.juegos=respuesta
-        console.log(this.juegos)
+        this.juegosListo=true
       },
       error => {console.log(error)}
     )

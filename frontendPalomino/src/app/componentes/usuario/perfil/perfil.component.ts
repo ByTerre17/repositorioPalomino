@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { Usuario } from 'src/app/clases/usuario';
 import { ComentariosService } from 'src/app/servicios/comentarios.service';
 import { JuegosService } from 'src/app/servicios/juegos.service';
@@ -20,9 +21,15 @@ comentariosUsuario: any
 editarPerfil: boolean = false
 nuevaFoto:Boolean = false
 nuevaUsuario:Boolean = false
+nuevaUsuarioNoValido:Boolean = false
 nuevoCorreo:Boolean = false
+nuevoCorreoNoValido:Boolean = false
 nuevaPassword:Boolean = false
+nuevoPasswordNoValido:Boolean = false
 fotoNueva:any
+passwordIguales:Boolean = false
+passwordAntigua:Boolean = false
+password:any
 
 form1= this.fb.group({
   nombreUsuario:['', [Validators.required]],
@@ -42,8 +49,11 @@ form1= this.fb.group({
 cargarPerfil(): void{
   this.servicioUsuarios.obtenerPerfil().subscribe(
     respuesta => {
-      console.log(respuesta)
       this.perfil = respuesta
+      console.log(this.perfil)
+      if(this.perfil.foto=="no_foto"){
+        this.perfil.foto ="./assets/no_foto.jpg"
+      }
       this.form1.get("nombreUsuario")?.setValue(this.perfil.usuario)
       this.form1.get("correo")?.setValue(this.perfil.email)
     },
@@ -63,7 +73,6 @@ obtenerComentarios(): void{
           this.comentariosUsuario[i].dislikes=0
         }
       }
-      console.log(this.comentariosUsuario)
     },
     error => {console.log(error)}
   )
@@ -83,7 +92,6 @@ eliminarComentario(idComentario:any): void{
 eliminarPerfil(): void{
   this.servicioUsuarios.eliminarUsuario().subscribe(
     respuesta => {
-      console.log(respuesta)
       this.servicioUsuarios.logOut()
       this.irHacia.navigate([''])
     },
@@ -100,13 +108,54 @@ mostrarEditarPerfil(): void{
 }
 
 nuevoCorreoFuntion(){
-  this.nuevoCorreo=true
+  if(this.form1.get("correo")?.value.length>10){
+    this.nuevoCorreo=true
+    this.nuevoCorreoNoValido=false
+  }
+  else{
+    this.nuevoCorreoNoValido=true
+    this.nuevoCorreo=false
+  }
 }
 nuevoUsuarioFuntion(){
-  this.nuevaUsuario=true
+  if(this.form1.get("nombreUsuario")?.value.length>3){
+    this.nuevaUsuario=true
+    this.nuevaUsuarioNoValido=false
+  }
+  else{
+    this.nuevaUsuarioNoValido=true
+    this.nuevaUsuario=false
+  }  
 }
-nuevaPasswordFuntion(){
-  this.nuevaPassword=true
+
+async comprobarPassword(){
+  await delay(2000);
+  var formData = new FormData()
+  formData.append("password", this.form1.get("passwordAntigua")?.value)
+  this.servicioUsuarios.comprobarPassword(formData).subscribe(
+    respuesta =>{
+      if(respuesta!="iguales"){
+        this.passwordAntigua=true
+      }
+      else{
+        this.passwordAntigua=false
+      }
+    },
+    error => console.log(error)
+  )
+}
+  async passwordIgualesFuntion(){
+  await delay(3000);
+  if(this.form1.get("passwordNueva")?.value != this.form1.get("passwordNueva2")?.value && this.form1.get("passwordNueva")?.value.length>3){
+    this.nuevaPassword=false
+    this.passwordIguales=true
+    this.nuevoPasswordNoValido=false
+  }
+  else{
+    this.nuevaPassword=true
+    this.passwordIguales=false
+    this.nuevoPasswordNoValido=true
+  }
 }
 nuevaFotoFuntion(evento: any){
   this.nuevaFoto=true
@@ -114,14 +163,13 @@ nuevaFotoFuntion(evento: any){
     this.fotoNueva=evento.target.files[0]
   }
 }
-submit(): void{
+  async submit(): Promise<void>{
   var formData = new FormData()
   if(this.nuevoCorreo==true){
     formData.append("correo",this.form1.get("correo")?.value)
     this.servicioUsuarios.editarCorreo(formData).subscribe(
       respuesta =>{
       },
-      error => console.log(error)
     )
   }
   if(this.nuevaUsuario==true){
@@ -129,7 +177,7 @@ submit(): void{
     this.servicioUsuarios.editarUsuario(formData).subscribe(
       respuesta =>{
       },
-      error => console.log(error)
+
     )
   }
   if(this.nuevaPassword==true){
@@ -149,6 +197,7 @@ submit(): void{
       error => console.log(error)
     )
   }
+  await delay(200);
   window.location.reload();
   }
 }

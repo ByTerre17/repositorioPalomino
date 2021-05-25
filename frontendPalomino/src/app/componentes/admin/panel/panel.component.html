@@ -1,4 +1,14 @@
-<h1>Bienvenido al panel de administración</h1>
-<a href="administracionUsuarios" routerLinkActive="active">Administración de usuarios</a><br>
-<a routerLink="juegos" routerLinkActive="active">Administración de juegos</a><br>
-<a routerLink="reportes" routerLinkActive="active">Administración de reportes</a><br>
+<div class="caja">
+    <div class="titulo">Bienvenido al panel de administración</div>
+    <div class="cajasAdministracion">
+        <div class="cajaAdministracion">
+            <div class="subtitulo">Panel de juegos</div>
+            <div class="opcion"><a routerLink="juegos/listar" routerLinkActive="active">Listar Juegos en la web</a></div>
+            <div class="opcion"><a routerLink="juegos/insertar" routerLinkActive="active">Publicar Juego</a></div>
+        </div>
+        <div class="cajaAdministracion">
+            <div class="subtitulo">Panel de Reportes</div>
+            <div class="opcion"><a routerLink="reportes/listarReportes" routerLinkActive="active">Listar reportes</a></div>
+        </div>
+    </div>
+</div>

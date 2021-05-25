@@ -1,0 +1,271 @@
+.caja{
+    padding: 4%;
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+    min-width: 100%;
+    min-height: 100%;
+}
+.nota{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    color: white;
+    background-color: #61ff47;
+    font-weight: bold;
+    font-size: 3vw;
+    border: 1px solid #000;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 5px solid rgba(28,110,164,0.11);
+    border-radius: 40px 40px 40px 40px;
+    margin-left: 10px;
+}
+.NombreNota{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+.nombre{
+    border-bottom: solid black;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+.titulos{
+    font-weight: bolder;
+    font-size: 2vw;
+}
+.subtitulo{
+    font-family: 'Shippori Mincho B1', serif;
+    color: #FFFFFF;
+    background: #b8b8b8;
+    text-shadow: 4px 3px 0 #7A7A7A;
+    font-size: 10vh;
+}
+.subtitulo{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    color: #444444;
+    background: #FFFFFF;
+    text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
+    color: #444444;
+    background: #FFFFFF;
+}
+.cajaMenu{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: solid black 0.3vh;
+    margin: 1%;
+    display: flex;
+}
+.buscador{
+    width: 100%;
+    display: inline;
+    padding: 1%;
+}
+.titulos{
+    font-weight: bolder;
+    font-size: 2vw;
+}
+.inpBuscador{
+    width: 100%;
+    height: 8vh;
+    font-size: 3vh;
+}
+.filtros{
+    display: flex;
+    width: auto;
+    flex-direction: column;
+    padding: 1%;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.cajaListadoJuegos{
+    display: flex;
+    width: 100%;
+    padding: 2%;
+    margin: 1%;
+}
+.listadoJuegos{
+    min-width: 100%;
+}
+.cajaJuego{
+    min-width: 100%;
+    height: 50vh;
+    background-color: white;
+    display: flex;
+    margin-top: 2%;
+}
+.cajaFotoJuego{
+    min-width: 20%;
+    height: 100% 100%;
+    display: flex;
+    margin: 1%;
+}
+.fotoJuego{
+    display: flex;
+    width: 20vw;
+    height: 100% 100%;
+}
+.cajaDatosJuego{
+    background-color: white;
+    display: flex;
+    width: 100%;
+}
+.datosJuego{
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.cajaNotaJuego{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2%;
+}
+.notaJuego{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 2vw;
+    padding: 3%;
+    font-weight: bold;
+    border:  black solid 0.5vw;
+}
+.fechaCreacionJuego{
+    margin-top: 2%;
+    margin-left: 1%;
+    display: flex;
+    width: 100%;
+}
+.creadorJuego{
+    margin-top: 2%;
+    margin-left: 1%;
+    display: flex;
+    width: 100%;
+}
+.generoJuego{
+    margin-top: 2%;
+    margin-left: 1%;
+    display: flex;
+    width: 100%;
+}
+.plataformaJuego{
+    margin-top: 2%;
+    margin-left: 1%;
+    display: flex;
+    width: 100%;
+    font-size: 1.5;
+}
+.tituloJuego{
+    font-size: 8vh;
+    font-weight: bold;
+}
+.datoJuegoTipo{
+    font-size: 3vh;
+    font-weight: bold;
+}
+.datoJuego{
+    font-size: 2.8vh;
+}
+.botonVerJuego{
+    width: 100%;
+    font-size: 1.5vw;
+    text-align: center;
+}
+.cajaBotonVerJuego{
+    width: 100%;
+}
+.botonVerJuego {
+    --button: hsl(0, 100%, 90%);
+    --button-hover: hsl(0, 100%, 94%);
+    --button-active:  hsl(0, 100%, 84%);
+    --button-visited: hsl(0, 100%, 94%);
+    --button-colour: #1e1e1e;
+     --button-border: #1e1e1e;
+  }
+  
+  
+  .cajaBotonVerJuego button {
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+  }
+  
+  .cajaBotonVerJuego button:hover {
+    text-decoration: underline;
+    background: var(--button-hover);
+    box-shadow: inset 0 0 0 4px #ffffff;
+  }
+  
+  .cajaBotonVerJuego button:active {
+    background: var(--button-active);
+  }
+  
+  .cajaBotonVerJuego button:visited {
+    background: var(--button-visited);
+  }

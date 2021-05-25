@@ -16,18 +16,20 @@ export class ListarReportesComponent implements OnInit {
   reportes : any
   logueado:any
   usuario: any;
+  reportesListos=false
 
   ngOnInit(): void {
     this.cargarUsuario()
     this.logueado= this.servicioUsuarios.isLogged
     this.obtenerReportes()
+
   }
 
   obtenerReportes(): void{
     this.servicioComentarios.listarReportes().subscribe(
       respuesta =>{
         this.reportes=respuesta
-        console.log(this.reportes)
+        this.reportesListos=true
       },
       error => {console.log(error)}
     )

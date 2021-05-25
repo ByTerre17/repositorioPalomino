@@ -12,7 +12,7 @@ class JuegoController {
 
   public function listarJuegos() {
       
-      $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
+      $eval = "SELECT juego.id as id, juego.nombre as nombre, DATE_FORMAT( juego.fechaDeLanzamiento ,  '%d/%m/%Y' ) as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, DATE_FORMAT( juego.fechaDePublicacion ,  '%d/%m/%Y' ) as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -34,9 +34,29 @@ class JuegoController {
   
   public function listarJuegosMasComentarios() {
      
-      $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen, COUNT(comentario.id) AS cantidadComentarios   FROM juego,imagenes,plataforma,genero,comentario WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id and juego.id = comentario.idJuego GROUP BY juego.id LIMIT 4";
+      $eval = "SELECT juego.id as id, juego.nombre as nombre, DATE_FORMAT( juego.fechaDeLanzamiento ,  '%d/%m/%Y' ) as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, DATE_FORMAT( juego.fechaDePublicacion ,  '%d/%m/%Y' ) as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen, COUNT(comentario.id) AS cantidadComentarios   FROM juego,imagenes,plataforma,genero,comentario WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id and juego.id = comentario.idJuego GROUP BY juego.id ORDER BY cantidadComentarios DESC limit 4";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
+      $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
+      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute();
+      $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
+      foreach ($juegos as $juego){
+        $juego->nota=$juego->nota*10;
+        foreach ($medias as $media){
+            if($media->id==$juego->id){
+                $juego->nota=$media->notaMedia;
+            }
+        }
+      }
+      exit(json_encode($juegos));
+    }
+    public function listarJuegosMasComentariosPlataforma($idPlataforma) {
+     
+      $eval = "SELECT juego.id as id, juego.nombre as nombre, DATE_FORMAT( juego.fechaDeLanzamiento ,  '%d/%m/%Y' ) as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, DATE_FORMAT( juego.fechaDePublicacion ,  '%d/%m/%Y' ) as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen, COUNT(comentario.id) AS cantidadComentarios   FROM juego,imagenes,plataforma,genero,comentario WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id and juego.id = comentario.idJuego and juego.plataforma = ? GROUP BY juego.id ORDER BY cantidadComentarios DESC limit 4";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$idPlataforma]);
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
       $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
       $peticion = $this->db->prepare($eval);
@@ -56,7 +76,7 @@ class JuegoController {
   
   public function listarXJuegosPorFechaNuevos($cantidad) {
     
-    $eval = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id ORDER BY fechaDePublicacion DESC LIMIT ".$cantidad;
+    $eval = "SELECT juego.id as id, juego.nombre as nombre, DATE_FORMAT( juego.fechaDeLanzamiento ,  '%d/%m/%Y' ) as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, DATE_FORMAT( juego.fechaDePublicacion ,  '%d/%m/%Y' ) as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id ORDER BY fechaDePublicacion DESC LIMIT ".$cantidad;
     $peticion = $this->db->prepare($eval);
     $peticion->execute();
     $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -75,9 +95,31 @@ class JuegoController {
       exit(json_encode($juegos));
     
   }
+  
+  public function listarXJuegosPorFechaNuevosPlataforma($cantidad,$idPlataforma) {
+    
+    $eval = "SELECT juego.id as id, juego.nombre as nombre, DATE_FORMAT( juego.fechaDeLanzamiento ,  '%d/%m/%Y' ) as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, DATE_FORMAT( juego.fechaDePublicacion ,  '%d/%m/%Y' ) as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id and juego.plataforma = ? ORDER BY fechaDePublicacion DESC LIMIT ".$cantidad;
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute([$idPlataforma]);
+    $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
+    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute();
+    $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
+    foreach ($juegos as $juego){
+        $juego->nota=$juego->nota*10;
+        foreach ($medias as $media){
+            if($media->id==$juego->id){
+                $juego->nota=$media->notaMedia;
+            }
+        }
+    }
+      exit(json_encode($juegos));
+    
+  }
 
   public function verJuego($id) {
-      $consulta = "SELECT juego.id as id, juego.nombre as nombre, juego.fechaDeLanzamiento as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, juego.fechaDePublicacion as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.id=? and juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
+      $consulta = "SELECT juego.id as id, juego.nombre as nombre, DATE_FORMAT( juego.fechaDeLanzamiento ,  '%d/%m/%Y' ) as fechaDeLanzamiento, juego.comprar as comprar, juego.edad as edad, juego.creador as creador, genero.nombre as genero, plataforma.nombre as plataforma, juego.numeroDeJugadores as numeroDeJugadores, DATE_FORMAT( juego.fechaDePublicacion ,  '%d/%m/%Y' ) as fechaDePublicacion, imagenes.direccion as imagen, juego.nota, juego.resumen   FROM juego,imagenes,plataforma,genero WHERE juego.id=? and juego.plataforma = plataforma.id and juego.genero = genero.id and juego.imagen = imagenes.id";
       $peticion = $this->db->prepare($consulta);
       $peticion->execute([$id]);
       $juego = $peticion->fetchObject();
@@ -135,7 +177,7 @@ class JuegoController {
     }
     
   public function juegoMejorValorado() {
-    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id LIMIT 1";
+    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id ORDER BY notaMedia DESC LIMIT 1";
     $peticion = $this->db->prepare($eval);
     $peticion->execute();
     $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -145,7 +187,19 @@ class JuegoController {
     $peticion->execute([$idJuego]);
     $video = $peticion->fetchAll(PDO::FETCH_OBJ);
     exit(json_encode($video));
-    
+  }
+  
+  public function juegoMejorValoradoPlataforma($idPlataforma) {
+    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1)*10 as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego and juego.plataforma = ? GROUP BY juego.id ORDER BY notaMedia DESC LIMIT 1";
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute([$idPlataforma]);
+    $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
+    $idJuego = $medias[0]->id;
+    $eval = "SELECT videos.direccion from videos where videos.idJuego = ?";
+    $peticion = $this->db->prepare($eval);
+    $peticion->execute([$idJuego]);
+    $video = $peticion->fetchAll(PDO::FETCH_OBJ);
+    exit(json_encode($video));
   }
 
   public function crearJuego() {

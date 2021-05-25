@@ -15,13 +15,10 @@ import { EnviarTokenInterceptor } from './auth/enviar-token.interceptor';
 import { PerfilComponent } from './componentes/usuario/perfil/perfil.component';
 import { RecuperarPasswordComponent } from './componentes/usuario/recuperar-password/recuperar-password.component';
 import { VerJuegoComponent } from './componentes/juego/ver-juego/ver-juego.component';
-import { CrearJuegoComponent } from './componentes/juego/crear-juego/crear-juego.component';
 import { PanelComponent } from './componentes/admin/panel/panel.component';
 import { PanelUsuariosComponent } from './componentes/admin/panel-usuarios/panel-usuarios.component';
-import { PanelReportesComponent } from './componentes/admin/panelReportes/panel-reportes/panel-reportes.component';
 import { ListarJuegosComponent } from './componentes/admin/panelJuegos/listar-juegos/listar-juegos.component';
 import { InsertarJuegosComponent } from './componentes/admin/panelJuegos/insertar-juegos/insertar-juegos.component';
-import { PanelJuegosComponent } from './componentes/admin/panelJuegos/panel-juegos/panel-juegos.component';
 import { EditarJuegoComponent } from './componentes/admin/panelJuegos/editar-juego/editar-juego.component';
 import { ListarReportesComponent } from './componentes/admin/panelReportes/listar-reportes/listar-reportes.component';
 import { ReportarComentarioComponent } from './componentes/comentario/reportar-comentario/reportar-comentario.component';
@@ -31,6 +28,9 @@ import { ListarjuegosComponent } from './componentes/juego/listarjuegos/listarju
 import { BuscarPipe } from './pipes/buscar.pipe';
 import { FiltroGeneroPipe } from './pipes/filtro-genero.pipe';
 import { FiltroPlataformaPipe } from './pipes/filtro-plataforma.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InicioPlataformasComponent } from './componentes/inicio-plataformas/inicio-plataformas.component';
+import { CurriculumComponent } from './componentes/curriculum/curriculum.component';
 
 @NgModule({
   declarations: [
@@ -43,11 +43,8 @@ import { FiltroPlataformaPipe } from './pipes/filtro-plataforma.pipe';
     PerfilComponent,
     RecuperarPasswordComponent,
     VerJuegoComponent,
-    CrearJuegoComponent,
     PanelComponent,
-    PanelJuegosComponent,
     PanelUsuariosComponent,
-    PanelReportesComponent,
     ListarJuegosComponent,
     InsertarJuegosComponent,
     EditarJuegoComponent,
@@ -58,7 +55,9 @@ import { FiltroPlataformaPipe } from './pipes/filtro-plataforma.pipe';
     ListarjuegosComponent,
     BuscarPipe,
     FiltroGeneroPipe,
-    FiltroPlataformaPipe
+    FiltroPlataformaPipe,
+    InicioPlataformasComponent,
+    CurriculumComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +67,7 @@ import { FiltroPlataformaPipe } from './pipes/filtro-plataforma.pipe';
     FormsModule,
     HttpClientModule,
     CommonModule,
+    NgbModule
   ],
   providers: [{provide:LOCALE_ID, useValue:"es"},
   {provide: HTTP_INTERCEPTORS, useClass:EnviarTokenInterceptor, multi:true}

@@ -1,9 +1,12 @@
 <div class="caja">
     <div class="titulo">
-      <h1>Registro</h1>
+      <h1 class="titulo">Registro</h1>
     </div>
     <div class="formulario">
-        <form [formGroup]="form1" (submit)="submit()">
+        <form  [formGroup]="form1" (submit)="submit()">
+          <div class="alert alert-danger" role="alert" *ngIf='mensaje'>
+            <strong>{{mensaje}}</strong>
+          </div>
             <div class="form-row mb-1">
               <div class="form-group col-md-6">
                 <label for="email">Correo electronico:</label>
@@ -22,7 +25,7 @@
               <input class="form-control" type="password" placeholder="Repite la contraseña" id="password2" formControlName="password2">
           </div>
             </div>
-            <button class="btn btn-primary btn-block" type ="submit" >Registrarse</button>
+            <button class="btn btn-primary btn-block" [disabled]="!form1.valid" type ="submit" >Registrarse</button>
         </form>
     </div>
 </div>

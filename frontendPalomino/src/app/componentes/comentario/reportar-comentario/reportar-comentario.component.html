@@ -1,14 +1,19 @@
-<div>
-    <h1>Reportar Comentario</h1>
-    <div>
-        Titulo: {{comentario.titulo}}<br>
-        Texto: {{comentario.texto}}<br>
-        Nota: {{comentario.nota}}<br>
+<div class="caja" *ngIf="comentarioListo==true">
+    <h1 class="titulo">Reportar Comentario</h1>
+    <div class="comentario">
+        <h2 class="subtitulo">Datos del comentario</h2>
+        <span class="tipoDato">Titulo: </span><span class="dato">{{comentario.titulo}}</span><br>
+        <span class="tipoDato">Texto: </span><span class="dato">{{comentario.texto}}</span><br>
+        <span class="tipoDato">Nota: </span><span class="dato">{{comentario.nota}}</span><br>
     </div>
-    <form [formGroup]="form1" (submit)="submit()">
-        <input type="text" formControlName="titulo" placeholder="Titulo"><br>
-        <input type="text" formControlName="descripcion" placeholder="texto"><br>
-        <input type="submit">
-    </form>
+    <div class="formReporte">
+        <form [formGroup]="form1" (submit)="submit()">
+            <div id="errores" class="errores">
+            </div>
+            <input type="text" formControlName="titulo" placeholder="Titulo del reporte"><br>
+            <textarea class="textarea" formControlName="descripcion" placeholder="Motivo del reporte" ></textarea><br>
+            <input type="submit">
+        </form>
+    </div>
 </div>
 

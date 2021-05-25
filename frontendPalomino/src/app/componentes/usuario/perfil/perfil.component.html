@@ -12,47 +12,36 @@
             <span class="subtitulo2">Editar cuenta</span>
             <form [formGroup]="form1" (submit)="submit()" >
                 <div class="nombreUsuario">
-                    <label for="nombreUsuario">Nombre de usuario:</label> <input (click)="nuevoUsuarioFuntion()" formControlName="nombreUsuario" id="nombreUsuario" type="text">
+                    <label for="nombreUsuario">Nombre de usuario:</label><div class="Usuario"> <input class="inpUsuario" (keyup)="nuevoUsuarioFuntion()" formControlName="nombreUsuario" id="nombreUsuario" type="text"> <button *ngIf="nuevaUsuario==true" (click)="nuevaUsuario=false">Cancelar la modificacion</button><div *ngIf="nuevaUsuario==true" class="estado">Se va a modificar</div><div *ngIf="nuevaUsuarioNoValido==true" class="AlertaPassword">El usuario como minimo tiene que tener 3 caracteres como minimo</div></div>
                 </div>
-                <div class="Correo">
+                <div class="correo">
                     <label for="email">Correo:</label>
-                     <input (click)="nuevoCorreoFuntion()" formControlName="correo" id="email" type="email">
+                     <div class="email"><input (keyup)="nuevoCorreoFuntion()" class="inpEmail" formControlName="correo" id="email" type="email"><button *ngIf="nuevoCorreo==true" (click)="nuevoCorreo=false">Cancelar la modificacion</button><div *ngIf="nuevoCorreo==true" class="estado">Se va a modificar</div><div *ngIf="nuevoCorreoNoValido==true" class="AlertaPassword">El correo como minimo tiene que tener 10 caracteres como minimo</div></div>
                 </div>
                 <div class="contraseña">
                     <label  for="passwordAntigua">Contraseña antigua:</label>
-                    <input (click)="nuevaPasswordFuntion()" class="form-control" type="password" placeholder="contraseña antigua" id="passwordAntigua" formControlName="passwordAntigua">
+                    <div class="contraseñaAntigua"><input (keyup)="comprobarPassword()" class="inpAntigua" type="password" placeholder="contraseña antigua" id="passwordAntigua" formControlName="passwordAntigua"><div *ngIf="passwordAntigua==true" class="AlertaPassword">Las Contraseñas no es correcta</div></div>
                     <label for="passwordNueva">Contraseña nueva:</label>
-                    <input (click)="nuevaPasswordFuntion()" class="form-control" type="password" placeholder="contraseña nueva" id="passwordNueva" formControlName="passwordNueva">
+                    <div class="contraseñaNueva1"><input (keyup)="passwordIgualesFuntion()"  class="anpNueva1" type="password" placeholder="contraseña nueva" id="passwordNueva" formControlName="passwordNueva"></div>
                     <label for="passwordNueva2">Repite la nueva contraseña:</label>
-                    <input (click)="nuevaPasswordFuntion()" class="form-control" type="password" placeholder="Repite la contraseña" id="passwordNueva2" formControlName="passwordNueva2">
+                    <div class="contraseñaNueva2"><input (keyup)="passwordIgualesFuntion()" class="anpNueva2" type="password" placeholder="Repite la contraseña" id="passwordNueva2" formControlName="passwordNueva2"><div *ngIf="passwordIguales==true" class="AlertaPassword">Las Contraseñas no coinciden</div><div *ngIf="nuevoPasswordNoValido==true" class="AlertaPassword">La nueva contraseña debe tener como minimo  3 caracteres</div></div>
                 </div>
                 <div class="imagen">
-                    Imagen nueva de perfil :<input (change)="nuevaFotoFuntion($event)" type="file">
+                    Imagen nueva de perfil :<br><input class="inpImagen" (change)="nuevaFotoFuntion($event)" type="file"><button *ngIf="nuevaFoto==true" (click)="nuevaFoto=false">Cancelar la modificacion</button><div *ngIf="nuevaFoto==true" class="estado">Se va a modificar</div>
                 </div>
                 <div class="imagenAntigua">
-                    <img src="{{perfil.foto}}" alt="100" width="100"><br>
+                    <img src="{{perfil.foto}}" class="imgAntigua"><br>
                 </div>
-                <input type="submit" value="Editar">
+                <div>
+                    <input type="submit" value="Editar">
+                </div>
             </form>
-        </div>
-        <div class="perfil">
-            <button class="btn btn-warning" (click)='mostrarEditar=!mostrarEditar'>Editar usuario</button><br><br>
-            <button class="btn btn-danger" (click)='mostrarEliminar=!mostrarEliminar'>Eliminar usuario</button><br>
-        </div>
-        <div class="eliminarPerfil" *ngIf="mostrarEliminar">
-            <button class="btn btn-danger" (click)="eliminarPerfil()">Eliminar perfil</button>
-        </div>
-        <div class="perfil" *ngIf='mostrarEditar'>
-            <span class="subtitulo2">Modificar contraseña</span>
-            <form class="form-group" [formGroup]="form1" >
-                <label for="email">Contraseña antigua:</label>
-                <input class="form-control" type="text" placeholder="contraseña antigua" id="passwordAntigua" formControlName="passwordAntigua">
-                <label for="email">Contraseña nueva:</label>
-                <input class="form-control" type="text" placeholder="contraseña nueva" id="passwordNueva" formControlName="passwordNueva">
-                <label for="password">Repite la nueva contraseña:</label>
-                <input class="form-control" type="text" placeholder="Repite la contraseña" id="passwordNueva2" formControlName="passwordNueva2">
-                <button class="btn btn-primary btn-block" type ="submit" >Modificar contraseña</button>
-            </form>
+            <div>
+                <button class="btn btn-danger" *ngIf="mostrarEliminar==false" (click)='mostrarEliminar=true'>Eliminar usuario</button><br>
+            </div>
+            <div class="eliminarPerfil" *ngIf="mostrarEliminar==true">
+                <button class="btn btn-danger" (click)="eliminarPerfil()">Vuelva a hacer click para eliminar</button>
+            </div>
         </div>
     </div>
     <div *ngIf="editarPerfil==false" class="comentarios">
@@ -62,7 +51,7 @@
                 <div class="comentarioArriba">
                     <div class="nota">{{comentario.nota}}</div>
                     <div class="tituloComentario">{{comentario.titulo}}</div>
-                    <div class="nombreJuego">{{comentario.nombreJuego}}</div>
+                    <div class="nombreJuego"><a href="/verJuego/{{comentario.idJuego}}">{{comentario.nombreJuego}}</a></div>
                     <div class="cajaBotonEliminar" (click)="eliminarComentario(comentario.id)"><button class="btn btn-danger">Eliminar</button></div>
                 </div>
                 <div class="comentarioAbajo">

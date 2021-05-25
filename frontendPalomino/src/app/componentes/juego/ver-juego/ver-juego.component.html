@@ -1,31 +1,111 @@
-<div *ngIf="cargado==true" class="caja">
-    <div class="card">
-        <div class="NombreNota"><h1 class="subtitulo">{{juego.nombre}}</h1><div class="nota">{{juego.nota}}</div></div><br>
-        <div class="card-body">
-            <span class="titulos"> Fecha de creacion:</span> {{juego.fechaDeLanzamiento}}<br>
-            <span class="titulos">Creador:</span> {{juego.creador}}<br>
-            <span class="titulos">Genero:</span> {{juego.genero}}<br>
-            <span class="titulos">Resumen:</span><br> <span class="resumen">-{{juego.resumen}}.</span><br>
+<div *ngIf="cargado==true && videosListo==true && imagenesListo==true" class="caja">
+    <div class="cajaJuego">
+        <div class="NombreNota"><h1 class="subtitulo">{{juego.nombre}}</h1><div class="cajaNota"><div class="nota">{{juego.nota}}</div></div></div><br>
+        <div class="cajaDatosJuego">
+            <div class="datosJuego">
+                <span class="titulos">Fecha de creacion:</span> <span class="titulosDatos"> {{juego.fechaDeLanzamiento}}</span><br>
+                <span class="titulos">Creador:</span><span class="titulosDatos"> {{juego.creador}}</span> <br>
+            </div>
+            <div class="cajaBotones">
+                <button *ngIf="cajaDeComentarios==false" (click)="mostrarCajaComentarios()">Comentarios</button>
+                <button *ngIf="cajaDeMultimedia==false" (click)="mostrarCajaMultimedia()">Videos y Imagenes</button>
+                <button *ngIf="cajaDeDetalles==false" (click)="mostrarCajaDetalles()">Detalles</button>
+            </div>
         </div>
     </div>
-    <div class="cajaDeComentarios">
-    <div><h2 class="tituloCajaComentarios"><span class="titulos">Comentarios</span></h2></div>
-        <div class="comentario" *ngFor="let comentario of comentarios, let indice=index">
-            <h4 class="titulos">{{comentario.titulo}} {{comentario.nota}} </h4>
-            Likes: {{comentario.likes}} Dislikes: {{comentario.dislikes}}<br>
-            <span class="resumenComentario">{{comentario.texto}}</span>
-            <div class="botonEliminar"><button class="btn btn-success" (click)="eliminarComentario(comentario.id)" *ngIf="comprobarUsuario(comentario.idUsuario)" >Eliminar</button></div>
-            <div class="botonLike"><button class="btn btn-success" (click)="likeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Like</button></div>
-            <div class="botondislike"><button class="btn btn-success" (click)="dislikeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Dislike</button></div>
-            <div class="botondislike"><button class="btn btn-success" (click)="reportarComentario(comentario.id)" >Reportar</button></div>
+    <div class="cajaComentarios" *ngIf="cajaDeComentarios==true">
+        <div class="cajaInsertarComentario" *ngIf="!logueado()">
+            <div class="errorSesion">
+                <span>Necesitas Iniciar sesion para poder escribir un comentario.</span><br>
+                <span>Clickea <a href="/login">aquí</a> para iniciar sesión.</span><br>
+                <span>Clickea <a href="/register">aquí</a> para registrarte.</span><br>
+            </div>
+        </div>
+        <div class="cajaInsertarComentario" *ngIf="logueado()">
+            <form [formGroup]='formComentario' (submit)='escribirComentario()'>
+                <span class="titulos">Escribir comentario:</span>
+                    <div class="comentarioArribaPlantilla">
+                        <div class="tituloComentarioPlantilla"><input type="text" class="inpTitulo" formControlName='titulo' placeholder='Titulo'><div class="error" id="titulo"></div></div><br>
+                        <div class="notaComentarioPlantilla"><input type="text" class="inpNota" formControlName='nota' placeholder='Nota'><div class="error" id="nota"></div></div>
+                    </div>
+                    <div class="comentarioAbajoPlantilla">
+                        <div class="error" id="texto"></div>
+                        <textarea class="inpTexto"  placeholder='Explicacion' formControlName='texto'></textarea>
+                    </div>
+                    <button type='submit' class="btn btn-secondary" (click)="formComentario.patchValue({idUsuario:usuario.id});formComentario.patchValue({idJuego:juego.id})">Enviar comentario</button>
+             </form>       
+        </div>    
+        <div class="cajaDeComentarios">
+            <div><h2 class="tituloCajaComentarios"><span class="titulos">Comentarios</span></h2></div>
+            <div *ngFor="let comentario of comentarios, let indice=index"class="comentario">
+                <div class="comentarioArriba">
+                    <div class="tituloComentario">{{comentario.titulo}}</div>
+                    <div class="notaComentario">Nota:{{comentario.nota}}</div>
+                    <div class="likesDislikes">
+                        <div class="likes">Likes: {{comentario.likes}}</div>
+                        <div class="dislikes">Dislikes: {{comentario.dislikes}}</div>
+                    </div>
+                </div>
+                <div class="comentarioAbajo">
+                    <div class="texto">{{comentario.texto}}</div>
+                    <div class="cajaBotonesComentario">
+                        <div class="botonReportar"><button class="reportar" (click)="reportarComentario(comentario.id)" >Reportar</button></div>
+                        <div class="botonesLikeDislike">
+                            <div class="botonLike"><button class="like" (click)="likeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Like</button></div>
+                            <div class="botonDislike"><button class="dislike" (click)="dislikeComentario(comentario.id,comentario.likes,comentario.dislikes, indice)" >Dislike</button></div>
+                        </div>
+                    </div>
+                </div>
+              </div> 
         </div>
     </div>
-    <div class="cajaInsertarComentario" *ngIf="logueado()">
-        <form [formGroup]='formComentario' (submit)='escribirComentario()'>
-            <span class="titulos">Titulo:</span><input type="text" class="form-control" formControlName='titulo' placeholder='escribe tu titulo'><br>
-            <span class="titulos">Texto:</span><input type="text" class="form-control" formControlName='texto' placeholder='escribe tu texto'><br>
-            <span class="titulos">Nota:</span><input type="text" class="form-control" formControlName='nota' placeholder='escribe tu nota'><br>
-            <button type='submit' class="btn btn-secondary" (click)="formComentario.patchValue({idUsuario:usuario.id});formComentario.patchValue({idJuego:juego.id})" [disabled]='!formComentario.valid'>Enviar comentario</button>
-        </form>
+    <div class="cajaDetalles" *ngIf="cajaDeDetalles==true"> 
+        <div class="titulos">Detalles:</div>
+        <div class="detalles">
+            <div class="detallesArriba">
+                <div class="cajaImagenDetalles" >
+                    <div class="imagenDetalles" style="background-image: url('{{juego.imagen}}')">
+                    </div>
+                </div>
+                <div class="cajaResumen">
+                    <span class="titulos">Resumen:</span>
+                    {{juego.resumen}}
+                </div>
+                <div class="cajaRestoDetalles">
+                    <div><span class="negrita">Enlace de compra:</span> <a href="{{juego.comprar}}">Enlace de compra</a></div>
+                    <div><span class="negrita">Genero:</span>  {{juego.genero}}</div>
+                    <div><span class="negrita">Plataforma:</span>  <a href="inicioPlataforma/{{plataforma}}">{{juego.plataforma}}</a></div>
+                    <div><span class="negrita">Edad minima para jugar:</span>  {{juego.edad}}</div>
+                    <div><span class="negrita">Jugadores maximos:</span>  {{juego.numeroDeJugadores}}</div>
+                </div>
+            </div>
+            <div class="detallesAbajo">
+                <span class="negrita">Trailer:</span>
+                <div class="trailerDetalle">
+                    <iframe class="cajaFuncion2video" [src]='videoUrl'></iframe> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cajaMultimedia" *ngIf="cajaDeMultimedia==true"> 
+        <div class="titulos">Multimedia:</div>
+        <div class="multimedia">
+            <div class="cajaCarruselImagenes">
+                <span class="negrita">Imagenes:</span>
+                <div class="carruselImagenes">
+                    <button (click)="indiceImagenUrlCarrusel()">Siguiente imagen</button>
+                    <div class="carruselImagen">
+                        <img [src]='imagenUrlCarrusel' class="imagenCarrusel">
+                    </div>
+                </div>
+            </div>
+            <div class="cajaCarruselVideos">
+                <span class="negrita">Videos:</span>
+                <div class="carruselVideos">
+                    <button (click)="indiceVideoUrlCarrusel()">Siguiente video</button>
+                    <div class="carruselVideo"><iframe class="cajaFuncion2video" [src]='videoUrlCarrusel'></iframe> </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,0 +1,180 @@
+.caja{
+    padding: 4%;
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+    min-width: 100%;
+    min-height: 83vh;
+}
+.titulo{
+    width: 100%;
+    font-family: 'Shippori Mincho B1', serif;
+    color: #FFFFFF;
+    background: #b8b8b8;
+    text-shadow: 4px 3px 0 #7A7A7A;
+    font-size: 8vh;
+}
+.titulo{
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    color: #444444;
+    background: #FFFFFF;
+    text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
+    color: #444444;
+    background: #FFFFFF;
+}
+.cajaFormulario{
+    display: flex;
+    width: 100%;
+    margin-top: 1%;
+    padding: 2%;
+    background-color: white;
+}
+.formulario{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.negrita{
+    font-size: 2vw;
+    font-weight: bold;
+}
+.cajaDatoJuego{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: gray;
+    border: solid black 1px;
+    padding: 1%;
+    margin-top:1% ;
+}
+.cajaImp{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+}
+.datoJuego{
+    width: 100%;
+}
+.resumenJuego{
+    width: 100%;
+    height: 20vh;
+}
+input, select{
+    width: 100%;
+    padding: 1%;
+    margin: 1%;
+    font-size: 1.5vw;
+}
+.cajaImagenesJuego{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.imagenNueva{
+    width: 30%;
+    display: flex;
+}
+.cajaImagenesNuevasJuego{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-color: gray;
+    border: solid black 1px;
+    padding: 1%;
+    margin-top:1% ;
+}
+.controlImagen{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: solid black 0.4vh;
+}
+.prueba{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5vw;
+    font-weight: bold;
+    
+}
+.cajaImagenesAntiguasJuego{
+    width: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-color: gray;
+    border: solid black 1px;
+    padding: 1%;
+    margin-top:1% ;
+}
+.ImagenesAntiguasJuego{
+    display: flex;
+    width: 100%;
+    padding-top: 1%;
+    padding-left: 1%;
+}
+.cajaImagenAntiguaJuego{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.imagenAntiguaJuego{
+    display: flex;
+    flex-direction: row;
+    width: 10%;
+    margin-right: 5%;
+}
+.controlImagenAntiguaJuego{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+.cajaVideosJuego{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    background-color: gray;
+    border: solid black 1px;
+    padding: 1%;
+    margin-top:1% ;
+    margin-bottom:1% ;
+}
+.controlImagenAntiguaJuego, .botonAdd{
+    font-size: 1.5vw;
+    margin-right: 10%;
+}
+.errores{
+    display: flex;
+    width: 100%;
+    font-size: 1.5vw;
+    color: red;
+    font-weight: bold;
+    background-color: gray;
+    border: solid black 1px;
+    padding: 1%;
+    margin-top:1% ;
+    margin-bottom:1% ;
+}

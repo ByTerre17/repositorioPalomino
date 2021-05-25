@@ -1,4 +1,6 @@
-<table class="table">
+<div class="caja" *ngIf="reportesListos==true">
+  <h1 class="titulo">Listado de reportes</h1>
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">id</th>
@@ -8,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let reporte of reportes, let indice=index">
+      <tr *ngFor="let reporte of reportes, let indice=index,">
         <th scope="row">{{indice}}</th>
         <td>{{reporte.titulo}}</td>
         <td>{{reporte.descripcion}}</td>
@@ -16,3 +18,4 @@
       </tr>
     </tbody>
   </table>
+</div>

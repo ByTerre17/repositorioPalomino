@@ -1,28 +1,32 @@
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Fecha de publicacion</th>
-        <th scope="col">Fecha de lanzamiento</th>
-        <th scope="col">Nota</th>
-        <th scope="col">Imagen</th>
-        <th scope="col">Eliminar</th>
-        <th scope="col">Editar</th>
-        <th scope="col">Ver juego</th>
-      </tr>
-    </thead>
-    <tbody >
-      <tr *ngFor="let juego of juegos, let indice=index">
-        <th scope="row">{{indice}}</th>
-        <td>{{juego.nombre}}</td>
-        <td>{{juego.fechaDePublicacion}}</td>
-        <td>{{juego.fechaDeLanzamiento}}</td>
-        <td>{{juego.nota}}</td>
-        <td><img src="{{juego.imagen}}" width="50px"></td>
-        <td><button (click)="eliminarJuego(juego.id)" class="btn btn-danger">Dar de baja</button></td>
-        <td><button (click)="editarJuego(juego.id)" class="btn btn-warning">Editar</button></td>
-        <td><button (click)="verJuego(juego.id)" class="btn btn-info">Ver juego</button></td>
-      </tr>
-    </tbody>
-  </table>
+<div class="caja" *ngIf="juegosListo==true">
+  <div class="titulo">Bienvenido al listado de juegos administración</div>
+  <div class="cajaTabla">
+      <table class="table">
+        <thead class="cabeceraTabla">
+          <tr class="fila">
+            <th class="datoJuego">Nombre</th>
+            <th class="datoJuego">Fecha de publicacion</th>
+            <th class="datoJuego">Fecha de lanzamiento</th>
+            <th class="datoJuego">Nota</th>
+            <th class="datoJuego">Imagen</th>
+            <th class="datoJuego">Eliminar</th>
+            <th class="datoJuego">Editar</th>
+            <th class="datoJuego">Ver juego</th>
+          </tr>
+        </thead>
+        <tbody class="cuerpoTabla" >
+          <tr class="fila" *ngFor="let juego of juegos, let indice=index">
+            <th class="datoJuego">{{juego.nombre}}</th>
+            <td class="datoJuego">{{juego.fechaDePublicacion}}</td>
+            <td class="datoJuego">{{juego.fechaDeLanzamiento}}</td>
+            <td class="datoJuego">{{juego.nota}}</td>
+            <td class="datoJuego"><img class="imagenTabla"  src="{{juego.imagen}}" ></td>
+            <td class="datoJuego"><button  (click)="eliminarJuego(juego.id)" class="eliminar">Dar de baja</button></td>
+            <td class="datoJuego"><button (click)="editarJuego(juego.id)" class="editar">Editar</button></td>
+            <td class="datoJuego"><button (click)="verJuego(juego.id)" class="verJuego">Ver juego</button></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+ 

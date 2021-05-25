@@ -1,0 +1,55 @@
+.cajaBarraNav{
+    display: flex;
+    width: 99%;
+    flex-direction: row;
+    margin: 0.2%;
+    font-size: 2.4vh;
+    font-weight: bold;
+    color: black;
+}
+.columnaBarraNavegacion{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    list-style:none;
+}
+.cajaSesion{
+    display: flex;
+    width: 20%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+.sesion{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0.1%;
+    margin: 1%;
+}
+.imagen{
+    width: 10vw;
+    height: auto;
+}
+.cajaImagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.2%;
+}
+.fila{
+    text-align: center;
+    border: solid black 0.1vh;
+    margin: 1vw;
+    padding: 0.5%;
+}
+a{
+    color: black;
+}

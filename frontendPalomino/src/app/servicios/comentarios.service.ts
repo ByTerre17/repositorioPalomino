@@ -50,6 +50,9 @@ export class ComentariosService {
   listComentarMasLikes(): Observable<any>{
     return this.http.get(url+'listComentarMasLikes/')
   }
+  listComentarMasLikesPlataforma(id:number): Observable<any>{
+    return this.http.get(url+'listComentarMasLikesPlataforma/'+id)
+  }
 
   listarComentarios(): Observable<any>{
     return this.http.get(url+'list/')

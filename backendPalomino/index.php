@@ -67,9 +67,11 @@ switch($control[0]) {
           case "editarPasswordRecuperar":
             $controladorUsuarios->editarPasswordRecuperar();
             break;
-        
           case "editarFoto":
             $controladorUsuarios->editarFoto();
+            break;
+          case "comprobarPassword":
+            $controladorUsuarios->comprobarPassword();
             break;
           case "editarPassword":
             $controladorUsuarios->editarPassword();
@@ -125,11 +127,20 @@ switch($control[0]) {
           case "listarXJuegosPorFechaNuevos":
             $controladorJuegos->listarXJuegosPorFechaNuevos($control[2]);
             break;
+        case "listarXJuegosPorFechaNuevosPlataforma":
+            $controladorJuegos->listarXJuegosPorFechaNuevosPlataforma($control[2],$control[3]);
+            break;
           case "obtenerVideosJuegoMejorValorado":
             $controladorJuegos->juegoMejorValorado();
             break;
+          case "obtenerVideosJuegoMejorValoradoPlataforma":
+            $controladorJuegos->juegoMejorValoradoPlataforma($control[2]);
+            break;
           case "listarJuegosMasComentarios":
             $controladorJuegos->listarJuegosMasComentarios();
+            break;
+          case "listarJuegosMasComentariosPlataforma":
+            $controladorJuegos->listarJuegosMasComentariosPlataforma($control[2]);
             break;
         }
 
@@ -174,6 +185,9 @@ switch($control[0]) {
             break;
           case "listComentarMasLikes":
             $controladorComentarios->listarComentariosMasLikes();
+            break;
+          case "listComentarMasLikesPlataforma":
+            $controladorComentarios->listarComentariosMasLikesPlataforma($control[2]);
             break;
           case "listReportes":
             $controladorComentarios->listarReportes();

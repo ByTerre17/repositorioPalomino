@@ -35,6 +35,9 @@ export class JuegosService {
   listarJuegosMasComentarios(): Observable<any>{
     return this.http.get(url+'listarJuegosMasComentarios/')
   }
+  listarJuegosMasComentariosPlataforma(id:number): Observable<any>{
+    return this.http.get(url+'listarJuegosMasComentariosPlataforma/'+id)
+  }
 
   listarJuegos(): Observable<any>{
     return this.http.get(url+'list/')
@@ -53,8 +56,14 @@ export class JuegosService {
   obtenerVideosJuegoMejorValorado(): Observable<any>{
     return this.http.get(url+'obtenerVideosJuegoMejorValorado/')
   }
+  obtenerVideosJuegoMejorValoradoPlataforma(id:number): Observable<any>{
+    return this.http.get(url+'obtenerVideosJuegoMejorValoradoPlataforma/'+id)
+  }
 
   listarXJuegosNuevos(cantidad:number): Observable<any>{
     return this.http.get(url+'listarXJuegosPorFechaNuevos/'+cantidad)
+  }
+  listarXJuegosNuevosPlataforma(cantidad:number,id:number): Observable<any>{
+    return this.http.get(url+'listarXJuegosPorFechaNuevosPlataforma/'+cantidad+"/"+id)
   }
 }

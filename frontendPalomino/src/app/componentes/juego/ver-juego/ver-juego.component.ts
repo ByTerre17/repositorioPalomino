@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComentariosService } from 'src/app/servicios/comentarios.service';
 import { JuegosService } from 'src/app/servicios/juegos.service';
@@ -12,6 +13,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
   styleUrls: ['./ver-juego.component.css']
 })
 export class VerJuegoComponent implements OnInit {
+  [x: string]: any;
   idJuego: any
   juegos: any[] = []
   juego: any
@@ -20,7 +22,23 @@ export class VerJuegoComponent implements OnInit {
   comentarios:any
   urlActiva: any
   usuario: any
+  imagenes:any
+  urlVideo:String = "https://www.youtube.com/embed/"
+  videos:any
+  cajaDeComentarios:Boolean = false
+  cajaDeDetalles:Boolean = true
+  cajaDeMultimedia:Boolean = false
   cargado:Boolean = false
+  tituloError:any
+  textoError:any
+  notaError:any
+  plataformas:any
+  plataforma:any
+  prueba:any
+  indiceVideos:number =0
+  indiceImagenes:number =0
+  videosListo:Boolean = false
+  imagenesListo:Boolean = false
   formComentario = this.fb.group({
     idJuego: [''],
     idUsuario: [''],
@@ -28,7 +46,7 @@ export class VerJuegoComponent implements OnInit {
     titulo: ['', Validators.required],
     nota: ['', Validators.required]
   })
-  constructor(private ruta: ActivatedRoute,private fb:FormBuilder,private servicioJuegos:JuegosService,private servicioUsuarios:UsuariosService, private irHacia:Router,private servicioComentarios:ComentariosService,@Inject(DOCUMENT) document: any) { }
+  constructor(private ruta: ActivatedRoute,private fb:FormBuilder,private servicioJuegos:JuegosService,private servicioUsuarios:UsuariosService, private irHacia:Router,private servicioComentarios:ComentariosService,private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.idJuego = this.ruta.snapshot.paramMap.get("id")
@@ -40,20 +58,114 @@ export class VerJuegoComponent implements OnInit {
     this.servicioJuegos.verJuego(this.idJuego).subscribe(
       respuesta =>{
         this.juego=respuesta
+        console.log(this.juego)
         this.obtenerComentariosPorJuego(this.idJuego)
+        this.obtenerVideos(this.juego.id)
+        this.obtenerImagenesJuego(this.juego.id)
+        this.obtenerPlataformas()
       },
       error => {console.log(error)}
     )
   }
-
-  escribirComentario(): void{
-    console.log(this.formComentario.value)
-    this.servicioComentarios.crearComentario(this.formComentario.value).subscribe(
+  get videoUrl(){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.videos[0].direccion);
+  }
+  
+  indiceVideoUrlCarrusel(){
+    this.indiceVideos++
+    if(this.indiceVideos==this.videos.length){
+      this.indiceVideos=0
+    }  
+  }
+  indiceImagenUrlCarrusel(){
+    this.indiceImagenes++
+    if(this.indiceImagenes==this.imagenes.length){
+      this.indiceImagenes=0
+    }
+  }
+  get videoUrlCarrusel(){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.videos[this.indiceVideos].direccion);
+  }
+  get imagenUrlCarrusel(){
+    return this.imagenes[this.indiceImagenes].direccion;
+  }
+  obtenerPlataformas(): void{
+    this.servicioJuegos.listarPlataformas().subscribe(
       respuesta =>{
-        window.location.reload();
+        this.plataformas=respuesta
+        for(var i=0;i<this.plataformas.length;i++){
+          if(this.juego.plataforma==this.plataformas[i].nombre){
+            this.plataforma=this.plataformas[i].id
+          }
+        }
       },
-      error => console.log(error)
+      error => {console.log(error)}
     )
+  }
+  obtenerImagenesJuego(idJuego:number): void{
+    this.servicioJuegos.imagenesJuego(idJuego).subscribe(
+      respuesta =>{
+        this.imagenes=respuesta
+        this.imagenesListo=true
+      },
+      error => {console.log(error)}
+    )
+  }
+  obtenerVideos(idJuego:number): void{
+    this.servicioJuegos.listarVideos(idJuego).subscribe(
+      respuesta =>{
+        this.videos=respuesta
+        for(let i =0;i<this.videos.length;i++){
+          let direccion = this.videos[i].direccion.substring(32,1000)
+          this.videos[i].direccion = this.urlVideo + direccion
+        }
+        console.log(this.sanitizer.bypassSecurityTrustResourceUrl(this.videos[0].direccion))
+        this.prueba=this.sanitizer.bypassSecurityTrustResourceUrl(this.videos[0].direccion)
+        this.videosListo=true
+      },
+      error => {console.log(error)}
+    )
+  }
+  mostrarCajaComentarios(): void{
+    this.cajaDeComentarios=true
+    this.cajaDeMultimedia=false
+    this.cajaDeDetalles=false
+  }
+  mostrarCajaDetalles(): void{
+    this.cajaDeComentarios=false
+    this.cajaDeMultimedia=false
+    this.cajaDeDetalles=true
+  }
+  mostrarCajaMultimedia(): void{
+    this.cajaDeComentarios=false
+    this.cajaDeMultimedia=true
+    this.cajaDeDetalles=false
+  }
+  escribirComentario(): void{
+    let valido = true
+    if(this.formComentario.get("titulo")?.value == ""){
+      valido=false
+      const element: HTMLElement = document.getElementById('titulo') as HTMLElement
+      element.innerHTML = 'El titulo del comentario no puede estar vacio'
+    }
+    if(this.formComentario.get("nota")?.value == "" || this.formComentario.get("nota")?.value > 10 || this.formComentario.get("nota")?.value < 1){
+      valido=false
+      const element: HTMLElement = document.getElementById('nota') as HTMLElement
+      element.innerHTML = 'La nota del comentario no puede estar vacia ni superar el 10 ni ser menor de 1'
+    }
+    if(this.formComentario.get("texto")?.value == "" ){
+      valido=false
+      const element: HTMLElement = document.getElementById('texto') as HTMLElement
+      element.innerHTML = 'La explicacion del comentario no puede estar vacio'
+    }
+    if(valido==true){
+      this.servicioComentarios.crearComentario(this.formComentario.value).subscribe(
+        respuesta =>{
+          window.location.reload();
+        },
+        error => console.log(error)
+      )
+    }
   }
   obtenerComentariosPorJuego(idJuego: any): void{
     this.servicioComentarios.listarComentariosPorJuego(idJuego).subscribe(

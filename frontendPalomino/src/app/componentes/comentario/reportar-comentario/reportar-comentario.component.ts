@@ -15,6 +15,7 @@ export class ReportarComentarioComponent implements OnInit {
   constructor(private ruta: ActivatedRoute,private fb:FormBuilder, private servicioUsuario:UsuariosService, private irHacia:Router,private serviciojuego:JuegosService, private servicioComentarios:ComentariosService) { }
   idComentario : any;
   comentario: any;
+  comentarioListo=false
   form1= this.fb.group({
     titulo:['', [Validators.required]],
     descripcion:['', [Validators.required]]
@@ -28,23 +29,38 @@ export class ReportarComentarioComponent implements OnInit {
     this.servicioComentarios.obtenerComentario(this.idComentario).subscribe(
       respuesta =>{
         this.comentario=respuesta
-        console.log(this.comentario)
+        this.comentarioListo=true
       },
       error => {console.log(error)}
     )
   }
 
   submit(): void{
-    var formData = new FormData()
-    var reporte = JSON.stringify(this.form1.getRawValue())
-    formData.append("reporte", reporte)
-    formData.append("idComentario", this.idComentario)
+    let valido= true
+    const element: HTMLElement = document.getElementById('errores') as HTMLElement
 
-    this.servicioComentarios.crearReporte( formData ).subscribe(
-      respuesta =>{
-        console.log(respuesta)
-      },
-      error => console.log(error)
-    )
+    if(this.form1.get("titulo")?.value == ""){
+      valido=false
+      element.innerHTML= element.innerHTML + "<br>" + "El titulo del reporte no puede estar en blanco"
+    }
+
+    if(this.form1.get("descripcion")?.value == ""){
+      valido=false
+      element.innerHTML= element.innerHTML + "<br>" + "La descripcion del reporte no puede estar en blanco"
+    }
+
+    if(valido==true){
+      var formData = new FormData()
+      var reporte = JSON.stringify(this.form1.getRawValue())
+      formData.append("reporte", reporte)
+      formData.append("idComentario", this.idComentario)
+
+      this.servicioComentarios.crearReporte( formData ).subscribe(
+        respuesta =>{
+          this.irHacia.navigate([''])
+        },
+        error => console.log(error)
+      )
+    }
   }
 }

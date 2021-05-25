@@ -167,7 +167,7 @@ class UserController {
         $peticion = $this->db->prepare($eval);
         $peticion->execute([$resultado->id,$fechaInicio,$fechaFinal,$codigoRecuperacion,0]);
         
-        $mensaje= "Hola usted ha solicitado un cambio de contraseña debido a que ha olvidado la misma, para cambiar la contraseña clicke el siguiente enlace ". 'http://localhost:4200/recuperarPassword2/'.$codigoRecuperacion;
+        $mensaje= "Hola usted ha solicitado un cambio de contraseña debido a que ha olvidado la misma, para cambiar la contraseña clicke el siguiente enlace ". 'http://localhost:4200/recuperarPassword/'.$codigoRecuperacion;
         $email_user = "manuelproyecto484@gmail.com"; //Mi correo
         $email_password = "2FJVx7PRpy2zjXe"; //Pass de mi correo
         $the_subject = "Recuperación de contraseña";
@@ -224,6 +224,30 @@ class UserController {
       exit(json_encode(["error" => "Fallo de autorizacion"]));         
     }
   }
+  
+  public function comprobarPassword() {
+    if(IDUSER) {
+      //Cogemos los valores de la peticion.
+      $password = $_POST[('password')];
+      
+      if(!isset($password)) {
+      http_response_code(400);
+      exit(json_encode("Faltan datos"));
+    }
+      //Obtenemos los datos guardados en el servidor relacionados con el usuario
+      $peticion = $this->db->prepare("SELECT email,foto,usuario,password,rol FROM usuario WHERE id=?");
+      $peticion->execute([IDUSER]);
+      $usuarioBaseDeDatos = $peticion->fetchObject();
+      
+      if(password_verify($password, $usuarioBaseDeDatos->password)){
+          http_response_code(201);
+          exit(json_encode("iguales"));
+      }
+    } else {
+      http_response_code(401);
+      exit(json_encode(["error" => "Fallo de autorizacion"]));         
+    }
+  }
 
   public function editarUsuario() {
     if(IDUSER) {
@@ -255,7 +279,7 @@ class UserController {
       http_response_code(400);
       exit(json_encode("Faltan datos"));
     }
-      $eval = "UPDATE usuario SET correo=? WHERE id=?";
+      $eval = "UPDATE usuario SET email=? WHERE id=?";
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$correo,IDUSER]);
       http_response_code(201);
@@ -348,6 +372,12 @@ class UserController {
       $eval = "UPDATE usuario SET password=? WHERE id=?";
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$nPassword,$codigoRecuperacion->idUsuario]);
+      
+      $nPassword = password_hash($password, PASSWORD_BCRYPT);
+      $eval = "delete from codigoRecuperacion where id = ?";
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$codigoRecuperacion->id]);
+      
       http_response_code(201);
       exit(json_encode("Usuario actualizado correctamente"));
       }

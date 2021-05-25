@@ -53,7 +53,9 @@ export class UsuariosService {
   editarFoto(datos:any): Observable<any>{
     return this.http.post(url+"editarFoto",datos)
   }
-
+  comprobarPassword(datos:any): Observable<any>{
+    return this.http.post(url+"comprobarPassword",datos)
+  }
 
   listarUsuarios(): Observable<any>{
     return this.http.get(url+'list/')

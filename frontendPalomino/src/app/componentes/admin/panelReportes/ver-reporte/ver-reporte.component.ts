@@ -17,6 +17,7 @@ export class VerReporteComponent implements OnInit {
   comentario: any;
   reporte:any;
   idReporte:any
+  comentarioListo=false
   ngOnInit(): void {
     this.idReporte = this.ruta.snapshot.paramMap.get("id")
     this.obtenerReporte()
@@ -27,7 +28,8 @@ export class VerReporteComponent implements OnInit {
     this.servicioComentarios.obtenerComentario(this.idComentario).subscribe(
       respuesta =>{
         this.comentario=respuesta
-        console.log(this.comentario)
+        
+        this.comentarioListo=true
       },
       error => {console.log(error)}
     )
@@ -49,7 +51,7 @@ export class VerReporteComponent implements OnInit {
       formData.append("idComentario",this.idComentario)
       this.servicioComentarios.eliminarComentarioAdmin(formData).subscribe(
         respuesta => {
-          console.log(respuesta)
+          this.irHacia.navigate(['/administracion/reportes/listarReportes'])
         },
         error => console.log(error)
       )
@@ -62,7 +64,7 @@ eliminarReporte(): void{
     formData.append("idReporte",this.idReporte)
     this.servicioComentarios.eliminarReporte(formData).subscribe(
       respuesta => {
-        console.log(respuesta)
+        this.irHacia.navigate(['/administracion/reportes/listarReportes'])
       },
       error => console.log(error)
     )

@@ -1,17 +1,12 @@
-<div>
-    <h1>Reportar Comentario</h1>
-    <div>
-        Comentario
-        Titulo: {{comentario.titulo}}<br>
-        Texto: {{comentario.texto}}<br>
-        Nota: {{comentario.nota}}<br>
+<div class="caja" *ngIf="comentarioListo==true">
+    <h1 class="titulo">Reportar Comentario</h1>
+    <div class="comentario">
+        <h2 class="subtitulo">Datos del comentario</h2>
+        <span class="tipoDato">Titulo: </span><span class="dato">{{comentario.titulo}}</span><br>
+        <span class="tipoDato">Texto: </span><span class="dato">{{comentario.texto}}</span><br>
+        <span class="tipoDato">Nota: </span><span class="dato">{{comentario.nota}}</span><br>
     </div>
-    <div>
-        Reporte
-        Titulo: {{reporte.titulo}}<br>
-        Descripcion: {{reporte.descripcion}}
-    </div>
-    <div>
+    <div class="botones">
         <button (click)="eliminarComentario()">Borrar Comentario</button>
         <button (click)="eliminarReporte()">Borrar Reporte</button>
     </div>

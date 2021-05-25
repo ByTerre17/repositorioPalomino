@@ -1,79 +1,109 @@
-<div class="caja">
-    <div class="titulo">
-      <h1>Insertar Juegos</h1>
-    </div>
-    <div class="formulario">
-        <form [formGroup]="form1" (submit)="submit()">
-            <div class="form-row mb-1">
-              <div class="form-group col-md-6">
-                <label for="nombre">Nombre:</label>
-                <input class="form-control" type="text" placeholder="Nombre" id="nombre" formControlName="nombre">
+<div *ngIf="isGeneros&&isPlataformas" class="caja">
+  <div class="titulo">
+    Publicar Juego
+  </div>
+  <div class="cajaFormulario">
+    <form class="cajaFormulario" [formGroup]="form1" (submit)="submit()">
+      <div class="formulario">
+          <div class="cajaDatoJuego">
+            <label class="cajaDatoJuego"  for="nombre">
+              <div class="datoJuego"><span class="negrita">Nombre:</span></div>
+              <div class="cajaImp"><input class="impNombre" type="text" placeholder="Nombre" id="nombre" formControlName="nombre"></div>
+            </label>  
+          </div>
+          <div class="cajaDatoJuego">
+            <label class="cajaDatoJuego" for="fechaDeLanzamiento">
+              <div class="datoJuego"><span class="negrita">fechaDeLanzamiento:</span></div>
+              <div class="cajaImp"><input class="impfechaLanzamiento" type="date" placeholder="fechaDeLanzamiento" id="fechaDeLanzamiento" formControlName="fechaDeLanzamiento"></div>
+            </label>
+          </div>
+            <div class="cajaDatoJuego">
+              <label class="cajaDatoJuego" for="comprar">
+                <div class="datoJuego"><span class="negrita">Enlace para comprar:</span></div>
+                <div class="cajaImp"><input class="" type="url" placeholder="comprar" id="comprar" formControlName="comprar"></div>
+              </label>
+            </div>
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="edad">
+                  <div class="datoJuego"><span class="negrita">Minimo de edad para jugar al juego:</span></div>
+                  <div class="cajaImp"><input class="" type="text" placeholder="edad" id="edad" formControlName="edad"></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="fechaDeLanzamiento">fechaDeLanzamiento:</label>
-                <input class="form-control" type="date" placeholder="fechaDeLanzamiento" id="fechaDeLanzamiento" formControlName="fechaDeLanzamiento">
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="creador">
+                  <div class="datoJuego"><span class="cajaDatoJuego" class="negrita">Creador:</span></div>
+                  <div class="cajaImp"><input class="" type="text" placeholder="creador" id="creador" formControlName="creador"></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="comprar">Enlace para comprar:</label>
-                <input class="form-control" type="url" placeholder="comprar" id="comprar" formControlName="comprar">
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="genero">
+                  <div class="datoJuego"><span class="negrita">Genero:</span></div>
+                  <div class="cajaImp"><select name="genero"  formControlName="genero" >
+                    <option *ngFor="let genero of generos" [ngValue]="genero.id" >
+                      {{ genero.nombre }}
+                    </option>
+                  </select></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="edad">Minimo de edad para jugar al juego:</label>
-                <input class="form-control" type="text" placeholder="edad" id="edad" formControlName="edad">
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="plataforma">
+                  <div class="datoJuego"><span class="negrita">Plataforma:</span></div>
+                  <div class="cajaImp"><select name="plataforma"  formControlName="plataforma">
+                    <option value="" disabled>Elige una plataforma</option>
+                    <option *ngFor="let plataforma of plataformas" [ngValue]="plataforma.id" >
+                      {{ plataforma.nombre }}
+                    </option>
+                  </select></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="creador">Creador:</label>
-                <input class="form-control" type="text" placeholder="creador" id="creador" formControlName="creador">
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="numeroDeJugadores">
+                  <div class="datoJuego"><span class="negrita">Numero de jugadores:</span></div>
+                  <div class="cajaImp"><input class="" type="text" placeholder="numeroDeJugadores" id="numeroDeJugadores" formControlName="numeroDeJugadores"></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="genero">Genero:</label>
-                <select name="genero"  formControlName="genero">
-                  <option value="" disabled selected="selected">Elige un genero</option>
-                  <option *ngFor="let genero of generos" [ngValue]="genero.id">
-                    {{ genero.nombre }}
-                  </option>
-                </select>
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="nombre">
+                  <div class="datoJuego"><span class="negrita">Resumen:</span></div>
+                  <div class="cajaImp"><textarea class="resumenJuego" placeholder="Resumen" id="resumen" formControlName="resumen" ></textarea></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="plataforma">Plataforma:</label>
-                <select name="plataforma"  formControlName="plataforma">
-                  <option value="" disabled selected="selected">Elige una plataforma</option>
-                  <option *ngFor="let plataforma of plataformas" [ngValue]="plataforma.id">
-                    {{ plataforma.nombre }}
-                  </option>
-                </select>
+              <div class="cajaDatoJuego">
+                <label class="cajaDatoJuego" for="nota">
+                  <div class="datoJuego"><span class="negrita">Nota:</span></div>
+                  <div class="cajaImp"><input class="" type="number" placeholder="nota" id="nota" formControlName="nota"></div>
+                </label>
               </div>
-              <div class="form-group col-md-6">
-                <label for="numeroDeJugadores">Numero de jugadores:</label>
-                <input class="form-control" type="text" placeholder="numeroDeJugadores" id="numeroDeJugadores" formControlName="numeroDeJugadores">
-              </div>
-              
-              <div class="form-group col-md-6">
-                <label for="nombre">Resumen:</label>
-                <input class="form-control" type="text" placeholder="Resumen" id="resumen" formControlName="resumen">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="nota">Nota:</label>
-                <input class="form-control" type="number" placeholder="nota" id="nota" formControlName="nota">
-              </div>
-              <div class="form-group col-md-6" formArrayName="imagenes">
-                <label for="imagen">Imagen:</label>
-                <div *ngFor="let item of getImagenes.controls, let pointIndex=index" [formGroupName]="pointIndex">
-                  <input type="file" name='imagen{{pointIndex}}' formControlName="imagen" (change)="cambiaImagen($event,pointIndex)">
-                  <input type="radio" id="principal"  name="principal" value="imagen{{pointIndex}}" (click)="cambiarFotoPrincipal(pointIndex)"> Foto principal
+              <div class="cajaImagenesJuego" formArrayName="imagenes">
+                <div class="cajaImagenesNuevasJuego">
+                  <label class="cajaImagenesNuevasJuego" for="imagen">
+                    <span class="negrita">Imagen:</span>
+                    <div class="imagenNueva" *ngFor="let item of getImagenes.controls, let pointIndex=index" [formGroupName]="pointIndex">
+                      <input type="file" name='imagen{{pointIndex}}' formControlName="imagen" (change)="meteImagen($event,pointIndex)">
+                      <div class="controlImagen"><input class="prueba" *ngIf="campoNull(pointIndex)==false" type="radio" id="principal"  name="principal" value="imagen{{pointIndex}}" (click)="cambiarFotoPrincipal(pointIndex)"><span class="prueba" *ngIf="campoNull(pointIndex)==false">Foto principal</span></div>
+                    </div>
+                  </label>
+                  <div class="cajaBotonesImagen">
+                    <button class="botonAdd" (click)="addImagen()">Añadir imagen</button>
+                    <button class="botonAdd" (click)="eliminarImagen()">Quitar imagen</button>
+                  </div>  
                 </div>
-                 <a class="btn btn-link" (click)="addImagen()">Añadir imagen</a>
-                 <a class="btn btn-link" (click)="eliminarImagen()">Quitar imagen</a>
               </div>
-              <div class="form-group col-md-6" formArrayName="videos">
-                <label for="video">Video:</label>
-                <div *ngFor="let item of getVideos.controls, let pointIndex=index" [formGroupName]="pointIndex">
-                  <input type="text" name='video{{pointIndex}}' formControlName="video">
+              <div class="cajaVideosJuego">
+                <div class="videosJuego" formArrayName="videos">
+                  <label class="videosJuego" for="video">
+                    <span class="negrita">Video:</span>
+                    <div *ngFor="let item of getVideos.controls, let pointIndex=index" [formGroupName]="pointIndex">
+                      <input type="text" name='video{{pointIndex}}' formControlName="video">
+                    </div>
+                  </label>
+                  <div><button class="botonAdd" (click)="addVideo()">Añadir video</button></div>
+                  <div><button class="botonAdd" (click)="eliminarVideo()">Quitar video</button></div>
                 </div>
-                 <a class="btn btn-link" (click)="addVideo()">Añadir video</a>
-                 <a class="btn btn-link" (click)="eliminarVideo()">Quitar video</a>
               </div>
-            <button class="btn btn-primary btn-block" [disabled]="!form1.valid" type ="submit" >Insertar</button>
+              <div class="errores" id="errores"></div>
+            <button class=""  type ="submit" >Insertar</button>
         </div>
-        </form>
-    </div>
+      </form>
+  <div>
+</div>

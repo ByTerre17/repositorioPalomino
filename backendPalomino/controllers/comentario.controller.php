@@ -12,9 +12,16 @@ class ComentarioController {
   }
 
   public function listarComentariosMasLikes() {
-      $eval = 'SELECT comentario.*, COUNT(likedislike.opinion = "like")as Likes  FROM comentario, likedislike WHERE comentario.id = likedislike.idComentario GROUP BY comentario.id ORDER BY COUNT(likedislike.opinion = "like") DESC LIMIT 3';
+      $eval = 'SELECT comentario.*, COUNT(likedislike.opinion = "like")as likes, juego.id as idJuego, juego.nombre as nombreJuego   FROM comentario, likedislike,juego WHERE comentario.id = likedislike.idComentario and comentario.idJuego=juego.id GROUP BY comentario.id ORDER BY COUNT(likedislike.opinion = "like") DESC LIMIT 3';
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
+      $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
+      exit(json_encode($comentarios));
+  }
+  public function listarComentariosMasLikesPlataforma($idPlataforma) {
+      $eval = 'SELECT comentario.*, COUNT(likedislike.opinion = "like")as likes, juego.id as idJuego, juego.nombre as nombreJuego   FROM comentario, likedislike,juego WHERE comentario.id = likedislike.idComentario and comentario.idJuego=juego.id and juego.plataforma = ? GROUP BY comentario.id ORDER BY COUNT(likedislike.opinion = "like") DESC LIMIT 3';
+      $peticion = $this->db->prepare($eval);
+      $peticion->execute([$idPlataforma]);
       $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
       exit(json_encode($comentarios));
   }
@@ -63,7 +70,7 @@ class ComentarioController {
   
   public function listarComentariosPorUsuario($id) {
     
-      $eval = "SELECT comentario.*,juego.nombre as nombreJuego FROM comentario,juego where idUsuario=? and comentario.idJuego = juego.id";
+      $eval = "SELECT comentario.*,juego.nombre as nombreJuego,juego.id as idJuego FROM comentario,juego where idUsuario=? and comentario.idJuego = juego.id";
       $peticion = $this->db->prepare($eval);
       $peticion->execute([IDUSER]);
       $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
