@@ -48,12 +48,12 @@ export class BarraNavegacionComponent implements OnInit {
   isAdmin(): Boolean{
     var resultado = false
     if(this.servicioUsuarios.isLogged()){
-            if(this.usuario.rol=="admin"){
-                resultado = true;
-            }
-            else{
-              resultado = false;
-            }
+      if(this.usuario.rol=="admin"){
+          resultado = true;
+      }
+      else{
+        resultado = false;
+      }
     }
     return resultado
   }

@@ -104,12 +104,13 @@ input, select{
 }
 .controlImagen{
     display: flex;
+    width: 100%;
     justify-content: flex-start;
     align-items: flex-start;
     border: solid black 0.4vh;
 }
 .prueba{
-    width: 100%;
+    width: 3vw;
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -178,3 +179,37 @@ input, select{
     margin-top:1% ;
     margin-bottom:1% ;
 }
+.estado{
+    font-size: 3vh;
+    color: green;
+    font-weight: bold;
+}
+.botonVer{
+    display: flex;
+    width:100%;
+    height: 100%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(0, 0%, 49%);
+    --button-hover: hsl(0, 0%, 49%);
+    --button-active:  hsl(0, 0%, 49%);
+    --button-visited: hsl(0, 0%, 49%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }
+  .instrucciones{
+    font-weight: bold;
+    font-size: 1vw;
+}
+button:hover{
+    text-decoration-line: underline;
+  }

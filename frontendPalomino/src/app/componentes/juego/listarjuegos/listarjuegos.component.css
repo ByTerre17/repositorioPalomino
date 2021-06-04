@@ -152,6 +152,7 @@
     background-color: white;
     display: flex;
     margin-top: 2%;
+    border: solid black 0.2px;
 }
 .cajaFotoJuego{
     min-width: 20%;
@@ -183,14 +184,17 @@
     margin: 2%;
 }
 .notaJuego{
-    width: 100%;
+    width: 60%;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     font-size: 2vw;
     padding: 3%;
     font-weight: bold;
-    border:  black solid 0.5vw;
+    border:  black solid 0.1vw;
+    border-radius: 40%;
+    background-color: rgb(12, 255, 12);
+    color: white;
 }
 .fechaCreacionJuego{
     margin-top: 2%;
@@ -237,14 +241,13 @@
     width: 100%;
 }
 .botonVerJuego {
-    --button: hsl(0, 100%, 90%);
-    --button-hover: hsl(0, 100%, 94%);
-    --button-active:  hsl(0, 100%, 84%);
-    --button-visited: hsl(0, 100%, 94%);
+    --button: hsl(0, 5%, 78%);
+    --button-hover: hsl(0, 3%, 73%);
+    --button-active:  hsl(0, 2%, 66%);
+    --button-visited: hsl(0, 3%, 68%);
     --button-colour: #1e1e1e;
      --button-border: #1e1e1e;
   }
-  
   
   .cajaBotonVerJuego button {
     color: var(--button-colour);

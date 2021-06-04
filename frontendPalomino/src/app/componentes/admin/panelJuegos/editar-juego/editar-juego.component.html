@@ -5,6 +5,14 @@
   <div class="cajaFormulario">
     <form class="cajaFormulario" [formGroup]="form1" (submit)="submit()">
       <div class="formulario">
+        <div class="cajaDatoJuego">
+          <span class="instrucciones">
+            Para la creación de un juego es necesario rellenar todos los campos.<br>
+            En el caso de las imágenes es necesario ingresar una imagen y seleccionarla como principal haciendo click en el campo de imagen principal (Solo 1 imagen por juego puede ser principal)<br>
+            En el caso de los videos con 1 es como mínimo<br>
+            Se puede seleccionar una antigua tambíen como principal pero es necesario mantenerla
+          </span>
+        </div>
           <div class="cajaDatoJuego">
             <label class="cajaDatoJuego"  for="nombre">
               <div class="datoJuego"><span class="negrita">Nombre:</span></div>
@@ -25,7 +33,7 @@
             </div>
               <div class="cajaDatoJuego">
                 <label class="cajaDatoJuego" for="edad">
-                  <div class="datoJuego"><span class="negrita">Minimo de edad para jugar al juego:</span></div>
+                  <div class="datoJuego"><span class="negrita">Mínimo de edad para jugar al juego:</span></div>
                   <div class="cajaImp"><input class="" type="text" placeholder="edad" id="edad" formControlName="edad"></div>
                 </label>
               </div>
@@ -37,7 +45,7 @@
               </div>
               <div class="cajaDatoJuego">
                 <label class="cajaDatoJuego" for="genero">
-                  <div class="datoJuego"><span class="negrita">Genero:</span></div>
+                  <div class="datoJuego"><span class="negrita">Género:</span></div>
                   <div class="cajaImp"><select name="genero"  formControlName="genero" >
                     <option *ngFor="let genero of generos" [ngValue]="genero.id" >
                       {{ genero.nombre }}
@@ -58,7 +66,7 @@
               </div>
               <div class="cajaDatoJuego">
                 <label class="cajaDatoJuego" for="numeroDeJugadores">
-                  <div class="datoJuego"><span class="negrita">Numero de jugadores:</span></div>
+                  <div class="datoJuego"><span class="negrita">Número de jugadores:</span></div>
                   <div class="cajaImp"><input class="" type="text" placeholder="numeroDeJugadores" id="numeroDeJugadores" formControlName="numeroDeJugadores"></div>
                 </label>
               </div>
@@ -93,29 +101,28 @@
                   <div class="ImagenesAntiguasJuego" *ngFor="let imagenAntigua of imagenesJuegoAntiguas, let pointIndex=index">
                     <div class="cajaImagenAntiguaJuego">
                       <img class="imagenAntiguaJuego" src="{{imagenAntigua.direccion}}" alt="100" width="100"><br>
-                      <div class="controlImagenAntiguaJuego"> Mantener imagen: <input class="controlImagenAntiguaJuego"  id="mantenerImagen{{pointIndex}}" (click)="mantenerImagen(pointIndex,imagenAntigua.id)" type="checkbox"> <br></div>
-                      <div class="controlImagenAntiguaJuego">Foto principal:  <input class="controlImagenAntiguaJuego"  type="radio" id="principal"  name="principal" value="imagen{{pointIndex}}" (click)="cambiarFotoPrincipalAntigua(imagenAntigua.id,pointIndex)"> </div>
+                      <div class="controlImagenAntiguaJuego">Mantener imagen: <input class="prueba"  id="mantenerImagen{{pointIndex}}" (click)="mantenerImagen(pointIndex,imagenAntigua.id)" type="checkbox"> <br></div>
+                      <div class="controlImagenAntiguaJuego">Foto principal:  <input class="prueba"  type="radio" id="principal"  name="principal" value="imagen{{pointIndex}}" (click)="cambiarFotoPrincipalAntigua(imagenAntigua.id,pointIndex)"> </div>
                     </div>         
                   </div>
                 </div>
-                
               </div>
               <div class="cajaVideosJuego">
                 <div class="videosJuego" formArrayName="videos">
                   <label class="videosJuego" for="video">
-                    <span class="negrita">Video:</span>
+                    <span class="negrita">Vídeo:</span>
                     <div *ngFor="let item of getVideos.controls, let pointIndex=index" [formGroupName]="pointIndex">
                       <input type="text" name='video{{pointIndex}}' formControlName="video">
                     </div>
                   </label>
-                  <div><button class="botonAdd" (click)="addVideo()">Añadir video</button></div>
-                  <div><button class="botonAdd" (click)="eliminarVideo()">Quitar video</button></div>
+                  <div><button class="botonAdd" (click)="addVideo()">Añadir vídeo</button></div>
+                  <div><button class="botonAdd" (click)="eliminarVideo()">Quitar vídeo</button></div>
                 </div>
               </div>
               <div class="errores" id="errores"></div>
-            <button class=""  type ="submit" >Insertar</button>
+              <div class="estado" id="estado"></div>
+            <button class="botonVer"  type ="submit" >Insertar</button>
         </div>
-        </form>
-        
+        </form> 
   <div>
 </div>

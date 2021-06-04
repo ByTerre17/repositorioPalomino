@@ -56,6 +56,9 @@ export class UsuariosService {
   comprobarPassword(datos:any): Observable<any>{
     return this.http.post(url+"comprobarPassword",datos)
   }
+  comprobarCorreo(datos:any): Observable<any>{
+    return this.http.post(url+"comprobarCorreo",datos)
+  }
 
   listarUsuarios(): Observable<any>{
     return this.http.get(url+'list/')

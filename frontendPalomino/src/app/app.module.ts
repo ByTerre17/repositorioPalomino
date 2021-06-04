@@ -16,7 +16,6 @@ import { PerfilComponent } from './componentes/usuario/perfil/perfil.component';
 import { RecuperarPasswordComponent } from './componentes/usuario/recuperar-password/recuperar-password.component';
 import { VerJuegoComponent } from './componentes/juego/ver-juego/ver-juego.component';
 import { PanelComponent } from './componentes/admin/panel/panel.component';
-import { PanelUsuariosComponent } from './componentes/admin/panel-usuarios/panel-usuarios.component';
 import { ListarJuegosComponent } from './componentes/admin/panelJuegos/listar-juegos/listar-juegos.component';
 import { InsertarJuegosComponent } from './componentes/admin/panelJuegos/insertar-juegos/insertar-juegos.component';
 import { EditarJuegoComponent } from './componentes/admin/panelJuegos/editar-juego/editar-juego.component';
@@ -31,6 +30,7 @@ import { FiltroPlataformaPipe } from './pipes/filtro-plataforma.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InicioPlataformasComponent } from './componentes/inicio-plataformas/inicio-plataformas.component';
 import { CurriculumComponent } from './componentes/curriculum/curriculum.component';
+import { MapaComponent } from './componentes/mapa/mapa.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,6 @@ import { CurriculumComponent } from './componentes/curriculum/curriculum.compone
     RecuperarPasswordComponent,
     VerJuegoComponent,
     PanelComponent,
-    PanelUsuariosComponent,
     ListarJuegosComponent,
     InsertarJuegosComponent,
     EditarJuegoComponent,
@@ -57,7 +56,8 @@ import { CurriculumComponent } from './componentes/curriculum/curriculum.compone
     FiltroGeneroPipe,
     FiltroPlataformaPipe,
     InicioPlataformasComponent,
-    CurriculumComponent
+    CurriculumComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule,

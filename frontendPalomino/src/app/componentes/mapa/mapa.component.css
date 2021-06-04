@@ -1,0 +1,15 @@
+@import "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css";
+.map-container {
+    margin-top: 1%;
+    width: 20vw;
+    height: 30vh;
+  }
+  
+  .map-frame {
+    border: 2px solid black;
+    height: 100%;
+  }
+  
+  #map {
+    height: 100%;
+  }

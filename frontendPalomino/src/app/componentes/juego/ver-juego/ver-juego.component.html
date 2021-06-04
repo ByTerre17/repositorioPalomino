@@ -1,14 +1,15 @@
 <div *ngIf="cargado==true && videosListo==true && imagenesListo==true" class="caja">
+    <a href="/listaJuegos" class="botonDefecto">Volver a el listado de juegos</a>
     <div class="cajaJuego">
         <div class="NombreNota"><h1 class="subtitulo">{{juego.nombre}}</h1><div class="cajaNota"><div class="nota">{{juego.nota}}</div></div></div><br>
         <div class="cajaDatosJuego">
             <div class="datosJuego">
-                <span class="titulos">Fecha de creacion:</span> <span class="titulosDatos"> {{juego.fechaDeLanzamiento}}</span><br>
+                <span class="titulos">Fecha de creación:</span> <span class="titulosDatos"> {{juego.fechaDeLanzamiento}}</span><br>
                 <span class="titulos">Creador:</span><span class="titulosDatos"> {{juego.creador}}</span> <br>
             </div>
             <div class="cajaBotones">
                 <button *ngIf="cajaDeComentarios==false" (click)="mostrarCajaComentarios()">Comentarios</button>
-                <button *ngIf="cajaDeMultimedia==false" (click)="mostrarCajaMultimedia()">Videos y Imagenes</button>
+                <button *ngIf="cajaDeMultimedia==false" (click)="mostrarCajaMultimedia()">Vídeos y Imágenes</button>
                 <button *ngIf="cajaDeDetalles==false" (click)="mostrarCajaDetalles()">Detalles</button>
             </div>
         </div>
@@ -22,22 +23,24 @@
             </div>
         </div>
         <div class="cajaInsertarComentario" *ngIf="logueado()">
+            <div id="estado1" class="estado"></div>
             <form [formGroup]='formComentario' (submit)='escribirComentario()'>
                 <span class="titulos">Escribir comentario:</span>
                     <div class="comentarioArribaPlantilla">
-                        <div class="tituloComentarioPlantilla"><input type="text" class="inpTitulo" formControlName='titulo' placeholder='Titulo'><div class="error" id="titulo"></div></div><br>
-                        <div class="notaComentarioPlantilla"><input type="text" class="inpNota" formControlName='nota' placeholder='Nota'><div class="error" id="nota"></div></div>
+                        <div class="tituloComentarioPlantilla"><input type="text" class="inpTitulo" formControlName='titulo' placeholder='Título'><div class="error" id="titulo"></div></div><br>
+                        <div class="notaComentarioPlantilla"><input type="number" class="inpNota" formControlName='nota' placeholder='Nota'><div class="error" id="nota"></div></div>
                     </div>
                     <div class="comentarioAbajoPlantilla">
                         <div class="error" id="texto"></div>
                         <textarea class="inpTexto"  placeholder='Explicacion' formControlName='texto'></textarea>
                     </div>
-                    <button type='submit' class="btn btn-secondary" (click)="formComentario.patchValue({idUsuario:usuario.id});formComentario.patchValue({idJuego:juego.id})">Enviar comentario</button>
+                    <button type='submit' class="botonDefecto" (click)="formComentario.patchValue({idUsuario:usuario.id});formComentario.patchValue({idJuego:juego.id})">Enviar comentario</button>
              </form>       
         </div>    
         <div class="cajaDeComentarios">
             <div><h2 class="tituloCajaComentarios"><span class="titulos">Comentarios</span></h2></div>
             <div *ngFor="let comentario of comentarios, let indice=index"class="comentario">
+                <span class="estado" id="estadoComentario{{comentario.id}}"></span>
                 <div class="comentarioArriba">
                     <div class="tituloComentario">{{comentario.titulo}}</div>
                     <div class="notaComentario">Nota:{{comentario.nota}}</div>

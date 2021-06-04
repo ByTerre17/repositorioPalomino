@@ -54,8 +54,6 @@ export class InicioPlataformasComponent implements OnInit {
     this.servicioJuegos.listarPlataformas().subscribe(
       respuesta =>{
         this.plataformas=respuesta
-        console.log(this.plataformas)
-        
         for(let i=0;i<this.plataformas.length;i++){
           if(this.idPlataforma==this.plataformas[i].id){
             this.nombrePlataforma=this.plataformas[i].nombre

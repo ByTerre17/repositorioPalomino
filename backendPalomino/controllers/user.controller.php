@@ -89,9 +89,6 @@ class UserController {
       exit(json_encode(["error" => "No se han enviado todos los parametros"]));
 
     }
-
-
-
     //Comprueba que no exista otro usuario con el mismo email.
     $peticion = $this->db->prepare("SELECT id FROM usuario WHERE email=?");
     $peticion->execute([$user->email]);
@@ -160,19 +157,21 @@ class UserController {
   
     if($resultado) {
         $password=$resultado->password ;
-        $fechaInicio=(date("H")).":".(date("i")).":".(date("s"));
-        $fechaFinal=(date("H")).":".(date("i")+15).":".(date("s"));
+        $fechaInicio=new DateTime(); 
+        $fechaFinal=$fechaInicio->modify('+15 minute');
+        $fechaInicio=$fechaInicio->format('H:i:s');
+        $fechaFinal=$fechaFinal->format('H:i:s');
         $codigoRecuperacion=time()*rand(1,1000);
         $eval = "INSERT INTO codigorecuperacion (idUsuario,fechaInicio,fechaFinal,codigoRecuperacion,usado) VALUES (?,?,?,?,?)";
         $peticion = $this->db->prepare($eval);
         $peticion->execute([$resultado->id,$fechaInicio,$fechaFinal,$codigoRecuperacion,0]);
         
-        $mensaje= "Hola usted ha solicitado un cambio de contraseña debido a que ha olvidado la misma, para cambiar la contraseña clicke el siguiente enlace ". 'http://localhost:4200/recuperarPassword/'.$codigoRecuperacion;
+        $mensaje= "Hola usted ha solicitado un cambio de contraseña debido a que ha olvidado la misma, para cambiar la password clicke el siguiente enlace ". 'http://localhost:4200/recuperarPassword/'.$codigoRecuperacion;
         $email_user = "manuelproyecto484@gmail.com"; //Mi correo
         $email_password = "2FJVx7PRpy2zjXe"; //Pass de mi correo
-        $the_subject = "Recuperación de contraseña";
+        $the_subject = "Recuperacion de la password";
         $address_to = $resultado->email;
-        $from_name = "Prueba";
+        $from_name = "Administrador Criticame";
         $phpmailer = new PHPMailer();
         // ---------- datos de la cuenta de Gmail ---------------------
         $phpmailer->Username = $email_user;
@@ -249,6 +248,30 @@ class UserController {
     }
   }
 
+    public function comprobarCorreo() {
+    if(IDUSER) {
+      //Cogemos los valores de la peticion.
+      $correo = $_POST[('correo')];
+      
+      if(!isset($correo)) {
+      http_response_code(400);
+      exit(json_encode("Faltan datos"));
+    }
+      $peticion = $this->db->prepare("SELECT id FROM usuario WHERE email=?");
+      $peticion->execute([$correo]);
+      $resultado = $peticion->fetchObject();
+      
+      if(!$resultado){
+          exit(json_encode("no existe"));
+      }
+      else {
+          exit(json_encode("existe"));
+      }
+    } else {
+      http_response_code(401);
+      exit(json_encode(["error" => "Fallo de autorizacion"]));         
+    }
+  }
   public function editarUsuario() {
     if(IDUSER) {
       //Cogemos los valores de la peticion.
@@ -379,6 +402,6 @@ class UserController {
       $peticion->execute([$codigoRecuperacion->id]);
       
       http_response_code(201);
-      exit(json_encode("Usuario actualizado correctamente"));
+      exit(json_encode("Password actualizado correctamente"));
       }
   }

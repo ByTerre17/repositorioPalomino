@@ -1,5 +1,6 @@
 <div class="caja" *ngIf="comentarioListo==true">
     <h1 class="titulo">Reportar Comentario</h1>
+    <div id="estado" class="estado"></div>
     <div class="comentario">
         <h2 class="subtitulo">Datos del comentario</h2>
         <span class="tipoDato">Titulo: </span><span class="dato">{{comentario.titulo}}</span><br>
@@ -12,7 +13,7 @@
             </div>
             <input type="text" formControlName="titulo" placeholder="Titulo del reporte"><br>
             <textarea class="textarea" formControlName="descripcion" placeholder="Motivo del reporte" ></textarea><br>
-            <input type="submit">
+            <input class="botonEnviar" value="Enviar reporte" type="submit">
         </form>
     </div>
 </div>

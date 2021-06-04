@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { JuegosService } from 'src/app/servicios/juegos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -276,7 +277,7 @@ export class EditarJuegoComponent implements OnInit {
     }
     if(this.form1.get("edad")?.value == ""){
       this.errores=true
-      element.innerHTML= element.innerHTML +"<br>" + "La edad minima no puede estar en blanco"
+      element.innerHTML= element.innerHTML +"<br>" + "La edad mínima no puede estar en blanco"
       valido=false
     }
     if(this.form1.get("creador")?.value == ""){
@@ -306,7 +307,7 @@ export class EditarJuegoComponent implements OnInit {
     }
     if(this.form1.get("videos")?.value == ""){
       this.errores=true
-      element.innerHTML= element.innerHTML +"<br>" + "Suba como minimo un video"
+      element.innerHTML= element.innerHTML +"<br>" + "Suba como mínimo un video"
       valido=false
     }
     if(this.form1.get("nota")?.value == "" && this.form1.get("nota")?.value >10 && this.form1.get("nota")?.value <1){
@@ -364,8 +365,13 @@ export class EditarJuegoComponent implements OnInit {
       formData.append('cantidadImagenesMantenidas', this.imagenesMantenidas.length+"")
       formData.append('juego', juego)
       this.serviciojuego.editarJuego( formData ).subscribe(
-        respuesta =>{
-          this.irHacia.navigate(['/administracion/juegos/listar'])
+        async respuesta =>{
+          if(respuesta="Juego editado"){
+            const element2: HTMLElement = document.getElementById('estado') as HTMLElement
+            element2.innerHTML = 'El juego se ha editado con éxito'
+            await delay(1500);
+            this.irHacia.navigate(['/administracion/juegos/listar'])
+          }
         },
         error => console.log(error)
       )

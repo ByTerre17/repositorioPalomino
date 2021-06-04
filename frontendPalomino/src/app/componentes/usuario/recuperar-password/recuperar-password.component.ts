@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
@@ -17,15 +18,14 @@ export class RecuperarPasswordComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  submit(): void{
+  async submit(): Promise<void>{
     this.servicioUsuario.recuperarPassword(this.form1.value).subscribe(
       respuesta => {
-        console.log(respuesta)
-        this.irHacia.navigate([''])
-      },
-      error => {
-        console.log(error)
       }
     )
+    const element2: HTMLElement = document.getElementById('estado') as HTMLElement
+    element2.innerHTML = 'Se ha enviado el correo'
+    await delay(1000);
+    this.irHacia.navigate([''])
   }
 }

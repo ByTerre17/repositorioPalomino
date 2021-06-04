@@ -5,7 +5,7 @@
     background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
     min-width: 100%;
-    min-height: 75.2vh;
+    min-height: 77vh;
 }
 .titulo{
     font-family: 'Shippori Mincho B1', serif;
@@ -83,3 +83,27 @@
     font-size: 4vh;
     padding: 1%;
 }
+button:hover{
+    text-decoration-line: underline;
+  }
+  .botonVer{
+    display: flex;
+    width:100%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(0, 0%, 49%);
+    --button-hover: hsl(0, 0%, 49%);
+    --button-active:  hsl(0, 0%, 49%);
+    --button-visited: hsl(0, 0%, 49%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { JuegosService } from 'src/app/servicios/juegos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -42,8 +43,12 @@ export class ListarJuegosComponent implements OnInit {
   eliminarJuego(idJuego:number): void{
     if(this.servicioUsuarios.isLogged()){
       this.servicioJuegos.eliminarJuego(idJuego).subscribe(
-        respuesta => {
-          console.log(respuesta)
+        async respuesta => {
+          if(respuesta=="juego eliminado correctamente"){
+            window.alert('El juego se ha eliminado correctamente')
+            await delay(1500);
+            window.location.reload();
+          }
         },
         error => console.log(error)
       )

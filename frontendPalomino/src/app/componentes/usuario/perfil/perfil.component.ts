@@ -29,6 +29,7 @@ nuevoPasswordNoValido:Boolean = false
 fotoNueva:any
 passwordIguales:Boolean = false
 passwordAntigua:Boolean = false
+correoExiste:Boolean = false
 password:any
 
 form1= this.fb.group({
@@ -50,7 +51,6 @@ cargarPerfil(): void{
   this.servicioUsuarios.obtenerPerfil().subscribe(
     respuesta => {
       this.perfil = respuesta
-      console.log(this.perfil)
       if(this.perfil.foto=="no_foto"){
         this.perfil.foto ="./assets/no_foto.jpg"
       }
@@ -81,7 +81,10 @@ obtenerComentarios(): void{
 eliminarComentario(idComentario:any): void{
   if(this.servicioUsuarios.isLogged()){
   this.servicioComentarios.eliminarComentario(idComentario,this.perfil.id).subscribe(
-    respuesta => {
+    async respuesta => {
+      const element: HTMLElement = document.getElementById('estado2') as HTMLElement
+      element.innerHTML = 'El comentario se ha eliminado correctamente.'
+      await delay(1000);
       window.location.reload();
     },
     error => console.log(error)
@@ -109,8 +112,7 @@ mostrarEditarPerfil(): void{
 
 nuevoCorreoFuntion(){
   if(this.form1.get("correo")?.value.length>10){
-    this.nuevoCorreo=true
-    this.nuevoCorreoNoValido=false
+    this.comprobarCorreo()
   }
   else{
     this.nuevoCorreoNoValido=true
@@ -126,6 +128,28 @@ nuevoUsuarioFuntion(){
     this.nuevaUsuarioNoValido=true
     this.nuevaUsuario=false
   }  
+}
+
+async comprobarCorreo(){
+  await delay(2000);
+  var formData = new FormData()
+  formData.append("correo", this.form1.get("correo")?.value)
+  console.log(this.form1.get("correo")?.value)
+  this.servicioUsuarios.comprobarCorreo(formData).subscribe(
+    respuesta =>{
+      if(respuesta!="no existe"){
+        this.correoExiste=true
+        this.nuevoCorreoNoValido=true
+        this.nuevoCorreo=false
+      }
+      else{
+        this.correoExiste=false
+        this.nuevoCorreoNoValido=false
+        this.nuevoCorreo=true
+      }
+    },
+    error => console.log(error)
+  )
 }
 
 async comprobarPassword(){
@@ -164,40 +188,58 @@ nuevaFotoFuntion(evento: any){
   }
 }
   async submit(): Promise<void>{
-  var formData = new FormData()
-  if(this.nuevoCorreo==true){
-    formData.append("correo",this.form1.get("correo")?.value)
-    this.servicioUsuarios.editarCorreo(formData).subscribe(
-      respuesta =>{
-      },
-    )
-  }
-  if(this.nuevaUsuario==true){
-    formData.append("usuario",this.form1.get("nombreUsuario")?.value)
-    this.servicioUsuarios.editarUsuario(formData).subscribe(
-      respuesta =>{
-      },
-
-    )
-  }
-  if(this.nuevaPassword==true){
-    formData.append("passwordAntigua",this.form1.get("passwordAntigua")?.value)
-    formData.append("passwordNueva",this.form1.get("passwordNueva")?.value)
-    this.servicioUsuarios.editarPassword(formData).subscribe(
-      respuesta =>{
-      },
-      error => console.log(error)
-    )
-  }
-  if(this.nuevaFoto==true){
-    formData.append("foto", this.fotoNueva)
-    this.servicioUsuarios.editarFoto(formData).subscribe(
-      respuesta =>{
-      },
-      error => console.log(error)
-    )
-  }
-  await delay(200);
-  window.location.reload();
-  }
+    var cambio
+    var formData = new FormData()
+    if(this.nuevoCorreo==true&&this.correoExiste==false){
+      formData.append("correo",this.form1.get("correo")?.value)
+      this.servicioUsuarios.editarCorreo(formData).subscribe(
+        respuesta =>{
+          if(respuesta=="Usuario actualizado correctamente"){
+            cambio=true
+          }
+        },
+      )
+    }
+    if(this.nuevaUsuario==true){
+      formData.append("usuario",this.form1.get("nombreUsuario")?.value)
+      this.servicioUsuarios.editarUsuario(formData).subscribe(
+        respuesta =>{
+          if(respuesta=="Usuario actualizado correctamente"){
+            cambio=true
+          }
+        },
+  
+      )
+    }
+    if(this.nuevaPassword==true){
+      formData.append("passwordAntigua",this.form1.get("passwordAntigua")?.value)
+      formData.append("passwordNueva",this.form1.get("passwordNueva")?.value)
+      this.servicioUsuarios.editarPassword(formData).subscribe(
+        respuesta =>{
+          if(respuesta=="Usuario actualizado correctamente"){
+            cambio=true
+          }
+        },
+        error => console.log(error)
+      )
+    }
+    if(this.nuevaFoto==true){
+      formData.append("foto", this.fotoNueva)
+      this.servicioUsuarios.editarFoto(formData).subscribe(
+        respuesta =>{
+          if(respuesta=="Usuario actualizado correctamente"){
+            cambio=true
+          }
+        },
+        error => console.log(error)
+      )
+    }
+    await delay(1000);
+    if(cambio==true){
+      const element: HTMLElement = document.getElementById('estado1') as HTMLElement
+      element.innerHTML = 'El cambio se ha efectuado correctamente.'
+    }
+    await delay(2000);
+    window.location.reload();
+    }
 }

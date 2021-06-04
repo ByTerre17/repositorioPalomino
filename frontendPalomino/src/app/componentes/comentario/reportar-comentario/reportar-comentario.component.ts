@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { ComentariosService } from 'src/app/servicios/comentarios.service';
 import { JuegosService } from 'src/app/servicios/juegos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -54,12 +55,15 @@ export class ReportarComentarioComponent implements OnInit {
       var reporte = JSON.stringify(this.form1.getRawValue())
       formData.append("reporte", reporte)
       formData.append("idComentario", this.idComentario)
-
       this.servicioComentarios.crearReporte( formData ).subscribe(
-        respuesta =>{
-          this.irHacia.navigate([''])
+        async respuesta =>{
+          if(respuesta="Reporte creado"){
+            const element2: HTMLElement = document.getElementById('estado') as HTMLElement
+            element2.innerHTML = 'El reporte se ha creado con éxito'
+            await delay(1500);
+            this.irHacia.navigate([''])
+          }
         },
-        error => console.log(error)
       )
     }
   }

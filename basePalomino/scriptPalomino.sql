@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2021 a las 21:38:26
+-- Tiempo de generación: 04-06-2021 a las 21:22:41
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -130,7 +130,8 @@ INSERT INTO `comentario` (`id`, `titulo`, `texto`, `nota`, `idJuego`, `idUsuario
 (83, 'Muy repetitivo', 'Me compré este nba para saber si tendria algo diferente a los demas porque lo pintaban muy bien, me llevé una desilusión', 3, 228, 9),
 (84, 'Graficos de play 3', 'Para ser un juego de nueva generación tiene unos graficos y jugabiliadad de 2006, inaceptable ', 1, 228, 9),
 (85, 'Esto ni es resident evil ni nada', 'La historia es para pegarte dos tiros. Lo único que haces en el juego es camino y disparar.los puzzles brillan por su ausencia. Los diálogos pocos,pobres y sin sentido este resident es de los peores mano a mano con el 6.', 3, 164, 9),
-(86, 'buen juego', 'lo disfruté bastante , gráficos excelentes en PS5 con una pantalla 8k se ve hermoso , la historia está bien , muy alejado de como eran los R.E originales pero se disfruta bastante , eh acabado absolutamente todos los juegos de la saga y fue un honor habla', 7, 164, 9);
+(86, 'buen juego', 'lo disfruté bastante , gráficos excelentes en PS5 con una pantalla 8k se ve hermoso , la historia está bien , muy alejado de como eran los R.E originales pero se disfruta bastante , eh acabado absolutamente todos los juegos de la saga y fue un honor habla', 7, 164, 9),
+(88, 'Lo mejor', 'La mejor y más realista simulación espacial que he jugado. Libertad absoluta, gran galaxia, gran variedad de misiones, desafío realista y no solo un tirador espacial pewpew, multijugador pvp y pve. Este juego lo tiene todo. Hasta ahora no he encontrado ni', 9, 194, 3);
 
 -- --------------------------------------------------------
 
@@ -461,7 +462,8 @@ INSERT INTO `juego` (`id`, `nombre`, `fechaDeLanzamiento`, `comprar`, `edad`, `c
 (228, 'NBA 2K21', '2020-11-10', 'https://tutiendadevideojuegos.com/videojuegos-xbox-series-x/5455-nba-2k21-xbox-one-5026555363945.html', '3', ' Visual Concepts', 12, 6, '4', '2021-05-16', '348', 8, 'NBA 2K21 es el simulador de baloncesto profesional y callejero de Visual Concepts y 2K Sports. Gracias a la increíble potencia de Xbox Series S/X y PS5, sus responsables han podido crear una experiencia de baloncesto mucho más profunda que lo que habían conseguido hasta ahora, añadiendo mejoras jugables y cambios en el comportamiento de los jugadores o incluso gráficos más realistas. Sagas relacionadas:'),
 (229, 'Spacelords', '2020-11-10', 'https://www.microsoft.com/es-es/p/spacelords/9p4d41k02wb8?activetab=pivot:overviewtab', '3', 'MercurySteam', 13, 6, '8', '2021-05-16', '350', 7, 'Spacelords es la reencarnación y reformulación del videojuego de acción en tercera persona Raiders of the Broken Planet. Cambiando su nombre y su estructura, deja de ser un título episódico de acción multijugador para convertirse en un juego online completamente free-to-play. El videojuego incorpora novedades visibles desde el primer momento, con varios tutoriales que de explicarán de manera más clara las bases de la jugabilidad, se mantendrá la estética y el universo de ciencia ficción y se potenciará la progresión de los jugadores a través de recompensas más justas tras cada partida. Aquellos usuarios que jugasen al original, mantendrán su progreso y personajes desbloqueables.'),
 (230, 'Yakuza Like a Dragon', '2020-11-13', 'https://www.xbox.com/es-ES/games/yakuza-like-a-dragon', '18', 'SEGA', 14, 6, '1', '2021-05-16', '352', 9, 'Yakuza: Like a Dragon es la nueva entrega de la saga de Sega para PC, PlayStation 4, Xbox One, PlayStation 5 y Xbox Series, ahora como RPG con combates por turnos con nuevo protagonista. Conviértete en Ichiban Kasuga, un yakuza de bajo rango al que el hombre en el que más confiaba dejó al borde de la muerte. Agarra tu bate legendario y prepárate para reventar cráneos de los bajos fondos'),
-(231, 'Yakuza Like a Dragon', '2020-11-13', 'https://www.xbox.com/es-ES/games/yakuza-like-a-dragon', '18', 'SEGA', 14, 6, '1', '2021-05-16', '', 9, 'Yakuza: Like a Dragon es la nueva entrega de la saga de Sega para PC, PlayStation 4, Xbox One, PlayStation 5 y Xbox Series, ahora como RPG con combates por turnos con nuevo protagonista. Conviértete en Ichiban Kasuga, un yakuza de bajo rango al que el hombre en el que más confiaba dejó al borde de la muerte. Agarra tu bate legendario y prepárate para reventar cráneos de los bajos fondos');
+(231, 'Yakuza Like a Dragon', '2020-11-13', 'https://www.xbox.com/es-ES/games/yakuza-like-a-dragon', '18', 'SEGA', 14, 6, '1', '2021-05-16', '', 9, 'Yakuza: Like a Dragon es la nueva entrega de la saga de Sega para PC, PlayStation 4, Xbox One, PlayStation 5 y Xbox Series, ahora como RPG con combates por turnos con nuevo protagonista. Conviértete en Ichiban Kasuga, un yakuza de bajo rango al que el hombre en el que más confiaba dejó al borde de la muerte. Agarra tu bate legendario y prepárate para reventar cráneos de los bajos fondos'),
+(235, 'Juego de prueba', '2021-06-04', 'https://www.google.es/', '12', 'Pedro', 3, 2, '12', '2021-06-04', '', 6, 'sfsdfsf');
 
 -- --------------------------------------------------------
 
@@ -543,7 +545,10 @@ INSERT INTO `likedislike` (`id`, `idUsuario`, `idComentario`, `opinion`) VALUES
 (77, 12, 34, 'like'),
 (78, 12, 50, 'like'),
 (79, 12, 40, 'like'),
-(80, 12, 65, 'like');
+(80, 12, 65, 'like'),
+(81, 3, 19, 'like'),
+(82, 3, 27, 'like'),
+(83, 3, 26, 'dislike');
 
 -- --------------------------------------------------------
 
@@ -581,6 +586,13 @@ CREATE TABLE `reporte` (
   `idComentario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `reporte`
+--
+
+INSERT INTO `reporte` (`id`, `titulo`, `descripcion`, `idComentario`) VALUES
+(2, 'Ofensivo', 'No explica bien el motivo por el que no le gusta el juego', 67);
+
 -- --------------------------------------------------------
 
 --
@@ -602,7 +614,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `email`, `foto`, `usuario`, `password`, `rol`) VALUES
 (2, 'manuelpalomino080@gmail.com', 'no_foto', 'Juan12343', '$2y$10$oqluhgCBzyWgiGnrVvYe4uCFah4o1D/09MOenrZFyYr799Z/kaPNW', 'user'),
-(3, 'manuelpalomino484@gmail.com', 'no_foto', 'admin', '$2y$10$BqURjc0ycw.DShGIVD2zdeUbde8b2ChabCn3pdaGqq4/iL/eoqJwe', 'admin'),
+(3, 'manuelpalomino484@gmail.com', 'http://localhost/backendPalomino/images/imagenimagenUsuario-3', 'admin', '$2y$10$BfaSEFhgp14z5xBrKE41m.aYV43S1k1Pjy/qFurdpA3Rdkg6sOswK', 'admin'),
 (6, 'manuelpalomino4884@gmail.com', 'no_foto', 'Manuel1234', '$2y$10$HCd4Ixng6Q4TSqifHgJMGe6Pvc1lYrs8UqBSFEQ52lEE.eu/pYeKS', 'user'),
 (7, 'aujo@gmail.com', 'no_foto', 'aujo21', '$2y$10$GzQVwRwc8b.9RADvEYSose0wmGs3LlB/adNPMSO3hpxRj3AlSMhQm', 'user'),
 (8, 'manuelpalomino040@gmail.com', 'no_foto', 'Juabhewr21', '$2y$10$W.PCAGEQP51V5p5PzQNpW.oUoFKAJkE2CzwMrIe09muO4W5BGkn/2', 'user'),
@@ -906,13 +918,13 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT de la tabla `codigorecuperacion`
 --
 ALTER TABLE `codigorecuperacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`
@@ -924,19 +936,19 @@ ALTER TABLE `genero`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=359;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
 -- AUTO_INCREMENT de la tabla `juego`
 --
 ALTER TABLE `juego`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=236;
 
 --
 -- AUTO_INCREMENT de la tabla `likedislike`
 --
 ALTER TABLE `likedislike`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT de la tabla `plataforma`
@@ -948,7 +960,7 @@ ALTER TABLE `plataforma`
 -- AUTO_INCREMENT de la tabla `reporte`
 --
 ALTER TABLE `reporte`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -960,7 +972,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=458;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=462;
 
 --
 -- Restricciones para tablas volcadas

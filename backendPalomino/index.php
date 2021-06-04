@@ -4,6 +4,7 @@ require_once 'config/db.php';
 require_once 'config/cors.php';
 require "vendor/autoload.php";
 use \Firebase\JWT\JWT;
+error_reporting(E_ALL ^ E_WARNING);
 
 //Guardamos la url para buscar el controlador y ponemos mensaje de bienvenida.
 if(!isset($_GET['url'])) {
@@ -72,6 +73,9 @@ switch($control[0]) {
             break;
           case "comprobarPassword":
             $controladorUsuarios->comprobarPassword();
+            break;
+          case "comprobarCorreo":
+            $controladorUsuarios->comprobarCorreo();
             break;
           case "editarPassword":
             $controladorUsuarios->editarPassword();

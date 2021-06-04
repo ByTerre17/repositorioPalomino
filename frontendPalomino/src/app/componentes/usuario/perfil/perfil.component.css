@@ -30,7 +30,7 @@
         color: white;
         background-color: #61ff47;
         font-weight: bold;
-        font-size: 0.9vw;
+        font-size: 2vw;
         border: 1px solid #000;
         padding-top: 0.2vw;
         padding-bottom: 0.2vw;
@@ -77,36 +77,12 @@
 .titulos{
     font-weight: bolder;
 }
-
-.text-muted{
-    font-size: bold;
-}
-.display-4 , .subtitulo{
+.subtitulo{
     font-family: 'Shippori Mincho B1', serif;
     color: #FFFFFF;
     background: #b8b8b8;
     text-shadow: 4px 3px 0 #7A7A7A;
-    font-size: 8vh;
-}
-.display-4{
-    display: -ms-inline-flexbox;
-    display: -webkit-inline-flex;
-    display: inline-flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
+    font-size: 6vw;
 }
 .subtitulo{
     display: -ms-inline-flexbox;
@@ -142,11 +118,6 @@
     justify-content: center;
     flex-direction: column;
 }
-
-.resumenComentario{
-    font-size: 1em;
-}
-
 .perfil{
     background-color: white;
     border: solid black;
@@ -156,38 +127,10 @@
     padding-bottom: 2%;
     padding-left: 2%;
 }
-.dato{
-    font-size: 1.2em;
-    font-weight: bold;
-}
 .subtitulo1{
-    font-weight: bold;  
-}
-.subtitulo2{
-    display: -ms-inline-flexbox;
-    display: -webkit-inline-flex;
-    display: inline-flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-    color: #444444;
-    background: #FFFFFF;
-    text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
-    color: #444444;
-    background: #FFFFFF;
-    font-size: 3em;
+    display: flex;
+    font-weight: bold;
+    font-size: 3vw;
 }
 .comentario{
     margin: 1vh;
@@ -203,14 +146,12 @@
     display: flex;
     align-items: flex-start;
 }
-
 .comentarioAbajo{
     width: 100%;
-    height: 60%;
     margin-top: 1vh;
     display: flex;
     align-items: flex-start;
-    display: inline-block;
+    display: flex;
     padding-left: 1vw;
     padding-top: 1vh;
     
@@ -226,13 +167,13 @@
     font-weight: bold;
     margin-left: 1vw;
     margin-top: 1vh;
-    font-size: 1.6vw;
+    font-size: 2vw;
     justify-content: flex-end;
     width: 400vw;
 }
 
 .nombreJuego{
-    font-size: 1.5vw;
+    font-size: 2vw;
     font-weight: bold;
     width: 100vw;
     display: flex;
@@ -241,22 +182,16 @@
     align-self: stretch;
 }
 .cajaBotonEliminar{
-    font-size: 1vw;
+    font-size: 2vw;
+    width: 50%;
     display: flex;
-    width: 30vw;
     align-items: flex-end;
     justify-content: flex-end;
-}
-.btn-primary {
-    font-size: 0.9vw;
-}
-.btn-danger {
-    font-size: 0.8vw;
+    background-color: red;
 }
 .texto{
-    font-size: 0.8vw;
-    display: inline-block;
-    overflow-wrap: break-word;
+    width: 100%;
+    height: 100%;
 }
 .nombreUsuario{
     margin: 1vh;
@@ -280,13 +215,13 @@
     width: 12vw;
 }
 .apNueva1{
-    width: 12vw;
+    width: 15vw;
 }
 .anpAntigua{
     width: 12vw;
 }
 .inpEmail{
-    width: 20vw;
+    width: 22vw;
     margin: 1vh;
 }
 .inpUsuario{
@@ -304,8 +239,7 @@
 
 .imgAntigua{
     padding-left: 10vh;
-    width: 15vw;
-    height: 20vh;
+    width: 40%;
 }
 .perfil{
     padding-left: 10vh;
@@ -324,3 +258,52 @@
 .texto{
     font-size: 1.5vw;
 }
+.botonCambiarMenu{
+    display: flex;
+    width: 14%;
+    height: 100%;
+    margin: 0.5%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(240, 100%, 49%);
+    --button-hover: hsl(240, 100%, 50%);
+    --button-active:  hsl(231, 76%, 47%);
+    --button-visited: hsl(240, 68%, 46%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }
+  button:hover{
+    text-decoration-line: underline;
+  }
+  .botonEliminar{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 0.5%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(0, 100%, 50%);
+    --button-hover: hsl(0, 100%, 50%);
+    --button-active:  hsl(0, 100%, 51%);
+    --button-visited: hsl(0, 79%, 48%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }

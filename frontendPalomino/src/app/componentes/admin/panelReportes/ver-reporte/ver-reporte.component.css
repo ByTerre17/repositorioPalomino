@@ -76,6 +76,9 @@
     margin-bottom: 1%;
 }
 .botones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 1%;
     width: 100%;
     background-color: white;
@@ -83,3 +86,33 @@
     font-size: 4vh;
     padding: 1%;
 }
+.estado{
+    font-size: 3vh;
+    color: green;
+    font-weight: bold;
+}
+button:hover{
+    text-decoration-line: underline;
+  }
+  .botonEliminar{
+    width: 20%;
+    height: 100%;
+    margin: 0.5%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(0, 100%, 50%);
+    --button-hover: hsl(0, 100%, 50%);
+    --button-active:  hsl(0, 100%, 51%);
+    --button-visited: hsl(0, 79%, 48%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }

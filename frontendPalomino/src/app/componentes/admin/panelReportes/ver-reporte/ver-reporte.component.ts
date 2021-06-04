@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { ComentariosService } from 'src/app/servicios/comentarios.service';
 import { JuegosService } from 'src/app/servicios/juegos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -28,7 +29,6 @@ export class VerReporteComponent implements OnInit {
     this.servicioComentarios.obtenerComentario(this.idComentario).subscribe(
       respuesta =>{
         this.comentario=respuesta
-        
         this.comentarioListo=true
       },
       error => {console.log(error)}
@@ -38,7 +38,6 @@ export class VerReporteComponent implements OnInit {
     this.servicioComentarios.obtenerReporte(this.idReporte).subscribe(
       respuesta =>{
         this.reporte=respuesta
-        console.log(this.reporte)
         this.idComentario=this.reporte.idComentario
         this.obtenerComentario()
       },
@@ -50,10 +49,14 @@ export class VerReporteComponent implements OnInit {
       var formData = new FormData()
       formData.append("idComentario",this.idComentario)
       this.servicioComentarios.eliminarComentarioAdmin(formData).subscribe(
-        respuesta => {
-          this.irHacia.navigate(['/administracion/reportes/listarReportes'])
+        async respuesta => {
+          if(respuesta="Comentario eliminado correctamente"){
+            const element2: HTMLElement = document.getElementById('estado') as HTMLElement
+            element2.innerHTML = 'El comentario se ha eliminado con éxito'
+            await delay(1500);
+            this.irHacia.navigate(['/administracion/reportes/listarReportes'])
+          }
         },
-        error => console.log(error)
       )
     }
   }
@@ -63,10 +66,14 @@ eliminarReporte(): void{
     var formData = new FormData()
     formData.append("idReporte",this.idReporte)
     this.servicioComentarios.eliminarReporte(formData).subscribe(
-      respuesta => {
-        this.irHacia.navigate(['/administracion/reportes/listarReportes'])
+      async respuesta => {
+        if(respuesta="Reporte eliminado correctamente"){
+          const element2: HTMLElement = document.getElementById('estado') as HTMLElement
+          element2.innerHTML = 'El reporte se ha eliminado con éxito'
+          await delay(1500);
+          this.irHacia.navigate(['/administracion/reportes/listarReportes'])
+        }
       },
-      error => console.log(error)
     )
   }
 }

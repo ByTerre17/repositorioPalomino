@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { ComentariosService } from 'src/app/servicios/comentarios.service';
 import { JuegosService } from 'src/app/servicios/juegos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -25,8 +26,8 @@ export class VerJuegoComponent implements OnInit {
   imagenes:any
   urlVideo:String = "https://www.youtube.com/embed/"
   videos:any
-  cajaDeComentarios:Boolean = false
-  cajaDeDetalles:Boolean = true
+  cajaDeComentarios:Boolean = true
+  cajaDeDetalles:Boolean = false
   cajaDeMultimedia:Boolean = false
   cargado:Boolean = false
   tituloError:any
@@ -58,7 +59,6 @@ export class VerJuegoComponent implements OnInit {
     this.servicioJuegos.verJuego(this.idJuego).subscribe(
       respuesta =>{
         this.juego=respuesta
-        console.log(this.juego)
         this.obtenerComentariosPorJuego(this.idJuego)
         this.obtenerVideos(this.juego.id)
         this.obtenerImagenesJuego(this.juego.id)
@@ -119,7 +119,6 @@ export class VerJuegoComponent implements OnInit {
           let direccion = this.videos[i].direccion.substring(32,1000)
           this.videos[i].direccion = this.urlVideo + direccion
         }
-        console.log(this.sanitizer.bypassSecurityTrustResourceUrl(this.videos[0].direccion))
         this.prueba=this.sanitizer.bypassSecurityTrustResourceUrl(this.videos[0].direccion)
         this.videosListo=true
       },
@@ -146,22 +145,27 @@ export class VerJuegoComponent implements OnInit {
     if(this.formComentario.get("titulo")?.value == ""){
       valido=false
       const element: HTMLElement = document.getElementById('titulo') as HTMLElement
-      element.innerHTML = 'El titulo del comentario no puede estar vacio'
+      element.innerHTML = 'El titulo del comentario no puede estar vacío'
     }
     if(this.formComentario.get("nota")?.value == "" || this.formComentario.get("nota")?.value > 10 || this.formComentario.get("nota")?.value < 1){
       valido=false
       const element: HTMLElement = document.getElementById('nota') as HTMLElement
-      element.innerHTML = 'La nota del comentario no puede estar vacia ni superar el 10 ni ser menor de 1'
+      element.innerHTML = 'La nota del comentario no puede estar vacía ni superar el 10 ni ser menor de 1'
     }
     if(this.formComentario.get("texto")?.value == "" ){
       valido=false
       const element: HTMLElement = document.getElementById('texto') as HTMLElement
-      element.innerHTML = 'La explicacion del comentario no puede estar vacio'
+      element.innerHTML = 'La explicacion del comentario no puede estar vacío'
     }
     if(valido==true){
       this.servicioComentarios.crearComentario(this.formComentario.value).subscribe(
-        respuesta =>{
-          window.location.reload();
+        async respuesta =>{
+          if(respuesta=="Comentario creado"){
+            const element2: HTMLElement = document.getElementById('estado1') as HTMLElement
+            element2.innerHTML = 'El comentario ha sido creado con éxito'
+            await delay(1000);
+            window.location.reload();
+          }
         },
         error => console.log(error)
       )
@@ -184,7 +188,6 @@ export class VerJuegoComponent implements OnInit {
       error => {console.log(error)}
     )
   }
-
   cargarPerfil(): void{
     if(this.servicioUsuarios.isLogged()){
     this.servicioUsuarios.obtenerPerfil().subscribe(
@@ -193,20 +196,8 @@ export class VerJuegoComponent implements OnInit {
       },
       error => console.log(error)
     )
+    }
   }
-  }
-
-  eliminarComentario(idComentario:any): void{
-    if(this.servicioUsuarios.isLogged()){
-    this.servicioComentarios.eliminarComentario(idComentario,this.usuario.id).subscribe(
-      respuesta => {
-        console.log(respuesta)
-        window.location.reload();
-      },
-      error => console.log(error)
-    )
-  }
-}
 
 likeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,indice:number): void{
   if(this.servicioUsuarios.isLogged()){
@@ -214,42 +205,55 @@ likeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,ind
     formData.append("idComentario",idComentario)
     formData.append("idUsuario",this.usuario.id)
   this.servicioComentarios.likeComentario(formData).subscribe(
-    respuesta => {
-      console.log(respuesta)
+    async respuesta => {
       if(respuesta=="true"){
+        const element2: HTMLElement = document.getElementById('estadoComentario'+idComentario) as HTMLElement
+        element2.innerHTML = 'El like ha sido introducido con éxito'
         this.comentarios[indice].likes++
+        await delay(1500);
+        element2.innerHTML = ''
       }
       else if(respuesta=="mod"){
+        const element2: HTMLElement = document.getElementById('estadoComentario'+idComentario) as HTMLElement
+        element2.innerHTML = 'El like ha sido introducido con éxito'
         this.comentarios[indice].likes++
         this.comentarios[indice].dislikes--
+        await delay(1500);
+        element2.innerHTML = ''
       }
     },
     error => console.log(error)
   )
 }
 }
-
 dislikeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,indice:number): void{
   if(this.servicioUsuarios.isLogged()){
     var formData = new FormData()
     formData.append("idComentario",idComentario)
     formData.append("idUsuario",this.usuario.id)
   this.servicioComentarios.dislikeComentario(formData).subscribe(
-    respuesta => {
+    async respuesta => {
       console.log(respuesta)
       if(respuesta=="true"){
+        const element2: HTMLElement = document.getElementById('estadoComentario'+idComentario) as HTMLElement
+        element2.innerHTML = 'El dislike ha sido introducido con éxito'
         this.comentarios[indice].dislikes++
+        await delay(1500);
+        element2.innerHTML = ''
       }
       else if(respuesta=="mod"){
+        const element2: HTMLElement = document.getElementById('estadoComentario'+idComentario) as HTMLElement
+        element2.innerHTML = 'El dislike ha sido introducido con éxito'
         this.comentarios[indice].likes--
         this.comentarios[indice].dislikes++
+        await delay(1500);
+        element2.innerHTML = ''
       }
     },
     error => console.log(error)
   )
 }
 }
-
   comprobarUsuario(idRespuestaUsuario:any): boolean{
     let igual = false
     if(this.servicioUsuarios.isLogged()){
@@ -259,7 +263,6 @@ dislikeComentario(idComentario:any,cantidadLikes:number,cantidadDislikes:number,
     }
   return igual
   }
-
   reportarComentario(idComentario:number): void{
     this.irHacia.navigate(["/reportarComentario/"+idComentario])
   }

@@ -1,6 +1,6 @@
 <nav class="cajaBarraNav">
     <div class="cajaBarraNav">
-      <a class="cajaImagen" href="#"><img  class="imagen" src="./assets/logo.jpg" ></a>
+      <a class="cajaImagen" href=""><img  class="imagen" src="./assets/logo.jpg" ></a>
       <div class="cajaBarraNav" id="">
         <ul class="columnaBarraNavegacion">
           <li class="fila" *ngFor=" let plataforma of plataformas">
@@ -10,17 +10,17 @@
             <a class="" href="listaJuegos">Lista de juegos</a>
           </li>
           <li class="fila" *ngIf="isAdmin()">
-            <a class="" href="administracion">Panel de administracion</a>
+            <a class="" href="administracion">Panel de administración</a>
           </li>
         </ul>
         <div class="cajaSesion">
           <div class="sesion" *ngIf="!logueado()">
-            <a class=""  href="login">Iniciar sesion</a>
+            <a class=""  href="login">Iniciar sesión</a>
             <a class=""  href="register">Registrarse</a>
           </div>
           <div class="sesion" *ngIf="logueado()">
             <a href="perfil">Perfil</a>
-            <a  (click)="doLogout()">Cerrar Sesion</a>
+            <a href="" (click)="doLogout()">Cerrar Sesión</a>
           </div>
         </div>
       </div>

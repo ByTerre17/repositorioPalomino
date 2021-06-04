@@ -74,8 +74,10 @@
     align-self: auto;
 }
 .titulos{
+    width: 12vw;
     font-weight: bolder;
     font-size: 2vw;
+    background-color: white;
 }
 .display-4 , .subtitulo{
     font-family: 'Shippori Mincho B1', serif;
@@ -211,6 +213,7 @@
   }
   .cajaInsertarComentario{
       margin-top: 2%;
+      margin-bottom: 2%;
       background-color: white;
       width: 100%;
       height: 100%;
@@ -261,7 +264,7 @@
     background-color: white;
 }
 .error{
-    font-size: 3vh;
+    font-size: 1.2vw;
     color: red;
     font-weight: bold;
 }
@@ -270,21 +273,20 @@
     margin-left: 4vw;
 }
 .comentarioArriba{
-    width: 100%;
-    display: flex;
-    background-color: white;
-    justify-content: space-around;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .comentarioAbajo{
-    background-color: white;
-    width: 100%;
-    margin-top: 1vh;
-    display: flex;
-    padding-left: 1vw;
-    padding-top: 1vh;
-    
+  background-color: white;
+  width: 100%;
+  margin-top: 1vh;
+  display: flex;
+  padding-left: 1vw;
+  padding-top: 1vh;
 }
 .comentario{
     margin: 1vh;
@@ -551,14 +553,43 @@
     width: 100%;
     height: 100% 100%;
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   
-  
+  .estado{
+    font-size: 3vh;
+    color: green;
+    font-weight: bold;
+  }
+  .botonDefecto{
+    display: flex;
+    width: 14%;
+    height: 100%;
+    margin: 0.5%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    --button: hsl(240, 6%, 77%);
+    --button-hover: hsl(240, 8%, 72%);
+    --button-active:  hsl(231, 4%, 67%);
+    --button-visited: hsl(240, 5%, 72%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    text-align: center;
+  }
+  button:hover{
+    text-decoration-line: underline;
+  }
+  .cajaDeComentarios{
+    margin-top: 1%;
+    padding-top: 1%;
+    padding: 2%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-color: white;
+    border: 0.1vw solid black;
+  }

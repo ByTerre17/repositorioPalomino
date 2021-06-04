@@ -6,6 +6,13 @@
     <form class="cajaFormulario" [formGroup]="form1" (submit)="submit()">
       <div class="formulario">
           <div class="cajaDatoJuego">
+            <span class="instrucciones">
+              Para la creación de un juego es necesario rellenar todos los campos.<br>
+              En el caso de las imágenes es necesario ingresar una imagen y seleccionarla como principal haciendo click en el campo de imagen principal (Solo 1 imagen por juego puede ser principal)<br>
+              En el caso de los videos con 1 es como mínimo<br>
+            </span>
+          </div>
+          <div class="cajaDatoJuego">
             <label class="cajaDatoJuego"  for="nombre">
               <div class="datoJuego"><span class="negrita">Nombre:</span></div>
               <div class="cajaImp"><input class="impNombre" type="text" placeholder="Nombre" id="nombre" formControlName="nombre"></div>
@@ -13,7 +20,7 @@
           </div>
           <div class="cajaDatoJuego">
             <label class="cajaDatoJuego" for="fechaDeLanzamiento">
-              <div class="datoJuego"><span class="negrita">fechaDeLanzamiento:</span></div>
+              <div class="datoJuego"><span class="negrita">Fecha de Lanzamiento:</span></div>
               <div class="cajaImp"><input class="impfechaLanzamiento" type="date" placeholder="fechaDeLanzamiento" id="fechaDeLanzamiento" formControlName="fechaDeLanzamiento"></div>
             </label>
           </div>
@@ -25,7 +32,7 @@
             </div>
               <div class="cajaDatoJuego">
                 <label class="cajaDatoJuego" for="edad">
-                  <div class="datoJuego"><span class="negrita">Minimo de edad para jugar al juego:</span></div>
+                  <div class="datoJuego"><span class="negrita">Mínimo de edad para jugar al juego:</span></div>
                   <div class="cajaImp"><input class="" type="text" placeholder="edad" id="edad" formControlName="edad"></div>
                 </label>
               </div>
@@ -37,8 +44,9 @@
               </div>
               <div class="cajaDatoJuego">
                 <label class="cajaDatoJuego" for="genero">
-                  <div class="datoJuego"><span class="negrita">Genero:</span></div>
+                  <div class="datoJuego"><span class="negrita">Género:</span></div>
                   <div class="cajaImp"><select name="genero"  formControlName="genero" >
+                    <option value="" disabled>Elige un género</option>
                     <option *ngFor="let genero of generos" [ngValue]="genero.id" >
                       {{ genero.nombre }}
                     </option>
@@ -102,7 +110,8 @@
                 </div>
               </div>
               <div class="errores" id="errores"></div>
-            <button class=""  type ="submit" >Insertar</button>
+              <div class="estado" id="estado"></div>
+            <button class="botonVer"  type ="submit" >Insertar</button>
         </div>
       </form>
   <div>

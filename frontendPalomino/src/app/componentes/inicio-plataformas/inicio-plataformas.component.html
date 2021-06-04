@@ -4,14 +4,14 @@
         <br>
       </div>
     <div class="ultimosLanzamientos">
-      <h2 class="subtitulo">Ultimos lanzamientos de {{nombrePlataforma}}.</h2>
+      <h2 class="subtitulo">Últimos lanzamientos de {{nombrePlataforma}}.</h2>
       <div class="cajaFuncion1">
           <div class="cajaUltimosLanzamientos">
             <div class="cajaUltimoLanzamiento" *ngFor="let juego of juegos1" (click)="verJuego(juego.id)" >
               <div class="parteArribaUL" style="background-image: url('{{juego.imagen}}')" ><div class="nota">{{juego.nota}}</div></div>
                 <div class="parteAbajoUL">
                   <h3 class="tituloUL"> <div class="NombreNota"><div class="nombre">{{juego.nombre}}</div></div></h3>
-                  <div class="cajaBotonUL" id="boton" ><button type="button" class="btn btn-primary">Haz click</button></div>
+                  <div class="cajaBotonUL" id="boton" ><button type="button" class="botonDefecto">Ver juego</button></div>
                   <div class="fechaDeLanzamientoUL">
                     <small class="text-muted">{{juego.fechaDePublicacion}}</small>
                   </div>
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="Video">
-      <h2 class="subtitulo">El trailer del juego mejor valorado de {{nombrePlataforma}}.</h2>
+      <h2 class="subtitulo">El tráiler del juego mejor valorado por los usuarios de {{nombrePlataforma}}.</h2>
       <div class="cajaFuncion2">
         <iframe class="cajaFuncion2video" [src]='video()'>
         </iframe> 
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div  class="comentariosMasLikes">
-      <h2>Comentarios con más likes de {{nombrePlataforma}}:</h2>
+      <h2 class="subtitulo">Comentarios con más likes de {{nombrePlataforma}}:</h2>
       <div class="cajaComentarios">
         <div class="cajaDeComentarios">
             <div *ngFor="let comentario of comentariosMasLikes" class="comentario">

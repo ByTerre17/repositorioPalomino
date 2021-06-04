@@ -39,7 +39,6 @@ export class ListarReportesComponent implements OnInit {
     if(this.servicioUsuarios.isLogged()){
     this.servicioUsuarios.obtenerPerfil().subscribe(
       respuesta => {
-        console.log(respuesta)
         this.usuario = respuesta
         if(this.usuario.rol!="admin"){
           this.irHacia.navigate([''])

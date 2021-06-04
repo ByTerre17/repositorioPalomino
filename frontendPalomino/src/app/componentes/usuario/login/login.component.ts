@@ -25,13 +25,11 @@ export class LoginComponent implements OnInit {
 submit(): void{
   this.servicioUsuario.acceso(this.formLogin.value).subscribe(
     respuesta => {
-      console.log(respuesta)
       this.servicioUsuario.guardarToken(respuesta)
       this.irHacia.navigate([''])
       window.location.reload();
     },
     error => {
-      console.log(error)
       this.mensaje=error.error.error
     }
   )

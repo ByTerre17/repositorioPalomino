@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { delay } from 'src/app/lib/common';
 import { JuegosService } from 'src/app/servicios/juegos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
@@ -124,7 +125,6 @@ export class InsertarJuegosComponent implements OnInit {
       control.removeAt(control.length-1)
       this.imagen.splice(control.length)
       this.form1.get("cantidadImagenes")?.setValue(this.form1.get("cantidadImagenes")?.value-1)
-      console.log(this.imagen)
     }
   }
   addVideo(){
@@ -155,7 +155,7 @@ export class InsertarJuegosComponent implements OnInit {
       valido=false
     }
     if(this.form1.get("edad")?.value == ""){
-      element.innerHTML= element.innerHTML +"<br>" + "La edad minima no puede estar en blanco"
+      element.innerHTML= element.innerHTML +"<br>" + "La edad mínima no puede estar en blanco"
       valido=false
     }
     if(this.form1.get("creador")?.value == ""){
@@ -163,7 +163,7 @@ export class InsertarJuegosComponent implements OnInit {
       valido=false
     }
     if(this.form1.get("genero")?.value == ""){
-      element.innerHTML= element.innerHTML +"<br>" + "El genero no puede estar en blanco"
+      element.innerHTML= element.innerHTML +"<br>" + "El género no puede estar en blanco"
       valido=false
     }
     if(this.form1.get("plataforma")?.value == ""){
@@ -175,11 +175,11 @@ export class InsertarJuegosComponent implements OnInit {
       valido=false
     }
     if(this.imagenesSubidas == 0 ){
-      element.innerHTML= element.innerHTML +"<br>" + "Suba una imagen como minimo"
+      element.innerHTML= element.innerHTML +"<br>" + "Suba una imagen como mínimo"
       valido=false
     }
     if(this.form1.get("videos")?.value == ""){
-      element.innerHTML= element.innerHTML +"<br>" + "Suba como minimo un video"
+      element.innerHTML= element.innerHTML +"<br>" + "Suba como mínimo un vídeo"
       valido=false
     }
     if(this.form1.get("nota")?.value == "" && this.form1.get("nota")?.value >10 && this.form1.get("nota")?.value <1){
@@ -197,28 +197,30 @@ export class InsertarJuegosComponent implements OnInit {
     if(valido==true){
     var formData = new FormData()
     var juego = JSON.stringify(this.form1.getRawValue())
-    console.log(this.imagen.length)
     for(let indice = 0;indice<this.imagen.length;indice++){
       let nombre
       nombre="imagen"+indice
       if(indice==this.imagenPrincipal){
         nombre="imagenPrincipal"
         formData.append(nombre, this.imagen[indice])
-        console.log(this.imagen[indice])
       }
       else{
         formData.append(nombre, this.imagen[indice])
-        console.log(this.imagen[indice])
-        console.log(nombre)
       }
     }
     formData.append('juego', juego)
     this.serviciojuego.crearJuego( formData ).subscribe(
-      respuesta =>{
-        this.irHacia.navigate(['/administracion/juegos/listar'])
+      async respuesta =>{
+        if(respuesta="Juego creado"){
+          const element2: HTMLElement = document.getElementById('estado') as HTMLElement
+          element2.innerHTML = 'El juego ha sido creado con éxito'
+          await delay(1500);
+          this.irHacia.navigate(['/administracion/juegos/listar'])
+        }
       },
       error => console.log(error)
     )
+    
     }
   }
 }

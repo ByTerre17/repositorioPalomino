@@ -48,3 +48,29 @@
 button{
     font-size: 3vh;
 }
+button:hover{
+    text-decoration-line: underline;
+  }
+  .botonVer{
+    display: flex;
+    width:50%;
+    height: 100%;
+    margin: 0.5%;
+    padding: 0.5%;
+    font-size: 1vw;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(0, 0%, 49%);
+    --button-hover: hsl(0, 0%, 49%);
+    --button-active:  hsl(0, 0%, 49%);
+    --button-visited: hsl(0, 0%, 49%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PanelUsuariosComponent } from './componentes/admin/panel-usuarios/panel-usuarios.component';
 import { PanelComponent } from './componentes/admin/panel/panel.component';
 import { EditarJuegoComponent } from './componentes/admin/panelJuegos/editar-juego/editar-juego.component';
 import { InsertarJuegosComponent } from './componentes/admin/panelJuegos/insertar-juegos/insertar-juegos.component';
@@ -17,6 +16,7 @@ import { VerReporteComponent } from './componentes/admin/panelReportes/ver-repor
 import { RecuperarPassword2Component } from './componentes/usuario/recuperar-password2/recuperar-password2.component';
 import { ListarjuegosComponent } from './componentes/juego/listarjuegos/listarjuegos.component';
 import { InicioPlataformasComponent } from './componentes/inicio-plataformas/inicio-plataformas.component';
+import { CurriculumComponent } from './componentes/curriculum/curriculum.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -28,7 +28,6 @@ const routes: Routes = [
   { path: 'listaJuegos', component: ListarjuegosComponent },
   { path: 'verJuego/:id', component: VerJuegoComponent },
   { path: 'administracion', component: PanelComponent },
-  { path: 'administracion/usuarios', component: PanelUsuariosComponent },
   { path: 'administracion/juegos/listar', component: ListarJuegosComponent },
   { path: 'administracion/juegos/insertar', component: InsertarJuegosComponent },
   { path: 'administracion/reportes/verReporte/:id', component: VerReporteComponent },
@@ -36,6 +35,7 @@ const routes: Routes = [
   { path: 'administracion/juegos/editar/:id', component: EditarJuegoComponent },
   { path: 'reportarComentario/:id', component: ReportarComentarioComponent  },
   { path: 'inicioPlataforma/:id', component: InicioPlataformasComponent  },
+  { path: 'about', component: CurriculumComponent  },
 ];
 
 @NgModule({

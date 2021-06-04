@@ -148,11 +148,10 @@ class ComentarioController {
     $peticion->execute([
       $reporte->titulo,$reporte->descripcion,$idComentario
     ]);
-      exit(json_encode("Reporte  creado"));
+      exit(json_encode("Reporte creado"));
       
   }
-   
-    
+     
   public function crearComentario() {
     //Guardamos los parametros de la petición.
     $comentario = json_decode(file_get_contents("php://input"));
@@ -168,7 +167,7 @@ class ComentarioController {
     $peticion->execute([
       $comentario->titulo,$comentario->texto,$comentario->nota,$comentario->idJuego,$comentario->idUsuario
     ]);
-      exit(json_encode("Comentario  creado"));
+      exit(json_encode("Comentario creado"));
   }
 
   public function eliminarComentario($idComentario,$idUsuario) {
@@ -190,7 +189,7 @@ class ComentarioController {
       $peticion = $this->db->prepare($eval);
       $resultado = $peticion->execute([$idReporte]);
       http_response_code(200);
-      exit(json_encode("reporte eliminado correctamente"));
+      exit(json_encode("Reporte eliminado correctamente"));
   }
   
   public function eliminarComentarioAdmin() {

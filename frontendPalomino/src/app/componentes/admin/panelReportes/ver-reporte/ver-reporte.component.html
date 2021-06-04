@@ -6,8 +6,13 @@
         <span class="tipoDato">Texto: </span><span class="dato">{{comentario.texto}}</span><br>
         <span class="tipoDato">Nota: </span><span class="dato">{{comentario.nota}}</span><br>
     </div>
+    <div class="comentario">
+        <h2 class="subtitulo">Datos del reporte</h2>
+        <span class="tipoDato">Titulo: </span><span class="dato">{{reporte.titulo}}</span><br>
+        <span class="tipoDato">Texto: </span><span class="dato">{{reporte.descripcion}}</span><br>
+    </div>
     <div class="botones">
-        <button (click)="eliminarComentario()">Borrar Comentario</button>
-        <button (click)="eliminarReporte()">Borrar Reporte</button>
+        <button class="botonEliminar" (click)="eliminarComentario()">Borrar Comentario</button>
+        <button class="botonEliminar" (click)="eliminarReporte()">Borrar Reporte</button>
     </div>
 </div>

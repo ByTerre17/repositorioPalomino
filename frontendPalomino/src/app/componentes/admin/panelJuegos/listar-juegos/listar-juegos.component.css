@@ -110,3 +110,8 @@ button{
     background-color: rgb(6, 155, 255);
     font-weight: bold;
 }
+.estado{
+    font-size: 3vh;
+    color: green;
+    font-weight: bold;
+}
