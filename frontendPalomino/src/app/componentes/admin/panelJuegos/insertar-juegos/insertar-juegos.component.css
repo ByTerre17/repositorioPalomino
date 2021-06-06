@@ -213,3 +213,25 @@ input, select{
 button:hover{
     text-decoration-line: underline;
   }
+.botonDefecto{
+  display: flex;
+  width: 14%;
+  height: 100%;
+  margin: 0.5%;
+  padding: 0.5%;
+  font-size: 1vw;
+  color: var(--button-colour);
+  transition: all 0.3s ease-in-out;
+  background: var(--button);
+  border: solid 1px var(--button-border);
+  box-shadow: inset 0 0 0 2px #ffffff;
+  margin-right: 1%;
+  font-weight: bold;
+  --button: hsl(240, 6%, 77%);
+  --button-hover: hsl(240, 8%, 72%);
+  --button-active:  hsl(231, 4%, 67%);
+  --button-visited: hsl(240, 5%, 72%);
+  --button-colour: #1e1e1e;
+  --button-border: #1e1e1e;
+  text-align: center;
+}

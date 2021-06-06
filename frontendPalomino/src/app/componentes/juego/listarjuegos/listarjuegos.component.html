@@ -25,11 +25,20 @@
           </select>
         </label>
       </div>
+      <div class="filtroGenero">
+        <label for="orden">Orden:
+          <select name="orden" id="orden" name="ordenSeleccionado" [(ngModel)]="ordenSeleccionado">
+            <option value=""  selected="selected">Elige un orden</option>
+            <option value="mayor">Ordenar por nota de mayor a menor</option>
+            <option value="menor">Ordenar por nota de menor a mayor</option>
+          </select>
+        </label>
+      </div>
     </div>
   </div>
   <div class="cajaListadoJuegos">
     <div class="listadoJuegos">
-      <div class="cajaJuego" *ngFor="let juego of juegos | buscar:buscador | filtroGenero:generoSeleccionado | filtroPlataforma:plataformaSeleccionada, let indice=index">
+      <div class="cajaJuego" *ngFor="let juego of juegos | buscar:buscador | filtroGenero:generoSeleccionado | filtroPlataforma:plataformaSeleccionada | ordenJuegos:ordenSeleccionado, let indice=index">
         <div class="cajaFotoJuego">
           <img class="fotoJuego" src="{{juego.imagen}}">
         </div>

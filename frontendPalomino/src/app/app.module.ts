@@ -31,6 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InicioPlataformasComponent } from './componentes/inicio-plataformas/inicio-plataformas.component';
 import { CurriculumComponent } from './componentes/curriculum/curriculum.component';
 import { MapaComponent } from './componentes/mapa/mapa.component';
+import { OrdenJuegosPipe } from './pipes/orden-juegos.pipe';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { MapaComponent } from './componentes/mapa/mapa.component';
     FiltroPlataformaPipe,
     InicioPlataformasComponent,
     CurriculumComponent,
-    MapaComponent
+    MapaComponent,
+    OrdenJuegosPipe
   ],
   imports: [
     BrowserModule,

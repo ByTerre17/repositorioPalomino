@@ -11,11 +11,13 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 })
 export class ListarjuegosComponent implements OnInit {
   juegos: any[] = []
+  juegosSinOrden: any[] = []
   plataformas:any[] = []
   generos:any[] = []
   buscador=''
   generoSeleccionado=''
   plataformaSeleccionada=''
+  ordenSeleccionado=''
   listoJuegos:Boolean=false
   listoGeneros:Boolean=false
   listoPlataformas:Boolean=false
@@ -35,7 +37,7 @@ export class ListarjuegosComponent implements OnInit {
     this.servicioJuegos.listarJuegos().subscribe(
       respuesta =>{
         this.juegos=respuesta
-        console.log(this.juegos)
+        this.juegosSinOrden=respuesta
         this.listoJuegos=true
       },
       error => {console.log(error)}
@@ -49,6 +51,18 @@ export class ListarjuegosComponent implements OnInit {
       },
       error => {console.log(error)}
     )
+  }
+  menorMayor():void{
+    let juegosOrdenados
+    juegosOrdenados=this.juegos.sort(function(a,b){return parseFloat(a.nota) - parseFloat(b.nota)})
+    this.juegos=juegosOrdenados
+    console.log(this.juegos)
+  }
+  mayorMenor():void{
+    let juegosOrdenados
+    juegosOrdenados=this.juegos.sort(function(a,b){return parseFloat(b.nota) - parseFloat(a.nota)})
+    this.juegos=juegosOrdenados
+    console.log(this.juegos)
   }
   obtenerPlataformas(): void{
     this.servicioJuegos.listarPlataformas().subscribe(

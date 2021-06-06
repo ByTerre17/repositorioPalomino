@@ -16,7 +16,7 @@ class JuegoController {
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
-      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),0) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -38,7 +38,7 @@ class JuegoController {
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
-      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),0) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -58,7 +58,7 @@ class JuegoController {
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$idPlataforma]);
       $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
-      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+      $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),0) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -80,7 +80,7 @@ class JuegoController {
     $peticion = $this->db->prepare($eval);
     $peticion->execute();
     $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
-    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),0) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
     $peticion = $this->db->prepare($eval);
     $peticion->execute();
     $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -102,7 +102,7 @@ class JuegoController {
     $peticion = $this->db->prepare($eval);
     $peticion->execute([$idPlataforma]);
     $juegos = $peticion->fetchAll(PDO::FETCH_OBJ);
-    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+    $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),0) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
     $peticion = $this->db->prepare($eval);
     $peticion->execute();
     $medias = $peticion->fetchAll(PDO::FETCH_OBJ);
@@ -126,7 +126,7 @@ class JuegoController {
       if(empty($juego)){
           exit(json_encode(["error" => "No se encuentra el juego"]));
       }else{
-        $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),1) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
+        $eval = "SELECT juego.id, FORMAT(AVG(comentario.nota),0) as notaMedia FROM juego,comentario WHERE juego.id = comentario.idJuego GROUP BY juego.id";
         $peticion = $this->db->prepare($eval);
         $peticion->execute();
         $medias = $peticion->fetchAll(PDO::FETCH_OBJ);      
