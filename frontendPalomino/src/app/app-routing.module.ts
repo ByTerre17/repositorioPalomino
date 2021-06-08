@@ -17,6 +17,7 @@ import { RecuperarPassword2Component } from './componentes/usuario/recuperar-pas
 import { ListarjuegosComponent } from './componentes/juego/listarjuegos/listarjuegos.component';
 import { InicioPlataformasComponent } from './componentes/inicio-plataformas/inicio-plataformas.component';
 import { CurriculumComponent } from './componentes/curriculum/curriculum.component';
+import { UserRouterGuard } from './auth/user-router.guard';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'recuperarPassword/:id', component: RecuperarPassword2Component},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'perfil', component: PerfilComponent },
+  { path: 'perfil', component: PerfilComponent, canActivate:[UserRouterGuard] },
   { path: 'listaJuegos', component: ListarjuegosComponent },
   { path: 'verJuego/:id', component: VerJuegoComponent },
   { path: 'administracion', component: PanelComponent },

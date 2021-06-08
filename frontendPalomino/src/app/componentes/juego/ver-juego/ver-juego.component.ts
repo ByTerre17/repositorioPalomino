@@ -141,35 +141,37 @@ export class VerJuegoComponent implements OnInit {
     this.cajaDeDetalles=false
   }
   escribirComentario(): void{
-    let valido = true
-    if(this.formComentario.get("titulo")?.value == ""){
-      valido=false
-      const element: HTMLElement = document.getElementById('titulo') as HTMLElement
-      element.innerHTML = 'El titulo del comentario no puede estar vacío'
-    }
-    if(this.formComentario.get("nota")?.value == "" || this.formComentario.get("nota")?.value > 10 || this.formComentario.get("nota")?.value < 1){
-      valido=false
-      const element: HTMLElement = document.getElementById('nota') as HTMLElement
-      element.innerHTML = 'La nota del comentario no puede estar vacía ni superar el 10 ni ser menor de 1'
-    }
-    if(this.formComentario.get("texto")?.value == "" ){
-      valido=false
-      const element: HTMLElement = document.getElementById('texto') as HTMLElement
-      element.innerHTML = 'La explicacion del comentario no puede estar vacío'
-    }
-    if(valido==true){
-      this.servicioComentarios.crearComentario(this.formComentario.value).subscribe(
-        async respuesta =>{
-          if(respuesta=="Comentario creado"){
-            const element2: HTMLElement = document.getElementById('estado1') as HTMLElement
-            element2.innerHTML = 'El comentario ha sido creado con éxito'
-            await delay(1000);
-            window.location.reload();
-          }
-        },
-        error => console.log(error)
-      )
-    }
+    if(this.servicioUsuarios.isLogged()){
+      let valido = true
+      if(this.formComentario.get("titulo")?.value == ""){
+        valido=false
+        const element: HTMLElement = document.getElementById('titulo') as HTMLElement
+        element.innerHTML = 'El titulo del comentario no puede estar vacío'
+      }
+      if(this.formComentario.get("nota")?.value == "" || this.formComentario.get("nota")?.value > 10 || this.formComentario.get("nota")?.value < 1){
+        valido=false
+        const element: HTMLElement = document.getElementById('nota') as HTMLElement
+        element.innerHTML = 'La nota del comentario no puede estar vacía ni superar el 10 ni ser menor de 1'
+      }
+      if(this.formComentario.get("texto")?.value == "" ){
+        valido=false
+        const element: HTMLElement = document.getElementById('texto') as HTMLElement
+        element.innerHTML = 'La explicacion del comentario no puede estar vacío'
+      }
+      if(valido==true){
+        this.servicioComentarios.crearComentario(this.formComentario.value).subscribe(
+          async respuesta =>{
+            if(respuesta=="Comentario creado"){
+              const element2: HTMLElement = document.getElementById('estado1') as HTMLElement
+              element2.innerHTML = 'El comentario ha sido creado con éxito'
+              await delay(1500);
+              window.location.reload();
+            }
+          },
+          error => console.log(error)
+        )
+      }
+    }  
   }
   obtenerComentariosPorJuego(idJuego: any): void{
     this.servicioComentarios.listarComentariosPorJuego(idJuego).subscribe(

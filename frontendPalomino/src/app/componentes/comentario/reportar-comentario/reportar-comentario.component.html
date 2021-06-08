@@ -1,6 +1,5 @@
 <div class="caja" *ngIf="comentarioListo==true">
     <h1 class="titulo">Reportar Comentario</h1>
-    <div id="estado" class="estado"></div>
     <div class="comentario">
         <h2 class="subtitulo">Datos del comentario</h2>
         <span class="tipoDato">Titulo: </span><span class="dato">{{comentario.titulo}}</span><br>
@@ -8,6 +7,7 @@
         <span class="tipoDato">Nota: </span><span class="dato">{{comentario.nota}}</span><br>
     </div>
     <div class="formReporte">
+        <div id="estado" class="estado"></div>
         <form [formGroup]="form1" (submit)="submit()">
             <div id="errores" class="errores">
             </div>

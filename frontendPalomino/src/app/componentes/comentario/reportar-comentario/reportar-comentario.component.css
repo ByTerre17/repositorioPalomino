@@ -89,7 +89,7 @@ button:hover{
     height: 100%;
     margin: 0.5%;
     padding: 0.5%;
-    font-size: 1vw;
+    font-size: 2vw;
     color: var(--button-colour);
     transition: all 0.3s ease-in-out;
     background: var(--button);

@@ -106,7 +106,7 @@ button:hover{
   display: flex;
   width:100%;
   padding: 0.5%;
-  font-size: 1vw;
+  font-size: 3vh;
   color: var(--button-colour);
   transition: all 0.3s ease-in-out;
   background: var(--button);
