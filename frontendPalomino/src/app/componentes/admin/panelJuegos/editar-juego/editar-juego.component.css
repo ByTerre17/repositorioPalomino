@@ -53,7 +53,7 @@
     width: 100%;
 }
 .negrita{
-    font-size: 2vw;
+    font-size: 2vh;
     font-weight: bold;
 }
 .cajaDatoJuego{
@@ -82,7 +82,7 @@ input, select{
     width: 100%;
     padding: 1%;
     margin: 1%;
-    font-size: 1.5vw;
+    font-size: 2vh;
 }
 .cajaImagenesJuego{
     display: flex;
@@ -110,7 +110,7 @@ input, select{
     border: solid black 0.4vh;
 }
 .prueba{
-    width: 3vw;
+    width: 3vh;
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -164,13 +164,13 @@ input, select{
     margin-bottom:1% ;
 }
 .controlImagenAntiguaJuego, .botonAdd{
-    font-size: 1.5vw;
+    font-size: 2vh;
     margin-right: 10%;
 }
 .errores{
     display: flex;
     width: 100%;
-    font-size: 1.5vw;
+    font-size: 2.5vh;
     color: red;
     font-weight: bold;
     background-color: gray;
@@ -189,7 +189,7 @@ input, select{
     width:100%;
     height: 100%;
     padding: 0.5%;
-    font-size: 1vw;
+    font-size: 3vh;
     color: var(--button-colour);
     transition: all 0.3s ease-in-out;
     background: var(--button);
@@ -208,7 +208,7 @@ input, select{
 }
 .instrucciones{
     font-weight: bold;
-    font-size: 1vw;
+    font-size: 2vh;
 }
 button:hover{
     text-decoration-line: underline;
@@ -219,7 +219,7 @@ button:hover{
     height: 100%;
     margin: 0.5%;
     padding: 0.5%;
-    font-size: 1vw;
+    font-size: 2vh;
     color: var(--button-colour);
     transition: all 0.3s ease-in-out;
     background: var(--button);

@@ -101,14 +101,17 @@ button{
 .eliminar{
     background-color: rgb(250, 65, 65);
     font-weight: bold;
+    font-size: 1.2vw;
 }
 .editar{
     background-color: rgb(255, 115, 0);
     font-weight: bold;
+    font-size: 1.2vw;
 }
 .verJuego{
     background-color: rgb(6, 155, 255);
     font-weight: bold;
+    font-size: 1.2vw;
 }
 .estado{
     font-size: 3vh;
@@ -124,7 +127,7 @@ button:hover{
   height: 100%;
   margin: 0.5%;
   padding: 0.5%;
-  font-size: 1vw;
+  font-size: 2vh;
   color: var(--button-colour);
   transition: all 0.3s ease-in-out;
   background: var(--button);

@@ -28,8 +28,8 @@ class JuegoController {
             }
         }
       }
+      http_response_code(201);
       exit(json_encode($juegos));
-    
   }
   
   public function listarJuegosMasComentarios() {
@@ -50,6 +50,7 @@ class JuegoController {
             }
         }
       }
+      http_response_code(201);
       exit(json_encode($juegos));
     }
     public function listarJuegosMasComentariosPlataforma($idPlataforma) {
@@ -70,8 +71,8 @@ class JuegoController {
             }
         }
       }
+      http_response_code(201);
       exit(json_encode($juegos));
-    
   }
   
   public function listarXJuegosPorFechaNuevos($cantidad) {
@@ -92,8 +93,8 @@ class JuegoController {
             }
         }
     }
-      exit(json_encode($juegos));
-    
+    http_response_code(201);  
+    exit(json_encode($juegos));
   }
   
   public function listarXJuegosPorFechaNuevosPlataforma($cantidad,$idPlataforma) {
@@ -114,8 +115,8 @@ class JuegoController {
             }
         }
     }
-      exit(json_encode($juegos));
-    
+    http_response_code(201);
+    exit(json_encode($juegos));   
   }
 
   public function verJuego($id) {
@@ -137,6 +138,7 @@ class JuegoController {
                   $juego->nota=$media->notaMedia;
               }
         }                
+        http_response_code(201);
         exit(json_encode($juego));
       }
     }
@@ -146,6 +148,7 @@ class JuegoController {
         $peticion = $this->db->prepare($eval);
         $peticion->execute([$idJuego]);
         $imagenes = $peticion->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
         exit(json_encode($imagenes));
      }
      
@@ -154,6 +157,7 @@ class JuegoController {
         $peticion = $this->db->prepare($eval);
         $peticion->execute();
         $generos = $peticion->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
         exit(json_encode($generos));
      }
      
@@ -162,6 +166,7 @@ class JuegoController {
         $peticion = $this->db->prepare($eval);
         $peticion->execute();
         $plataforma = $peticion->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
         exit(json_encode($plataforma));
      }
     
@@ -170,6 +175,7 @@ class JuegoController {
        $peticion = $this->db->prepare($eval);
        $peticion->execute([$idJuego]);
        $videos = $peticion->fetchAll(PDO::FETCH_OBJ);
+       http_response_code(201);
        exit(json_encode($videos));
     }
     
@@ -183,6 +189,7 @@ class JuegoController {
     $peticion = $this->db->prepare($eval);
     $peticion->execute([$idJuego]);
     $video = $peticion->fetchAll(PDO::FETCH_OBJ);
+    http_response_code(201);
     exit(json_encode($video));
   }
   
@@ -196,6 +203,7 @@ class JuegoController {
     $peticion = $this->db->prepare($eval);
     $peticion->execute([$idJuego]);
     $video = $peticion->fetchAll(PDO::FETCH_OBJ);
+    http_response_code(201);
     exit(json_encode($video));
   }
 
@@ -318,6 +326,7 @@ class JuegoController {
             }
         }
     } 
+    http_response_code(201);
     exit(json_encode("Juego creado"));  
 }
       
@@ -408,11 +417,7 @@ class JuegoController {
             $direccionImagen= ROOT .'images'. '\\' . substr($imagenesEliminar[$i]->direccion, 40);
             unlink($direccionImagen);
             
-        }
-    
-    
-    
-    
+        }   
     
     for($i=0;$i<(count($imagenes)) && $cantidadDeImagenes=!0 ;$i++){
         if($i==$imagenPrincipal && $principalVieja=="false"){
@@ -498,16 +503,14 @@ class JuegoController {
                 }
             }
         }
-    }
-
-        
+    }        
         if($principalVieja=="true"){
             $eval = "UPDATE juego SET imagen=? WHERE id=?";
             $peticion = $this->db->prepare($eval);
             $peticion->execute([$imagenPrincipal,$idJuego]);
         }
     
-        
+            http_response_code(201);
             exit(json_encode("Juego editado"));
   
       }

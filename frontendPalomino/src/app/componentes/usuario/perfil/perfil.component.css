@@ -30,7 +30,7 @@
         color: white;
         background-color: #61ff47;
         font-weight: bold;
-        font-size: 2vw;
+        font-size: 3vh;
         border: 1px solid #000;
         padding-top: 0.2vw;
         padding-bottom: 0.2vw;
@@ -82,7 +82,7 @@
     color: #FFFFFF;
     background: #b8b8b8;
     text-shadow: 4px 3px 0 #7A7A7A;
-    font-size: 6vw;
+    font-size: 7vh;
 }
 .subtitulo{
     display: -ms-inline-flexbox;
@@ -130,7 +130,7 @@
 .subtitulo1{
     display: flex;
     font-weight: bold;
-    font-size: 3vw;
+    font-size: 4vh;
 }
 .comentario{
     margin: 1vh;
@@ -167,7 +167,7 @@
     font-weight: bold;
     margin-left: 1vw;
     margin-top: 1vh;
-    font-size: 2vw;
+    font-size: 3vh;
     justify-content: flex-end;
     width: 400vw;
 }
@@ -260,11 +260,11 @@
 }
 .botonCambiarMenu{
     display: flex;
-    width: 14%;
+    width: 30%;
     height: 100%;
     margin: 0.5%;
     padding: 0.5%;
-    font-size: 1vw;
+    font-size: 2.2vh;
     color: var(--button-colour);
     transition: all 0.3s ease-in-out;
     background: var(--button);
@@ -290,7 +290,30 @@
     height: 100%;
     margin: 0.5%;
     padding: 0.5%;
-    font-size: 2vw;
+    font-size: 2vh;
+    color: var(--button-colour);
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border: solid 1px var(--button-border);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    margin-right: 1%;
+    font-weight: bold;
+    color: white;
+    --button: hsl(0, 100%, 50%);
+    --button-hover: hsl(0, 100%, 50%);
+    --button-active:  hsl(0, 100%, 51%);
+    --button-visited: hsl(0, 79%, 48%);
+    --button-colour: #1e1e1e;
+    --button-border: #1e1e1e;
+    justify-content: center;
+  }
+  .botonEliminar2{
+    display: flex;
+    width: 90%;
+    height: 100%;
+    margin: 0.5%;
+    padding: 0.5%;
+    font-size: 2vh;
     color: var(--button-colour);
     transition: all 0.3s ease-in-out;
     background: var(--button);

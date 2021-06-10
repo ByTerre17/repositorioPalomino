@@ -16,6 +16,7 @@ class ComentarioController {
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
+      http_response_code(201);
       exit(json_encode($comentarios));
   }
   public function listarComentariosMasLikesPlataforma($idPlataforma) {
@@ -23,16 +24,16 @@ class ComentarioController {
       $peticion = $this->db->prepare($eval);
       $peticion->execute([$idPlataforma]);
       $comentarios = $peticion->fetchAll(PDO::FETCH_OBJ);
+      http_response_code(201);
       exit(json_encode($comentarios));
   }
-  public function listarReportes() {
-    
+  public function listarReportes() {   
       $eval = "SELECT * FROM reporte";
       $peticion = $this->db->prepare($eval);
       $peticion->execute();
       $resultado = $peticion->fetchAll(PDO::FETCH_OBJ);
-      exit(json_encode($resultado));
-    
+      http_response_code(201);
+      exit(json_encode($resultado));    
   }
   
   public function listarComentariosPorJuego($id) {
@@ -65,6 +66,7 @@ class ComentarioController {
               }
           }
       }
+      http_response_code(201);
       exit(json_encode($comentarios));
   }
   
@@ -98,6 +100,7 @@ class ComentarioController {
               }
           }
       }
+      http_response_code(201);
       exit(json_encode($comentarios));
   }
 
@@ -107,9 +110,11 @@ class ComentarioController {
       $peticion->execute([$id]);
       $resultado = $peticion->fetchObject();
       if(empty($resultado)){
+          http_response_code(400);
           exit(json_encode(["error" => "No se encuentra el juego"]));
       }else{
-          exit(json_encode($resultado));
+        http_response_code(201);
+        exit(json_encode($resultado));
       }
     }
 
@@ -121,6 +126,7 @@ class ComentarioController {
       if(empty($resultado)){
           exit(json_encode(["error" => "No se encuentra el comentario"]));
       }else{
+          http_response_code(201);
           exit(json_encode($resultado));
       }
     }
@@ -130,8 +136,10 @@ class ComentarioController {
       $peticion->execute([$id]);
       $resultado = $peticion->fetchObject();
       if(empty($resultado)){
+          http_response_code(400);
           exit(json_encode(["error" => "No se encuentra el reporte"]));
       }else{
+          http_response_code(201);
           exit(json_encode($resultado));
       }
     }
@@ -148,8 +156,8 @@ class ComentarioController {
     $peticion->execute([
       $reporte->titulo,$reporte->descripcion,$idComentario
     ]);
-      exit(json_encode("Reporte creado"));
-      
+    http_response_code(201);  
+    exit(json_encode("Reporte creado"));
   }
      
   public function crearComentario() {
@@ -167,7 +175,8 @@ class ComentarioController {
     $peticion->execute([
       $comentario->titulo,$comentario->texto,$comentario->nota,$comentario->idJuego,$comentario->idUsuario
     ]);
-      exit(json_encode("Comentario creado"));
+    http_response_code(201);  
+    exit(json_encode("Comentario creado"));
   }
 
   public function eliminarComentario($idComentario,$idUsuario) {
@@ -213,16 +222,19 @@ class ComentarioController {
         $eval = "INSERT INTO likedislike (idUsuario,idComentario,opinion) VALUES (?,?,?)";
         $peticion = $this->db->prepare($eval);
         $resultado = $peticion->execute([$idUsuario,$idComentario,"like"]);
+        http_response_code(201);
         exit(json_encode("true"));
       }
       else if(!empty($resultado)){
           if($resultado->opinion=="like"){
+              http_response_code(201);
               exit(json_encode("repetido"));
           }
           else if($resultado->opinion=="dislike"){
             $eval = "UPDATE likedislike SET opinion='like' where idUsuario = ? and idComentario = ?";
             $peticion = $this->db->prepare($eval);
             $resultado = $peticion->execute([$idUsuario,$idComentario]);
+            http_response_code(201);
             exit(json_encode("mod"));
           }
           
@@ -241,16 +253,19 @@ class ComentarioController {
         $eval = "INSERT INTO likedislike (idUsuario,idComentario,opinion) VALUES (?,?,?)";
         $peticion = $this->db->prepare($eval);
         $resultado = $peticion->execute([$idUsuario,$idComentario,"dislike"]);
+        http_response_code(201);
         exit(json_encode("true"));
       }
       else if(!empty($resultado)){
           if($resultado->opinion=="dislike"){
-              exit(json_encode("repetido"));
+            http_response_code(201);
+            exit(json_encode("repetido"));
           }
           else if($resultado->opinion=="like"){
             $eval = "UPDATE likedislike SET opinion='dislike' where idUsuario = ? and idComentario = ?";
             $peticion = $this->db->prepare($eval);
             $resultado = $peticion->execute([$idUsuario,$idComentario]);
+            http_response_code(201);
             exit(json_encode("mod"));
           }
           

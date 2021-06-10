@@ -263,7 +263,7 @@ transition: all .4s ease;
   width: 100%;
   align-items: center;
   justify-content: center;
-  font-size: 1vw;
+  font-size: 2vh;
   color: var(--button-colour);
   transition: all 0.3s ease-in-out;
   background: var(--button);

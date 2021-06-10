@@ -12,7 +12,7 @@
     color: #FFFFFF;
     background: #b8b8b8;
     text-shadow: 4px 3px 0 #7A7A7A;
-    font-size: 10vh;
+    font-size: 7vh;
 }
 .titulo{
     display: -ms-inline-flexbox;
@@ -96,7 +96,7 @@
 }
 .alerta{
     margin-top: 1%;
-    font-size: 2vw;
+    font-size: 3vh;
     font-weight: bold;
 }
 button:hover{
@@ -106,7 +106,7 @@ button:hover{
   display: flex;
   width:100%;
   padding: 0.5%;
-  font-size: 3vh;
+  font-size:3vh;
   color: var(--button-colour);
   transition: all 0.3s ease-in-out;
   background: var(--button);
